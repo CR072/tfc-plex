@@ -1,0 +1,33 @@
+
+{
+    "version": "1.0.0",
+    "port": 3000,
+    "titel": "00",
+    "name": "TFC",
+
+    "background": "",
+
+
+
+    "discord": {
+      "clientID": "",
+      "clientSecret": "",
+      "callbackURL": "http://localhost:3000/auth/callback"
+
+
+
+    },
+
+
+    "news": {
+      "enabled": true,
+      "content": "test"
+    },
+  
+
+
+  "curency": {
+    "enabled": true,
+    "name": "coins"
+  }
+}
