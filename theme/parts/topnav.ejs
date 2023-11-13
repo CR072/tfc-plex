@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .dropdown {
+
+      display: inline-block;
+
+
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #000000;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      margin-top: 18px;
+      border-radius: 0px 0px 10px 10px;
+      margin-right: 100px;
+      
+    }
+
+    .dropdown-content a {
+      color: rgb(255, 255, 255);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #181818;
+      border-radius: 0px 0px 10px 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top-nav">
+    <h1 class="text-light" style="margin-right: 840px;"><%= settings.name %></h1>
+
+    <div class="dropdown">
+      <a class="text-light" onclick="toggleDropdown()"><%= user.username %></a>
+      <div class="dropdown-content" id="dropdownContent">
+        <a href="#">Coins: <%= user.coins %></a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/873121310950191155/900cadbdffb9dea27332d9a88498a2a3?size=1024" alt="Avatar">
+  </header>
+
+  <% if (settings.news.enabled) { %>
+    <p style="margin-left: 250px; margin-right: 250px; background-color: rgb(0, 132, 255); padding: 10px 60px 10px 60px; border-radius: 10px;" class="text-light"><%= settings.news.content %></p>
+<% } else { %>
+    <p>News sind deaktiviert.</p>
+<% } %>
+
+  <script>
+    function toggleDropdown() {
+      var dropdownContent = document.getElementById("dropdownContent");
+      dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+
+</html>

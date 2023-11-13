@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Coins</title>
+</head>
+<body>
+    <h1>Manage Your Coins</h1>
+
+    <p>Your current coins: <%= user.coins %></p>
+
+    <form action="/user/updateCoins" method="POST" enctype="application/x-www-form-urlencoded"></form>>
+        <label for="addCoins">Add Coins:</label>
+        <input type="number" id="addCoins" name="coins" min="1" value="1" required>
+        <button type="submit">Add Coins</button>
+    </form>
+
+    <form action="/user/updateCoins" method="POST" enctype="application/x-www-form-urlencoded"></form>>
+        <label for="removeCoins">Remove Coins:</label>
+        <input type="number" id="removeCoins" name="coins" min="1" value="1" required>
+        <button type="submit">Remove Coins</button>
+    </form>
+
+
+    <img src="prew.png" alt="bils" width="390px">
+
+    <a href="/logout">Logout</a>
+</body>
+</html>
