@@ -1,2 +1,2 @@
 # tfc-plex
-Pterodactyl client
+advanced pterodactyl client
