@@ -43,7 +43,7 @@
 ---
 
 ## 👀 Preview
-TFC-plex Demo: https://dash.tfc-hosting.de/
+TFC-plex Demo: https://demo.tfc-plex.de/
 
 Dashboard (v1.0):
 ![dashboard](https://cdn.tfc-plex.de/img/githubweb.png)
