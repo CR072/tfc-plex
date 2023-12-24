@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+  <body>
+    <div class="container-scroller">
+      <%- include('./components/adminsidebar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div class="main-panel">
+          <div style="background-color: #111319" class="content-wrapper">
+           <h2>Admin</h2>
+           <p class="text-gray">Use tfc-plex's admin settings.</p>
+            <% if (req.query.err) { %>
+              <% if (req.query.err !== "none") { %>
+                <div style="border-radius: 15px;" class="alert">
+                  <% if (req.query.err == "MISSINGID") { %>
+                      You have not provided the Discord user ID.
+				    <% } else if (req.query.err == "CREATECOUPONINVALIDCHARACTERS") { %>
+					One of the characters you entered in coupon creation was invalid, please try again.
+				    <% } else if (req.query.err == "REVOKECOUPONCANNOTFINDCODE") { %>
+					One of the characters you entered in coupon revoke was invalid, please try again.
+				    <% } else if (req.query.err == "CREATECOUPONEMPTY") { %>
+					While creating your coupon you did not specify to give any resources or coins.
+				    <% } else if (req.query.err == "CREATECOUPONLESSTHANONE") { %>
+					While creating your coupon you tried to give less then one in RAM, DISK, CPU and/or coins.
+                  <% } else if (req.query.err == "INVALIDID") { %>
+                      You have provided a Discord user ID that does not exist, or has not signed up on the dashboard.
+                  <% } else if (req.query.err == "MISSINGVARIABLES") { %>
+                      You have not provided either ram, disk, cpu, and/or servers.
+                  <% } else if (req.query.err == "RAMSIZE" || req.query.err == "DISKSIZE" || req.query.err == "CPUSIZE" || req.query.err == "SERVERSIZE") { %>
+                      The RAM, disk, CPU and servers number cannot be less than 0 and must be above 999999999999999.
+                  <% } else { %>
+                      Stop admin abusing.
+                  <% } %>
+                </div>
+              <% } else if (req.query.err == "none") { %>
+                <div class="alert" style="background-color: #007fcc; border-radius: 15px;">
+                  Success! Action completed
+                </div>
+              <% } %>
+            <% } %>
+				    <% if (req.query.code) { %>
+					<div class="alert" style="background-color: #007fcc; border-radius: 15px;">
+					Success! You have created a coupon code with the name of: <%= req.query.code %>
+					</div>
+				    <% } %>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">tfc-plex Version</h4>
+                    <form class="forms-sample">
+                      <div class="form-group">
+                      <p id="latestversion"><span>Fetching...</span></p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+                                    <script>
+                                        fetch("https://tfc-plex.de/version/index.html")
+                                            .then(res => Promise.resolve(res.json()).then(ver => {
+                                                let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
+                                                if (ver.version == currentver) {
+                                                    document.getElementById("latestversion").innerHTML = `<span>You are running TFC-Plex version <code style="color: #007fcc" >v${currentver}</code>. TFC-Plex is up-to-date!</span>`;
+                                                } else if (ver.prerelease == currentver) {
+                                                    document.getElementById("latestversion").innerHTML = `<span>You are running TFC-Plex version <code style="color: #007fcc">v${currentver}</code>. TFC-Plex is up-to-date!</span>`;
+                                                } else {
+                                                    document.getElementById("latestversion").innerHTML = `<span>tfc-plex is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
+                                                };
+                                            }));
+                                    </script>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">tfc-plex Information</h4>
+                    <form class="forms-sample">
+                      <div class="form-group">
+
+
+                          <a href="javascript:void(0);" onclick="openPopup()" class="btn btn-primary btn-lg">View latest version</a> <a href="https://discord.gg/mTAbrDXv" target="_blank" class="btn btn-primary btn-lg">Get support</a>
+                    </form>
+
+
+                      <script>
+                          function openPopup() {
+                              var popupUrl = "https://github.com/privt00/tfc-plex/releases/latest";
+
+
+                              window.open(popupUrl, "_blank", "width=1200,height=800");
+                          }
+                      </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+          <%- include('./components/footer') %>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/vendors/select2/select2.min.js"></script>
+    <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script>
+        async function submitPlan() {
+            let id = encodeURIComponent(document.getElementById("IDPlan").value);
+            let packagename = encodeURIComponent(document.getElementById("package").value);
+            window.location.href = "/setplan?id=" + id + "&package=" + packagename
+        }
+        async function submitSet() {
+            let id = encodeURIComponent(document.getElementById("IDSet").value);
+            let cpu = encodeURIComponent(document.getElementById("SetCPU").value);
+            let ram = encodeURIComponent(document.getElementById("SetRAM").value);
+            let disk = encodeURIComponent(document.getElementById("SetDisk").value);
+            let servers = encodeURIComponent(document.getElementById("SetServers").value);
+            window.location.href = "/setresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitAdd() {
+            let id = encodeURIComponent(document.getElementById("IDAdd").value);
+            let cpu = encodeURIComponent(document.getElementById("AddCPU").value);
+            let ram = encodeURIComponent(document.getElementById("AddRAM").value);
+            let disk = encodeURIComponent(document.getElementById("AddDisk").value);
+            let servers = encodeURIComponent(document.getElementById("AddServers").value);
+            
+            window.location.href = "/addresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitRemove() {
+            let id = encodeURIComponent(document.getElementById("IDRemove").value);
+            let cpu = encodeURIComponent(document.getElementById("RemoveCPU").value);
+            let ram = encodeURIComponent(document.getElementById("RemoveRAM").value);
+            let disk = encodeURIComponent(document.getElementById("RemoveDisk").value);
+            let servers = encodeURIComponent(document.getElementById("RemoveServers").value);
+            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+    </script>
+    <%- include('./components/scripts') %>
+    <script src="/assets/js/file-upload.js"></script>
+    <script src="/assets/js/typeahead.js"></script>
+    <script src="/assets/js/select2.js"></script>
+  </body>
+</html>

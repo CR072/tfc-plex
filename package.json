@@ -1,18 +1,34 @@
 {
+  "name": "Heliactyl",
+  "version": "12.0",
+  "description": "The best Pterodactyl client area.",
+  "main": "index.js",
+  "author": "Sryden UK",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "bootstrap": "^5.3.2",
-    "discord.js": "^14.13.0",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "mime": "^3.0.0",
-    "node-sass": "^9.0.0",
-    "passport": "^0.6.0",
-    "passport-discord": "^0.1.4",
-    "passport-local": "^1.0.0",
-    "react-icons": "^4.11.0",
-    "sequelize": "^6.34.0",
-    "sqlite3": "^5.1.6"
+    "@keyv/mongo": "^1.2.1",
+    "@keyv/mysql": "^1.1.5",
+    "@keyv/postgres": "^1.0.17",
+    "@keyv/redis": "^2.2.1",
+    "@keyv/sqlite": "^2.0.3",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "axios": "^0.25.0",
+    "chalk": "^4.1.0",
+    "cron": "^1.8.2",
+    "discord.js": "^12.5.3",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "express-ws": "^4.0.0",
+    "javascript-obfuscator": "^2.19.1",
+    "keyv": "^4.0.4",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.6",
+    "nodemon": "^2.0.15",
+    "paypal-rest-sdk": "^1.8.1",
+    "textflow.js": "^0.1.4",
+    "warn": "^1.0.1"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
   }
 }

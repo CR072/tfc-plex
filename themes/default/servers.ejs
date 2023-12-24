@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <body>
+    <div style="" class="container-scroller">
+      <%- include('./components/sidebar') %>
+      <div style="" class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div style="" class="main-panel">
+          <div style="" class="content-wrapper">
+            <%- include('./components/alert') %>
+              <div class="row justify-content-center">
+                  <div class="col-md-12 grid-margin stretch-card">
+                      <div class="card" style="height: 100px;">
+                          <div class="card-body d-flex justify-content-between align-items-center">
+                              <div>
+                                  <h3 class="text-left">Your Servers</h3>
+                                  <p class="text-muted">You can edit, delete, create & update servers here.</p>
+                              </div>
+                              <div class="text-right row ">
+                              <a class=" bg-primary p-2 mr-2 d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../servers/new">
+                                  <i class="fa-solid fa-plus"></i>
+                              </a>
+                              <a class=" bg-success p-2  d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../updateinfo">
+                                  <i class="fa-solid fa-arrows-rotate-reverse"></i>
+                              </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+              <% if (req.query.err) { %>
+              <% } if (req.query.err == "SUCCESS") { %>
+                  <div style="background-color: #007fcc" class="alert">
+                      Success! The server has been deployed
+                  </div>
+              <% } %>
+
+
+            <div class="row">
+
+             </div><br>
+            <div class="row">
+                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                    <p>No servers available.</p>
+                <% } else { %>
+                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                        <div class="col-md-6 grid-margin stretch-card "  style="max-width: 405px; max-height: 265px">
+                            <div class="card mr-3 mb-3">
+                                <div class="card-body" >
+
+                                    <div class="dropdown float-right"> <!-- Hier wird "float-right" hinzugefügt -->
+                                        <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="mdi mdi-dots-horizontal"></i>
+                                        </button>
+                                        <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
+                                            <a class="dropdown-item text-white" href="/servers/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
+                                            <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
+
+                                    <h5 style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
+
+                    <div class="row mt-4">
+                                    <div class="card mr-3 mb-3" style="background: #17181b">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
+                                            <p class="card-text">Core(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mr-3 mb-3" style="background: #17181b">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><i class="mdi mdi-layers"></i> RAM</h5>
+                                            <p class="card-text">GB(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-3" style="background: #17181b">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><i class="mdi mdi-harddisk"></i> Disk</h5>
+                                            <p class="card-text">GB(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+          </div>
+          </div>
+          <%- include('./components/footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('./components/scripts') %>
+  </body>
+</html>

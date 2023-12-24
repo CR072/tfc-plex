@@ -1,0 +1,71 @@
+<nav style="background: #0b0b0f;" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
+
+    <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+
+        <a class="navbar-brand brand-logo-mini text-white" href="../dashboard"><%= settings.letter %> </a>
+    </div>
+
+
+    <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                    <div class="navbar-profile">
+                        <img class="img-xs rounded-circle" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" alt="">
+                        <p class="mb-0 d-none d-sm-block navbar-profile-name"><%= userinfo.username %>#<%= req.session.userinfo.discriminator %></p>
+                        <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                    </div>
+                </a>
+                <div style="background: rgba(0, 0, 0, 0.91);; padding: 15px; border-radius: 16px;" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                    <div class="dropdown-divider"></div>
+
+
+
+    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="../settings">
+        <div class="preview-item-content">
+            <p class="preview-subject mb-1"><p class="user-subtitle"><%= userinfo.username %></p></p>
+        </div>
+    </a>
+
+    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="">
+        <div class="preview-item-content">
+            <p class="preview-subject mb-1"><p class="user-subtitle"><%= packagename %> plan</p></p>
+        </div>
+    </a>
+
+                    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="/afk">
+                        <div class="preview-item-content">
+                            <p class="preview-subject mb-1">Coins: <span id="balance"></span></p>
+                        </div>
+                    </a>
+                    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="/dashboard">
+                        <div class="preview-item-content">
+                            <p class="preview-subject mb-1">Plan:
+                                <% if (typeof packagename.charAt(0) == 'number') { %>
+                                    <%= packagename %>
+                                <% } else { %>
+                                    <%= packagename.charAt(0).toUpperCase() + packagename.slice(1) %>
+                                <% } %>
+                            </p>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a onclick="location.href = '../logout';" style="color: rgb(255, 47, 47); cursor: pointer;"
+                        class="dropdown-item preview-subject mb-1"> Logout</a>
+                </div>
+            </li>
+        </ul>
+        <script>
+            let balance = document.getElementById("balance")
+            balance.textContent = Math.floor(<%= coins %> * 100) / 100
+        </script>
+
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+        </button>
+    </div>
+</nav>

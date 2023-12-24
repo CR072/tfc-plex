@@ -1,0 +1,60 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="<%= settings.name %> | Powered by TFC-Plex.">
+    <meta name="keywords" content="TFC-Plex, TFC-Plex, Hosting, TFC-Plex, Freemium Minecraft Hosting, <%= settings.name %>, Cloud, Minecraft, Servers, Free Servers, Hostings that uses TFC-Plex">
+    <meta name="author" content="TFC-plex">
+    <meta name="copyright" content="<%= settings.name %>">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<%= settings.name %>">
+    <meta property="og:description" content="<%= settings.name %> | Powered by TFC-Plex.">
+    <meta property="og:image" content="<%= settings.icon %>">
+    <meta name="twitter:card" content="<%= settings.icon %>">
+    <meta name="twitter:title" content="<%= settings.name %>">
+    <meta name="twitter:description" content="<%= settings.name %> | Powered by TFC-Plex.">
+    <meta name="twitter:image" content="<%= settings.icon %>">
+    <meta name="twitter:image:src" content="<%= settings.icon %>">
+    <title><%= settings.name %></title>
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+    <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="shortcut icon" href="https://cdn.tfc-plex.de/img/tfc.png" />
+    <link rel="icon" type="image/png" href="<%= settings.icon %>">
+    <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
+    <% if (settings.api.arcio.enabled == true) { %>
+        <script async src="https://arc.io/widget.min.js#<%= settings.api.arcio.widgetid %>"></script>
+    <% } %>
+</head>
+<style>
+    body{
+        font-family: 'Whitney-Semibold', sans-serif;
+    }
+</style>
+<style>
+    .content-wrapper{
+        background: #0b0b0f !important;
+        background-image: url(<%= settings.background %>) !important;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    body{
+        background: #0b0b0f !important;
+        background-image: url(<%= settings.background %>) !important;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .fa-regular{
+        margin-right: 7px;
+    }
+</style>
+<div class="nanobar my-class" id="my-id" style="position: fixed;">
+    <div class="bar"></div>
+</div>

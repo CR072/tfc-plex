@@ -1,0 +1,134 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <%- include('./components/head') %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.tfc-plex.de/css/bootstrap.css">
+
+  <style>
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-30px);
+      }
+    }
+
+    .floating-image {
+      animation: floatUpDown 7s ease-in-out infinite;
+    }
+
+    .animated-text {
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .animated-text span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+
+    <body class="bg-dark">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">
+
+          <h1 style="color: #cbcbcb">   <img src="<%= settings.icon %>" alt="Logo" width="75" height="75" class="d-inline-block align-text-top">
+  <%= settings.name %></h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+
+          </ul>
+
+
+
+
+   <% if (!req.session.userinfo)  { %>
+              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white" href="<%= extra.home.buttontext.loggedout.link %>">Login</a>
+            <% } else { %>
+              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white; margin-right: 10px" href="<%= extra.home.buttontext.loggedin.link %>">Login as <%= req.session.userinfo.username %>#<%= req.session.userinfo.discriminator %></a><br />
+              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white" href="<%= extra.home.buttontext.loggedout.link %>">Login on a different account</a>
+            <% } %></a>
+        </div>
+      </div>
+
+
+
+    </nav>
+
+
+
+    <header class="bg-dark py-5">
+      <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+          <div class="col-lg-8 col-xl-7 col-xxl-6">
+            <div class="my-5 text-center text-xl-start">
+
+              <h2 class="display-5 fw-normal text-white">Create a Powerful server at
+              </h2>
+              <h1 class="display-5 fw-bolder text-white mb-2"><%= settings.name %></h1>
+
+
+
+              <p class="lead fw-normal text-white-50 mb-4"><%= settings.motd %></p>
+              <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/login">Get Started</a>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center" style="background: radial-gradient(#1c446e 40%, #212529 70%);"><img class="img-fluid rounded-3 my-5 floating-image" src="https://www.ovhcloud.com/sites/default/files/styles/desktop_full_width/public/2021-01/SD-Advance.png" alt="...">
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+      <%- include('./components/scripts') %>
+    <div style="margin-top: 10%">
+    <%- include('./components/footer') %>
+    </div>
+
+    </body>
+  </div>
+  </html>
+
+
+
+
+
+
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Login to access the dashboard.">
+    <meta name="keywords" content="hosting, free hosting, mc, mc hosting, minecraft, witchly, witchlyhost, witchly.host">
+    <meta name="author" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>

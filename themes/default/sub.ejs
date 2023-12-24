@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subdomain Generator</title>
+</head>
+<body>
+<h1>Subdomain Generator</h1>
+<p>Generiere eine Subdomain:</p>
+
+<label for="subdomainInput">Gib einen Namen ein:</label>
+<input type="text" id="subdomainInput" placeholder="subdomain">
+
+<button onclick="generateSubdomain()">Generiere Subdomain</button>
+
+<p id="result"></p>
+
+<script>
+    function generateSubdomain() {
+        var subdomainInput = document.getElementById('subdomainInput').value;
+
+        var randomString = Math.random().toString(36).substring(2, 7);
+        var generatedSubdomain = subdomainInput + "-" + randomString;
+
+        document.getElementById('result').innerHTML = "Generierte Subdomain: " + generatedSubdomain;
+
+    }
+</script>
+</body>
+</html>
