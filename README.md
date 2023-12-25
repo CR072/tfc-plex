@@ -13,14 +13,9 @@
   <a  href="https://github.com/privt00/tfc-plex/stargazers"><img src="https://img.shields.io/github/stars/privt00/tfc-plex?label=Stars %E2%AD%90" height="20"/></a>
 </p>
 
+## Features
 
-- Auto Configurators: Config eggs & locations easily.
-- Onboarding: Interactive starting page for the users.
-- User Management: Easily add/remove/set resources.
-- Real-time stats: View the real-time resource usage.
-- Real time stats: View the real time resource usage.
-- Linkvertise Earning: Earn coins by completing a link.
-- Role Packages: Give a package to users who have the role.
+
 
 ---
 
