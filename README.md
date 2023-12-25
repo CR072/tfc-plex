@@ -23,6 +23,9 @@
 ## 👀 Preview
 TFC-plex Demo: https://dash.tfc-hosting.de/
 
+## 👀 Our Docs
+https://docs.nexinfoscript.de/
+
 
 
 Dashboard (v1.0):
