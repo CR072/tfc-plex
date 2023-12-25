@@ -13,7 +13,7 @@
   <a  href="https://github.com/privt00/tfc-plex/stargazers"><img src="https://img.shields.io/github/stars/privt00/tfc-plex?label=Stars %E2%AD%90" height="20"/></a>
 </p>
 
-@@ -36,19 +35,26 @@
+
 - Auto Configurators: Config eggs & locations easily.
 - Onboarding: Interactive starting page for the users.
 - User Management: Easily add/remove/set resources.
@@ -30,31 +30,27 @@ TFC-plex Demo: https://dash.tfc-hosting.de/
 
 
 Dashboard (v1.0):
-![dashboard](https://cdn.tfc-plex.de/img/githubweb.png)
+![dashboard](https://cdn.tfc-plex.de/img/git_5.png)
 
+Server (v1.0):
+![Your Servers](https://cdn.tfc-plex.de/img/git_2.png)
 
+User Settings (v1.0):
+![Account Setting](https://cdn.tfc-plex.de/img/git_3.png)
 
+Shop (v1.0):
+![Shop](https://cdn.tfc-plex.de/img/git_4.png)
+
+Store (v1.0):
+![Store](https://cdn.tfc-plex.de/img/git_5.png)
 
 ---
 
 ## 📝 Authors
 - [**Privt**](https://github.com/privt00)
 
+
 ---
-
-
-
-# Preview
-
-![Main-Panel](https://cdn.tfc-plex.de/img/git_1.png)
-![Your Servers](https://cdn.tfc-plex.de/img/git_2.png)
-![Your Server 2](https://cdn.tfc-plex.de/img/git_2.png)
-![Account Setting](https://cdn.tfc-plex.de/img/git_3.png)
-![Shop](https://cdn.tfc-plex.de/img/git_4.png)
-![Store](https://cdn.tfc-plex.de/img/git_5.png)
-
-# Authors
-privt00 - Coder & Founder
 
 # Cangelog
 
@@ -62,4 +58,4 @@ privt00 - Coder & Founder
 |---|---|---|---|
 |2023/12/24|v1.0|First Release||
 
-© 2024 TFC-Plex by privt00
+© 2023-2024 TFC-Plex by privt00
