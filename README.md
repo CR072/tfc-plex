@@ -1,6 +1,6 @@
 # tfc-plex
 
-![image](https://cdn.tfc-plex.de/img/gitfront.png)
+![image](https://cdn.tfc-plex.de/img/gitlogo.png)
 <p align="center" dir="auto">Trusted by 1 host and 3 users.</p>
 <p align="center">
   <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=1.0 Downloads"/></a>
