@@ -1,7 +1,7 @@
 # tfc-plex
 
 ![image](https://cdn.tfc-plex.de/img/gitlogo.png)
-<p align="center" dir="auto">Trusted by 1 host and 3 users.</p>
+<p align="center" dir="auto">Trusted by 7 host and 960 users.</p>
 <p align="center">
   <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=1.0 Downloads"/></a>
   <a href="https://discord.gg/BXmzHS9DRA"><img src="https://img.shields.io/discord/1175441775972860076?color=blue&label=Discord&logo=tfc-plex&logoColor=blue" alt="discord" /></a>
