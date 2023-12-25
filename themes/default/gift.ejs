@@ -9,9 +9,21 @@
         <%- include('./components/topnav') %>
         <div style="background-color: #111319" class="main-panel">
           <div style="background-color: #111319" class="content-wrapper">
-           <h2>Gift Coins</h2>
-           <p class="text-gray">Gift others your coins.</p>
-            <% if (req.query.err) { %>
+
+
+
+              <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card" style="height: 100px;">
+                      <div class="card-body">
+                          <h3>Gift Coins</h3>
+                          <p class="text-muted">Gift others your coins.</p>
+                      </div>
+                  </div>
+              </div>
+
+
+
+          <% if (req.query.err) { %>
               <div style="border-radius: 15px;" class="alert">
                 <% if (req.query.err == "MISSINGFIELDS") { %>
                     You must fill out all fields in the form.
@@ -47,7 +59,7 @@
                         <label for="InputCoins">Coins</label>
                         <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputCoins" placeholder="100">
                       </div>
-                     <a role="button" class="btn btn-primary btn-lg" href="javascript: submitGift()">Gift</a>
+                     <a role="button" class="btn btn-primary" href="javascript: submitGift()">Gift</a>
                     </form>
                   </div>
                 </div>
