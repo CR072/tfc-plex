@@ -1,7 +1,7 @@
 # TFC-Plex
 
 
-![image]([https://cdn.tfc-plex.de/img/git_titel.png](https://cdn.tfc-plex.de/img/git_titel.png)
+![image]([https://cdn.tfc-plex.de/img/git_titel.png](https://cdn.tfc-plex.de/img/git_titel.png))
 <p align="center" dir="auto">This is a Pterodactyl Client who people love it. </p>
 <p align="center">
   <a><img src="https://img.shields.io/github/downloads/HolaClient/HolaClient/total?color=blue&label=v1.5.8 Downloads"/></a>
