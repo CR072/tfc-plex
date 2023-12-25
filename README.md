@@ -5,13 +5,12 @@
 <p align="center">
   <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=1.0 Downloads"/></a>
   <a href="https://discord.gg/BXmzHS9DRA"><img src="https://img.shields.io/discord/1175441775972860076?color=blue&label=Discord&logo=tfc-plex&logoColor=blue" alt="discord" /></a>
- 
-  <a href="https://demo.tfc-plex.de"><img alt="Docs" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
-  <a href="https://tfc-plex.de/docs"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://tfc-plex.de/"></a>
-
+  <a href="https://tfc-plex.de/docs"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://demo.tfc-plex.de"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://tfc-plex.de/docs"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://tfc-plex.de"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
   <a  href="https://github.com/privt00/tfc-plex/stargazers"><img src="https://img.shields.io/github/stars/privt00/tfc-plex?label=Stars %E2%AD%90" height="20"/></a>
 </p>
-
 
 
 
