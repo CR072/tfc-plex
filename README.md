@@ -2,7 +2,16 @@
 
 ![image](https://cdn.tfc-plex.de/img/gitfront.png)
 <p align="center" dir="auto">Trusted by 1 host and 3 users.</p>
-<img align="center" src="https://github-readme-stats.vercel.app/api?username=madushadhanushka&include_all_commits=true&count_private=true&show_icons=true&line_height=20&title_color=2B5BBD&icon_color=1124BB&text_color=A1A1A1&bg_color=0,000000,130F40" alt="my Github Stats"/>
+<p align="center">
+  <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=1.0 Downloads"/></a>
+  <a href="https://discord.gg/BXmzHS9DRA"><img src="https://img.shields.io/discord/1175441775972860076?color=blue&label=Discord&logo=tfc-plex&logoColor=blue" alt="discord" /></a>
+  <a href="https://tfc-plex.de/docs"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://demo.tfc-plex.de"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://tfc-plex.de/docs"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a href="https://tfc-plex.de"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de/docs"></a>
+  <a  href="https://github.com/privt00/tfc-plex/stargazers"><img src="https://img.shields.io/github/stars/privt00/tfc-plex?label=Stars %E2%AD%90" height="20"/></a>
+</p>
+
 
 
 
