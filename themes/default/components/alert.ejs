@@ -86,3 +86,54 @@
     </div>
 <% } %>
 
+
+<% if (req.query.alert === 'claimtoosoon') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Failed to Claimed!</h3>
+                            <p class="text-muted">Pls Wait Util The next Day you allready claimed you coins today <a href="/gifts">try later Again.</a></p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>
+
+
+<% if (req.query.alert === 'claim') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-check fa-2x text-success"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Claimed Successfuly!</h3>
+                            <p class="text-muted">The Coins got successfully Claimd!</p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>

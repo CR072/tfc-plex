@@ -11,7 +11,7 @@ module.exports.load = async function (app, db) {
         // Check if claiming is enabled in settings
         let settings = JSON.parse(fs.readFileSync("./settings.json").toString());
         if (!settings.claiming.enabled) {
-            return res.send("Claiming is currently disabled.");
+            return res.send(`Claiming is currently disabled. <a href='/dashboard?alert=claimtoosoon'>go back to dashboard</a>`);
         }
 
         // Check if the user has already claimed coins on the current day
@@ -19,7 +19,7 @@ module.exports.load = async function (app, db) {
         let currentDate = moment().format("YYYY-MM-DD");
 
         if (lastClaimDate === currentDate) {
-            return res.send("You have already claimed your coins today.");
+            return res.send(`You have already claimed your coins today. <a href='/dashboard?alert=claimtoosoon'>go back to dashboard</a>`);
         }
 
         // Update last claim date for the user
@@ -33,8 +33,6 @@ module.exports.load = async function (app, db) {
         coins = coins + coinsPerClaim;
         await db.set("coins-" + req.session.userinfo.id, coins);
 
-        res.send(`You have successfully claimed ${coinsPerClaim} coins.`);
-
-        let newSettings = JSON.parse(fs.readFileSync("./settings.json").toString());
+        res.send(`You have successfully claimed ${coinsPerClaim} coins. <a href='/dashboard?alert=claim'>go back to dashboard</a>`);
     });
 };
