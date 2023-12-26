@@ -1,9 +1,9 @@
 {
-  "name": "Heliactyl",
-  "version": "12.0",
-  "description": "The best Pterodactyl client area.",
+  "name": "TFC",
+  "version": "1.2",
+  "description": "Pterodactyl client area.",
   "main": "index.js",
-  "author": "Sryden UK",
+  "author": "Privt00",
   "dependencies": {
     "@keyv/mongo": "^1.2.1",
     "@keyv/mysql": "^1.1.5",
@@ -29,6 +29,6 @@
     "warn": "^1.0.1"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   }
 }
