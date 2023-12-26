@@ -18,14 +18,16 @@ module.exports = (action, message) => {
         body: JSON.stringify({
             embeds: [
                 {
+                    avatar_url: settings.icon || 'https://cdn.tfc-plex.de/img/tfc.png',
                     color: hexToDecimal('#191c24'),
                     title: `Event: \`${action}\``,
                     description: message,
                     author: {
-                        name: 'Logging'
+                        name: 'Logging',
+                        icon_url: settings.icon || 'https://cdn.tfc-plex.de/img/gitlogo.png',
                     },
                     thumbnail: {
-                        url: 'https://cdn.discordapp.com/attachments/881207010417315861/949595064554913812/Copy_of_H_35.png'
+                        url: 'https://cdn.tfc-plex.de/img/gitlogo.png'
                     }
                 }
             ]
