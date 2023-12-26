@@ -1,40 +1,30 @@
-TFC-Plex License
+# TFC-Plex License
+Version 2.1, December 26, 2023
 
-Version 1.0, 24.12.2023
+Copyright (c) 2023, TFC-Hosting
 
-Copyright Holder: TFC-Plex
+## Definitions
+   a. "Software" refers to the TFC-Plex program.
+   b. "Host" refers to the server or system on which the Software is executed.
+   c. "Modification" refers to any alteration, adaptation, or derivative work of the Software.
 
-Subject to the terms and conditions of the Apache License, Version 2.0 ("License"), you are hereby granted a license to use, copy, modify, and distribute the software under the terms of this License.
+## License Grant
+   a. This Software is subject to the terms of the Apache 2.0 License (https://www.apache.org/licenses/LICENSE-2.0), with the following modifications:
 
-1. Definitions
+## Permitted Actions
+   a. The Software may only be used for personal purposes and for internal use within companies. Sale, publication, merging, or sublicensing remains prohibited.
 
-1.1. "Software" refers to TFC-Plex.
+## Limitations
+   a. Changes to the TFC-Plex Software's footer are prohibited. Violation of this prohibition may result in the suspension of the Host.
+   b. The TFC-Plex API may not be altered without explicit permission. Permission requests can be made through the Discord server (https://discord.gg/MCfBtSWPE8).
 
-1.2. "Derived Works" refers to any modifications or adaptations of the Software you create.
+## Host Verification
+   a. A Host may be considered "verified" if it adheres to these license terms and is deemed 100% legitimate.
 
-2. Permissions
+## Relationship to Pterodactyl Panel
+   a. The TFC-Plex Software is a Pterodactyl Panel Shop and is not directly affiliated with the Pterodactyl Panel. Any references to the Pterodactyl Panel are for contextualization purposes only and should not be construed as an official connection.
 
-2.1. You are allowed to use, copy, and modify the Software, provided you comply with the terms of this License.
+## Disclaimer
+   a. The TFC-Plex Software is provided "as is," without any warranty or guarantee. The author is not liable for any damages arising from the use of the TFC-Plex Software.
 
-3. Restrictions
-
-3.1. You may not modify the Software and distribute it unless you:
-
-   a) Mark your changes appropriately,
-   b) Provide clear notices of modifications,
-   c) Do not change the License text.
-
-4. Liability
-
-4.1. The Software is provided without any warranties. The Copyright Holder is not liable for any damages arising from the use of the Software.
-
-5. Termination
-
-5.1. The License may be terminated if you violate its terms, and your rights will be automatically revoked.
-
-6. Miscellaneous
-
-6.1. This License is governed by the laws of the state of [Your State/Country].
-
-This License is based on the Apache License, Version 2.0. The full text of the License is available at [Link to the Apache License].
-
+This license has been created to address the author's concerns regarding changes to the TFC-Plex Software's footer, API, and Host verification. It is recommended to carefully read and understand this license before using, modifying, or distributing the TFC-Plex Software.
