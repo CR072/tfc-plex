@@ -59,7 +59,7 @@
             </div>
             </div>
                                     <script>
-                                        fetch("https://tfc-plex.de/version/index.html")
+                                        fetch("https://tfc-plex.de/version/")
                                             .then(res => Promise.resolve(res.json()).then(ver => {
                                                 let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
                                                 if (ver.version == currentver) {
