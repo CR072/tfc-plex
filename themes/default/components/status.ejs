@@ -1,114 +1,44 @@
-<div class="row">
-  <%
-  let ram = 0;
-  let disk = 0;
-  let cpu = 0;
-  let servers = pterodactyl.relationships.servers.data.length;
-  for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
-    ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
-    disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
-    cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
-  }
-  %>
-  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Cpu</h6>
-            <div class="d-flex align-items-center align-self-start">
-              <h3 class="mb-0"><%= cpu/100 %> / <%= (packages.cpu/100 + extraresources.cpu/100) %> </h3>
-            </div>
-            <div class="d-flex align-items-center align-self-start">
-              <div class="progress w-100 mt-3 rounded">
-                <div class=" progress-bar bg-gradient-success" role="progressbar" style="width: <%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>%;" aria-valuenow="<%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <h4 class="mb-0 ml-2 mt-3"><%= (cpu / (packages.cpu + extraresources.cpu) * 100).toFixed(2) %>%</h4>
-            </div>
-          </div>
-        </div>
+<!DOCTYPE html>
+<!-- Данный вебсайт не относится к Cloudflare -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>MWCLIENT</title>
+      <style>
+     div {
+      margin-top: 1%; /* Отступ сверху */
+     }
+    </style>
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <meta name="robots" content="noindex, nofollow">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <link rel="stylesheet" href="{{url_for('static', filename='errors.css')}}" media="screen">
+      <script>
+(function(){if(document.addEventListener&&window.XMLHttpRequest&&JSON&&JSON.stringify){var e=function(a){var c=document.getElementById("error-feedback-survey"),d=document.getElementById("error-feedback-success"),b=new XMLHttpRequest;a={event:"feedback clicked",properties:{errorCode:1020,helpful:a,version:5}};b.open("POST","https://sparrow.cloudflare.com/api/v1/event");b.setRequestHeader("Content-Type","application/json");b.setRequestHeader("Sparrow-Source-Key","c771f0e4b54944bebf4261d44bd79a1e");
+b.send(JSON.stringify(a));c.classList.add("feedback-hidden");d.classList.remove("feedback-hidden")};document.addEventListener("DOMContentLoaded",function(){var a=document.getElementById("error-feedback"),c=document.getElementById("feedback-button-yes"),d=document.getElementById("feedback-button-no");"classList"in a&&(a.classList.remove("feedback-hidden"),c.addEventListener("click",function(){e(!0)}),d.addEventListener("click",function(){e(!1)}))})}})();
+</script>
+
+      <script>
+      (function(){function d(c){var b=document.getElementById("copy-label"),a=document.getElementById("cf-details-wrapper-expandable");c.target.checked?a.classList.add("expanded"):(a.classList.remove("expanded"),b.innerText="Click to copy")}if(document.addEventListener){var e=function(){var c=document.getElementById("copy-label");var b=document.getElementById("error-details").textContent;if(navigator.clipboard)navigator.clipboard.writeText(b);else{var a=document.createElement("textarea");a.value=b;a.style.top="0";a.style.left="0";a.style.position="fixed";document.body.appendChild(a);a.focus();a.select();document.execCommand("copy");document.body.removeChild(a)}c.innerText="Copied text to clipboard"};document.addEventListener("DOMContentLoaded",function(){var c=document.getElementById("error-details-checkbox"),b=document.getElementById("click-to-copy-btn");document.getElementById("copy-label").classList.remove("hidden");c.addEventListener("change",d);b.addEventListener("click",e)})}})();
+      </script>
+      <script defer="" src="{{url_for('static', filename='beacon.js')}}"></script>
+   </head>
+   <body>
+   <div class="cf-main-wrapper" role="main">
+      <div class="cf-header cf-section">
+         <div class="cf-error-title">
+            <h1>Добро пожаловать, {{uname}}.</h1>
+             
+         </div>
+         <div class="cf-error-description">
+              <form action="/create" method="POST">
+                <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="sumbit" type="sumbit">Создать сервер</button>
+              </form>
+              <form action="{{panel}}" method="GET">
+                <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="sumbit" type="sumbit">Перейти в панель управления</button>
+              </form>
+         </div>
+         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Данные от панели</p></div>
+         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Почта:</p> <code class="text-md">{{email}}</code></div>
+         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Пароль:</p> <code class="text-md">{{searchword}}</code></div>
       </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Ram</h6>
-            <div class="d-flex align-items-center align-self-start">
-              <h3 class="mb-0 ml-2"><%= (ram / 1024) %> / <%= (packages.ram / 1024 + extraresources.ram / 1024).toFixed(2) %> GB</h3>
-            </div>
-            <div class="d-flex align-items-center align-self-start">
-              <div class="progress w-100 mt-3 rounded">
-                <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (ram / (packages.ram + extraresources.ram)) * 100 %>%;" aria-valuenow="<%= (ram / (packages.ram + extraresources.ram)) * 100 %>"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <h4 class="mb-0 ml-2 mt-3"><%= ((ram / (packages.ram + extraresources.ram)) * 100).toFixed(2) %>%</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Disk</h6>
-            <div class="d-flex align-items-center align-self-start">
-              <h3 class="mb-0"><%= disk/1024 %> / <%= (packages.disk/1024 + extraresources.disk/1024).toFixed(2) %> GB</h3>
-            </div>
-            <div class="d-flex align-items-center align-self-start">
-              <div class="progress w-100 mt-3 rounded">
-                <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (disk / (packages.disk + extraresources.disk)) * 100 %>%;" aria-valuenow="<%= (disk / (packages.disk + extraresources.disk)) * 100 %>"
-                     aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <h4 class="mb-0 ml-2 mt-3"><%= ((disk / (packages.disk + extraresources.disk)) * 100).toFixed(2) %>%</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-
-
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-9">
-              <h6 class="card-title text-muted mb-0">Slots</h6>
-              <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%= servers %> / <%= packages.servers + extraresources.servers %> </h3>
-              </div>
-              <div class="d-flex align-items-center align-self-start">
-                <div class="progress w-100 mt-3 rounded">
-                  <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (servers / (packages.servers + extraresources.servers)) * 100 %>%;" aria-valuenow="<%= servers %>"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="mb-0 ml-2 mt-3"><%= ((servers / (packages.servers + extraresources.servers)) * 100).toFixed(2) %>%</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-</div>
-</div>
+   </div>
+</body></html>
