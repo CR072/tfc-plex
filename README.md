@@ -24,7 +24,7 @@
 TFC-plex Demo: https://dash.tfc-hosting.de/
 
 ## 👀 Our Docs
-https://docs.nexinfoscript.de/
+https://docs.tfc-plex.de/
 
 
 
