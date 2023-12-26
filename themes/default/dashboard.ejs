@@ -1,44 +1,152 @@
 <!DOCTYPE html>
-<!-- Данный вебсайт не относится к Cloudflare -->
-<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>MWCLIENT</title>
-      <style>
-     div {
-      margin-top: 1%; /* Отступ сверху */
-     }
-    </style>
-      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-      <meta name="robots" content="noindex, nofollow">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <link rel="stylesheet" href="{{url_for('static', filename='errors.css')}}" media="screen">
-      <script>
-(function(){if(document.addEventListener&&window.XMLHttpRequest&&JSON&&JSON.stringify){var e=function(a){var c=document.getElementById("error-feedback-survey"),d=document.getElementById("error-feedback-success"),b=new XMLHttpRequest;a={event:"feedback clicked",properties:{errorCode:1020,helpful:a,version:5}};b.open("POST","https://sparrow.cloudflare.com/api/v1/event");b.setRequestHeader("Content-Type","application/json");b.setRequestHeader("Sparrow-Source-Key","c771f0e4b54944bebf4261d44bd79a1e");
-b.send(JSON.stringify(a));c.classList.add("feedback-hidden");d.classList.remove("feedback-hidden")};document.addEventListener("DOMContentLoaded",function(){var a=document.getElementById("error-feedback"),c=document.getElementById("feedback-button-yes"),d=document.getElementById("feedback-button-no");"classList"in a&&(a.classList.remove("feedback-hidden"),c.addEventListener("click",function(){e(!0)}),d.addEventListener("click",function(){e(!1)}))})}})();
-</script>
+<html lang="en">
+<%- include('./components/head') %>
 
-      <script>
-      (function(){function d(c){var b=document.getElementById("copy-label"),a=document.getElementById("cf-details-wrapper-expandable");c.target.checked?a.classList.add("expanded"):(a.classList.remove("expanded"),b.innerText="Click to copy")}if(document.addEventListener){var e=function(){var c=document.getElementById("copy-label");var b=document.getElementById("error-details").textContent;if(navigator.clipboard)navigator.clipboard.writeText(b);else{var a=document.createElement("textarea");a.value=b;a.style.top="0";a.style.left="0";a.style.position="fixed";document.body.appendChild(a);a.focus();a.select();document.execCommand("copy");document.body.removeChild(a)}c.innerText="Copied text to clipboard"};document.addEventListener("DOMContentLoaded",function(){var c=document.getElementById("error-details-checkbox"),b=document.getElementById("click-to-copy-btn");document.getElementById("copy-label").classList.remove("hidden");c.addEventListener("change",d);b.addEventListener("click",e)})}})();
-      </script>
-      <script defer="" src="{{url_for('static', filename='beacon.js')}}"></script>
-   </head>
-   <body>
-   <div class="cf-main-wrapper" role="main">
-      <div class="cf-header cf-section">
-         <div class="cf-error-title">
-            <h1>Добро пожаловать, {{uname}}.</h1>
-             
-         </div>
-         <div class="cf-error-description">
-              <form action="/create" method="POST">
-                <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="sumbit" type="sumbit">Создать сервер</button>
-              </form>
-              <form action="{{panel}}" method="GET">
-                <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="sumbit" type="sumbit">Перейти в панель управления</button>
-              </form>
-         </div>
-         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Данные от панели</p></div>
-         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Почта:</p> <code class="text-md">{{email}}</code></div>
-         <div class="flex flex-row items-center gap-2 p-2 bg-slate-700 rounded-md shadow-md border-[1px] mb-2 border-slate-600 w-full lg:w-96"><p class="text-md font-bold">Пароль:</p> <code class="text-md">{{searchword}}</code></div>
-      </div>
-   </div>
-</body></html>
+<body>
+<div class="container-scroller">
+    <%- include('./components/sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div  class="main-panel">
+            <div class="content-wrapper">
+                <div class="row justify-content-center align-items-center">
+
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card" style="height: 100px;">
+                                <div class="card-body">
+                                    <h3>Dashboard</h3>
+                                    <p class="text-muted">View your resources & other things here.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+
+
+
+                <div class="row justify-content-center align-items-center">
+
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card" style="height: 100px;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <i class="fa-solid fa-coin fa-2x text-warning"></i>
+                                    </div>
+                                    <div class="box">
+                                        <h3>Claimed your Dayli Coins?</h3>
+                                        <p class="text-muted"><a href="/claim">Claim Your Coins now</a></p>
+                                    </div>
+                                    <div class="col-10">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <%- include('./components/alert') %>
+
+
+                <%- include('./components/status') %>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
+                        <a href="../store" style="text-decoration: none; color: inherit;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <i class="fas fa-bolt fa-2x"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <%- include('./boxes/1') %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+
+
+
+                        <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
+                            <a href="../servers/new" style="text-decoration: none; color: inherit;">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <i class="fa-solid fa-plus fa-2x"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <%- include('./boxes/2') %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card" style="height: 150px; overflow: scroll;">
+                            <div class="card-body">
+                                <h3>Your Servers:</h3>
+
+
+                                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                                    <p>No servers available.</p>
+                                <% } else { %>
+                                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+
+
+                                        <div class="dropdown float-right mt-2">
+                                            <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+
+                                            <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
+                                                <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
+                                                <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                                                <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
+
+
+
+                                        <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+                                            <option value="<%= name %>"><%= value.name %></option>
+                                        <% } %>
+
+
+
+                            <hr>
+                            <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <%- include('./components/footer') %>
+
+        </div>
+
+    </div>
+</div>
+<%- include('./components/scripts') %>
+</body>
+</html>

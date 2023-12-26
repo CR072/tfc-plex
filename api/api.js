@@ -275,6 +275,7 @@ app.post("/api/createcoupon", async (req, res) => {
     if (!coins || !req.query.id) return res.redirect(`/gift?err=MISSINGFIELDS`);
     if (req.query.id.includes(`${req.session.userinfo.id}`)) return res.redirect(`/gift?err=CANNOTGIFTYOURSELF`)
 
+    const captcha = req.query.captcha
 
     if (coins < 1) return res.redirect(`/gift?err=TOOLOWCOINS`)
 

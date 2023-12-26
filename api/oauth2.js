@@ -40,13 +40,13 @@ module.exports.load = async function (app, db) {
     <head>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
     <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
-    <title>Please wait...</title>
+    <title>wait...</title>
     </head>
-    <body style="background-color: #111319; font-family: 'Whitney-Semibold', sans-serif;">
+    <body style="background-color: #0b0b0f; font-family: 'Whitney-Semibold', sans-serif;">
     <center>
       <br><br><br>
-      <h1 style="color: white">You are currently in the login queue, please wait...</h1>
-      <p style="color: #BBBBBB">Been stuck here for a while? You may need to re-login</p>
+      <h1 style="color: white">You´re getting loged in sitdown and Relax</h1>
+      <p style="color: #BBBBBB">were getting all ready for you for the best hosting expririenc</p>
     </center>
     <script type="text/javascript" defer>
       history.pushState('/login', 'Logging in...', '/login')

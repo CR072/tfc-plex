@@ -7,10 +7,10 @@
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
   "background": "",
-  "hostid": "",
+  "hostid": "100",
 
   "claiming": {
-    "enabled": false,
+    "enabled": true,
     "coinsPerClaim": 20
   },
 
