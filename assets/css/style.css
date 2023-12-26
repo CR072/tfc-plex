@@ -7459,7 +7459,7 @@
   --gray-lighter: #e8eff4;
   --gray-lightest: #e6e9ed;
   --black: #000000;
-  --primary: #1d4ed8;
+  --primary: #0090e7;
   --secondary: #e4eaec;
   --success: #00d25b;
   --info: #8f5fe8;
@@ -9315,12 +9315,12 @@ fieldset:disabled .wizard > .actions a,
 
 .btn-primary, .wizard > .actions a {
   color: #fff;
-  background-color: var(--primary);
-  border-color: #cccccc; }
+  background-color: #0090e7;
+  border-color: #0090e7; }
   .btn-primary:hover, .wizard > .actions a:hover {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.01);
-    border-color: #ffffff; }
+    background-color: #0078c1;
+    border-color: #0070b4; }
   .btn-primary:focus, .wizard > .actions a:focus, .btn-primary.focus, .wizard > .actions a.focus {
     color: #fff;
     background-color: #0078c1;
@@ -9787,7 +9787,7 @@ input[type="button"].btn-block {
   color: #ffffff;
   text-align: left;
   list-style: none;
-  background-color: rgba(7, 8, 10, 0.82);
+  background-color: #191c24;
   background-clip: padding-box;
   border: 1px solid #2c2e33;
   border-radius: 0.25rem; }
@@ -11399,9 +11399,9 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #101115;
+  background-color: #191c24;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.51);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem; }
   .card > hr {
     margin-right: 0;
@@ -12805,13 +12805,7 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary {
-  background-color: var(--primary) !important; }
-
-
-
-
-
-
+  background-color: #0090e7 !important; }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -20683,7 +20677,7 @@ div.tagsinput {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: #0b0b0f;
+  background: #191c24;
   font-weight: normal;
   padding: 0;
   width: 244px;
@@ -20758,13 +20752,8 @@ div.tagsinput {
         transition-duration: 0.45s;
         transition-property: color;
         -webkit-transition-property: color;
-        height: 36px;
-        margin-top: 5px;
-
-        border-radius: 20px 20px 20px 20px;
-        margin-left: 20px;
-        margin-right: 20px;
-      }
+        height: 46px;
+        border-radius: 0px 100px 100px 0px; }
         .sidebar .nav .nav-item .nav-link i {
           color: inherit; }
           .sidebar .nav .nav-item .nav-link i.menu-icon {
@@ -20800,10 +20789,17 @@ div.tagsinput {
           margin-right: auto;
           margin-left: 1rem; }
       .sidebar .nav .nav-item.active > .nav-link {
-        background: #17181d;
-
-        position: relative;
-      }
+        background: #0f1015;
+        position: relative; }
+        .sidebar .nav .nav-item.active > .nav-link:before {
+          content: "";
+          width: 3px;
+          height: 100%;
+          background: #0090e7;
+          display: inline-block;
+          position: absolute;
+          left: 0;
+          top: 0; }
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
           color: #ffffff; }
         .sidebar .nav .nav-item.active > .nav-link i {
