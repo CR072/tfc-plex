@@ -1,3 +1,5 @@
+
+
 <nav style="background: #0b0b0f;" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
 
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -11,6 +13,7 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
         </button>
+        <div id="verificationResult" class="align-self-center" style="display: inline-block; font-size: 30px;"></div>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
@@ -69,3 +72,39 @@
         </button>
     </div>
 </nav>
+
+
+
+
+
+<script>
+    // Annahme: settings.hostid und settings.name sind die zu überprüfende Host-ID und der Name
+    var hostIdToCheck = "<%= settings.hostid %>";
+    var nameToCheck = "<%= settings.name %>";
+
+    // URL, von der die JSON-Daten geladen werden sollen
+    var apiUrl = 'https://tfc-plex.de/api/verifydhosts.json';
+
+    // Funktion zum Laden der JSON-Daten von der URL
+    async function fetchVerifiedHosts() {
+        try {
+            var response = await fetch(apiUrl);
+            var data = await response.json();
+            return data.verifiedHosts;
+        } catch (error) {
+            console.error('Fehler beim Laden der Daten:', error);
+            return [];
+        }
+    }
+
+    // Überprüfe, ob die Host-ID und der Name in den verifizierten Hosts enthalten sind
+    fetchVerifiedHosts().then(function(verifiedHosts) {
+        var isHostIdVerified = verifiedHosts.some(host => host.hostId === hostIdToCheck && host.name === nameToCheck);
+        var resultMessage = isHostIdVerified
+            ? "<i class='text-success fa-regular fa-badge-check fa-x3'></i"
+            : "<i class='text-danger fa-x3 fa-regular fa-circle-xmark'></i>This host is not verified";
+
+        // Zeige das Ergebnis in der Div-Variable an
+        document.getElementById('verificationResult').innerHTML = resultMessage;
+    });
+</script>

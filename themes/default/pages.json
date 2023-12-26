@@ -60,7 +60,8 @@
         "credits": "credits.ejs",
         "lv": "lv.ejs",
         "shop": "buycoins.ejs",
-        "tos": "tos.ejs"
+        "tos": "tos.ejs",
+        "admin/reghost": "admin-verify.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",
@@ -73,7 +74,9 @@
         "/coins",
         "/lv",
         "/shop",
-        "/earn"
+        "/earn",
+        "/redeem",
+        "/servers"
     ],
     "mustbeadmin": [
         "/admin",

@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
@@ -7,7 +7,7 @@
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
   "background": "",
-
+  "hostid": "",
 
   "claiming": {
     "enabled": false,

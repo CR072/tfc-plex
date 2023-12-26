@@ -59,7 +59,7 @@
                                             <i class="mdi mdi-dots-horizontal"></i>
                                         </button>
                                         <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
-                                            <a class="dropdown-item text-white" href="/servers/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
+                                            <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
                                             <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
                                             <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
                                         </div>
@@ -99,6 +99,7 @@
                 <% } %>
           </div>
           </div>
+
           <%- include('./components/footer') %>
         </div>
       </div>
