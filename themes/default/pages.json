@@ -61,7 +61,8 @@
         "lv": "lv.ejs",
         "shop": "buycoins.ejs",
         "tos": "tos.ejs",
-        "admin/reghost": "admin-verify.ejs"
+        "admin/reghost": "admin-verify.ejs",
+        "s/send": "social/send.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",

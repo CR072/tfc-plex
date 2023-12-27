@@ -1,6 +1,6 @@
 {
   "name": "TFC",
-  "version": "1.2",
+  "version": "1.3.0",
   "description": "Pterodactyl client area.",
   "main": "index.js",
   "author": "Privt00",

@@ -1,0 +1,35 @@
+<!-- views/inbox.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox</title>
+</head>
+<body>
+<h1>Inbox</h1>
+
+<ul id="inboxList"></ul>
+
+<script>
+    // Lade die JSON-Daten über JavaScript
+    fetch('/api/inbox')
+        .then(response => response.json())
+        .then(data => {
+            const inboxList = document.getElementById('inboxList');
+
+            // Iteriere durch die Nachrichten und füge sie der Liste hinzu
+            data.messages.forEach(message => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                        <strong>From:</strong> ${message.fromUser}<br>
+                        <strong>Content:</strong> ${message.content}
+                    `;
+                inboxList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error fetching inbox data:', error));
+</script>
+</body>
+</html>

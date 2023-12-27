@@ -30,6 +30,8 @@
     <% if (settings.api.arcio.enabled == true) { %>
         <script async src="https://arc.io/widget.min.js#<%= settings.api.arcio.widgetid %>"></script>
     <% } %>
+
+    <%- include('loading.ejs') %>
 </head>
 <style>
     body{
@@ -58,3 +60,34 @@
 <div class="nanobar my-class" id="my-id" style="position: fixed;">
     <div class="bar"></div>
 </div>
+<script>
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            // Wenn das Tab gewechselt wurde
+            document.title = document.title + ' - Idle';
+        } else {
+            // Wenn der Benutzer zum Tab zurückkehrt
+            document.title = '<%= settings.name %>';
+        }
+    });
+</script>
+
+
+
+
+<script>var btn = $('#button');
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '100');
+    });
+
+</script>

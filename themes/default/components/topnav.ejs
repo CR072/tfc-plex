@@ -1,6 +1,6 @@
 
 
-<nav style="background: #0b0b0f;" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
+<nav style="background: #0b0b0f; z-index: 1" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
 
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
 
@@ -9,18 +9,35 @@
 
 
     <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
         </button>
         <div id="verificationResult" class="align-self-center" style="display: inline-block; font-size: 30px;"></div>
+
+
+
+
+
+
+
         <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="inboxDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-inbox"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" style="margin-top: 100px" aria-labelledby="inboxDropdown">
+                    <!-- Hier werden die Inbox-Nachrichten dynamisch eingefügt -->
+                    <div id="inboxMessages"></div>
+                </div>
+            </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                     <div class="navbar-profile">
+                        <p class="mb-0 mr-2 d-none d-sm-block navbar-profile-name"><%= userinfo.username %></p>
                         <img class="img-xs rounded-circle" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" alt="">
-                        <p class="mb-0 d-none d-sm-block navbar-profile-name"><%= userinfo.username %>#<%= req.session.userinfo.discriminator %></p>
-                        <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+
+
                     </div>
                 </a>
                 <div style="background: rgba(0, 0, 0, 0.91);; padding: 15px; border-radius: 16px;" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
@@ -72,6 +89,40 @@
         </button>
     </div>
 </nav>
+
+
+<script>
+    // Lade die JSON-Daten über JavaScript
+    fetch('/api/inbox')
+        .then(response => response.json())
+        .then(data => {
+            const inboxMessages = document.getElementById('inboxMessages');
+            const userId = "<%= pterodactyl.username %>"; // Die ID des eingeloggten Benutzers
+
+            // Überprüfe, ob Nachrichten vorhanden sind
+            if (data.messages.length === 0) {
+                const noNewInboxes = document.createElement('div');
+                noNewInboxes.classList.add('dropdown-item', 'text-muted');
+                noNewInboxes.textContent = 'No new inboxes';
+                inboxMessages.appendChild(noNewInboxes);
+            } else {
+                // Iteriere durch die Nachrichten und füge sie dem Dropdown-Menü hinzu
+                data.messages.forEach(message => {
+                    // Überprüfe, ob die Nachricht für den eingeloggten Benutzer bestimmt ist
+                    if (message.toUserId === userId) {
+                        const messageItem = document.createElement('div');
+                        messageItem.classList.add('dropdown-item');
+                        messageItem.innerHTML = `
+                            <strong>From:</strong> ${message.fromUser}<br>
+                            <strong>Content:</strong> ${message.content}
+                        `;
+                        inboxMessages.appendChild(messageItem);
+                    }
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching inbox data:', error));
+</script>
 
 
 
