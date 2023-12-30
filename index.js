@@ -127,7 +127,6 @@ require('express-ws')(app);
 const ejs = require("ejs");
 const session = require("express-session");
 const indexjs = require("./index.js");
-const antiVM = require("./sec/antipterovm");
 
 console.log(chalk.white("+ | ✅ "));
 
@@ -167,7 +166,7 @@ const listener = app.listen(settings.website.port, function () {
     console.log(chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
     console.log(chalk.whiteBright("TFC-Plex V" + settings.version + " is online at " + settings.api.client.oauth2.link + " "));
     console.log(chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
-    const antiVM = require("./sec/antipteroVM.js");
+    const antiVM = require("./sec/antipterovm.js");
     antiVM.load(app, db);
 });
 
