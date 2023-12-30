@@ -8,12 +8,22 @@
         <%- include('./components/topnav') %>
         <div style="background-color: #111319" class="main-panel">
           <div style="background-color: #111319" class="content-wrapper">
-           <h2>Join for Rewards</h2>
-           <p class="text-gray">Join discord servers and get extra credits.</p>
+
+
+
+              <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card" style="height: 100px;">
+                      <div class="card-body">
+                          <h3>Join for Rewards</h3>
+                          <p class="text-muted">Join discord servers and get extra credits.</p>
+                      </div>
+                  </div>
+              </div>
+
             <div class="row">
               <% for (let i = 0, len = settings.api.client.j4r.ads.length; i < len; i++) { %>
                 <div class="col-md-6 grid-margin stretch-card">
-                  <div class="card">
+                  <div class="card ml-3">
                     <div class="card-body">
                       <h4 class="card-title"><%= settings.api.client.j4r.ads[i].name %></h4>
                       <p class="card-description"> Join this server to receive: <br> <%= settings.api.client.j4r.ads[i].coins %> Coins </p>
@@ -24,6 +34,7 @@
                   </div>
                 </div>
               <% } %>
+
             </div>
           </div>
           <%- include('./components/footer') %>

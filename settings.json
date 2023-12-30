@@ -1,40 +1,52 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
-  "motd": "best hosting ever!",
+  "motd": "Change me in settings.json",
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
   "background": "",
+  "banner": "",
   "hostid": "100",
-
   "claiming": {
-    "enabled": true,
+    "enabled": false,
     "coinsPerClaim": 20
   },
+  "website": {
+    "port": 2000,
+    "secret": "Defaultdfasfdsf"
+  },
+  "pterodactyl": {
+    "domain": "",
+    "key": "ptla_",
+    "account_key": "ptlc_"
+  },
 
+  "anti_pteroVM": {
+    "enabled": false,
+    "level": "low",
+    "time": 10,
+    "_comment": "low, medium, high, strict"
+  },
 
   "cloudflare": {
     "domain": "",
-    "email": "",
+    "email": "@gmail.com",
     "api_key": "",
     "zone_id": "",
     "account_id": ""
   },
 
 
-  "website": {
-    "port": 2000,
-    "secret": "(Change this)"
+  "purge": {
+    "enabled": false,
+    "keyword": "keyword"
   },
-  "pterodactyl": {
-    "domain": "",
-    "key": ""
-  },
+
   "linkvertise": {
-    "userid": "963062 ",
-    "coins": 10
+    "userid": "963062",
+    "coins": 15
   },
   "database": "sqlite://database.sqlite",
   "api": {
@@ -135,7 +147,7 @@
         }
       },
       "eggs": {
-       "paper": {
+        "paper": {
           "display": "Minecraft Java | Paper/Spigot",
           "minimum": {
             "ram": 24,
@@ -351,5 +363,3 @@
   }
 
 }
-
-

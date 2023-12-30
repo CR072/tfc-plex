@@ -54,19 +54,37 @@
                         <div class="form-group">
                             <label for="exampleInputUsername1">Password</label>
                             <div class="input-group">
-                                <input style="border-radius: 15px; color: white;" type="text" class="form-control" value="<%= req.session.password %>" placeholder="*******************" disabled>
+                                <input id="passwordInput" style="border-radius: 15px; color: white;" type="text" class="form-control" value="<%= req.session.password %>" placeholder="*******************">
                                 <div class="input-group-append">
-                                    <a href="/regen" class="mt-2 ml-3">  <i class="fa-solid fa-eye"></i> </a>
+                                    <a href="/regen" class="mt-2 ml-3" id="regenLink">  <i class="fa-solid fa-eye"></i> </a>
                                 </div>
                             </div>
                         </div>
-<hr>
+                        <hr>
 
                     </form>
                   </div>
                 </div>
 
 
+                  <script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                          const passwordInput = document.getElementById('passwordInput');
+                          const regenLink = document.getElementById('regenLink');
+
+                          passwordInput.addEventListener('keydown', function(event) {
+                              if (event.key === 'Enter') {
+                                  const newPassword = passwordInput.value;
+                                  window.location.href = '/regen?pass=' + newPassword;
+                              }
+                          });
+
+                          regenLink.addEventListener('click', function() {
+                              const newPassword = passwordInput.value;
+                              window.location.href = '/regen?pass=' + newPassword;
+                          });
+                      });
+                  </script>
 
             </div>
 

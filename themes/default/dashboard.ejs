@@ -23,7 +23,7 @@
                 </div>
 
 
-
+                <div id="claimLink" style="display: none;">
                 <div class="row justify-content-center align-items-center">
 
                     <div class="col-md-12 grid-margin stretch-card">
@@ -33,8 +33,8 @@
                                     <div class="col-1">
                                         <i class="fa-solid fa-coin fa-2x text-warning"></i>
                                     </div>
-                                    <div class="box">
-                                        <h3>Claimed your Dayli Coins?</h3>
+                                    <div class="box ml-3">
+                                        <h3 class="h3-mobile">Claimed your Daily Coins?</h3>
                                         <p class="text-muted"><a href="/claim">Claim Your Coins now</a></p>
                                     </div>
                                     <div class="col-10">
@@ -43,9 +43,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+
+                </div>
+
 
                 <%- include('./components/alert') %>
 
@@ -150,3 +152,15 @@
 <%- include('./components/scripts') %>
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Überprüfe, ob das Claiming in den Einstellungen aktiviert ist
+        if (<%= settings.claiming.enabled %>) {
+            // Wenn aktiviert, zeige den Claim-Link an
+            document.getElementById("claimLink").style.display = "block";
+        } else {
+            // Wenn deaktiviert, verstecke den Claim-Link
+            document.getElementById("claimLink").style.display = "none";
+        }
+    });
+</script>

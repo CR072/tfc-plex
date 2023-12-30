@@ -62,7 +62,9 @@
         "shop": "buycoins.ejs",
         "tos": "tos.ejs",
         "admin/reghost": "admin-verify.ejs",
-        "s/send": "social/send.ejs"
+        "s/send": "social/send.ejs",
+        "sub": "sub.ejs"
+
     },
     "mustbeloggedin": [
         "/dashboard",
@@ -77,7 +79,12 @@
         "/shop",
         "/earn",
         "/redeem",
-        "/servers"
+        "/servers",
+        "/sub",
+        "/s/send",
+        "/tos",
+        "/shop"
+
     ],
     "mustbeadmin": [
         "/admin",
@@ -85,7 +92,8 @@
         "/admin/resources",
         "/admin/coupons",
         "/admin/user",
-        "/admin/coins"
+        "/admin/coins",
+        "/admin/reghost"
     ],
     "variables": {
         "home": {
