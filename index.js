@@ -7,7 +7,7 @@ const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
-const arciotext = require('./stuff/arciotext')
+const arciotext = require('./sec/arciotext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -385,4 +385,11 @@ function getCookie(req, cname) {
 console.log(chalk.white("+ | ✅ "));
 
 
+// Load the addons files.
 
+let addons = fs.readdirSync('./addons').filter(file => file.endsWith('.js'));
+
+addons.forEach(file => {
+    let addons = require(`./addons/${file}`);
+    addons.load(app, db);
+});

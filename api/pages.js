@@ -3,7 +3,7 @@ const ejs = require("ejs");
 const express = require("express");
 const settings = require("../settings.json");
 const fetch = require('node-fetch');
-const arciotext = require('../stuff/arciotext')
+const arciotext = require('../sec/arciotext')
 
 module.exports.load = async function(app, db) {
   app.all("/", async (req, res) => {

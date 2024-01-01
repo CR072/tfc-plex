@@ -6,6 +6,7 @@ const fs = require("fs");
 const getPteroUser = require('../misc/getPteroUser')
 const Queue = require('../managers/Queue')
 const log = require('../misc/log')
+const axios = require('axios');
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
@@ -358,6 +359,217 @@ module.exports.load = async function (app, db) {
     }
   });
 
+
+
+
+
+
+
+  // control Feature
+
+
+
+  const PTERO_API_URL = settings.pterodactyl.domain;
+
+  app.get('/control', async (req, res) => {
+    const serverId = req.query.id;
+    const action = req.query.action;
+
+    if (!serverId || !action) {
+      return res.status(400).send('Ungültige Anfrage. Stelle sicher, dass du "id" und "action" in der URL angibst.');
+    }
+
+    try {
+      // Hier musst du deine Pterodactyl API-Zugangsdaten angeben
+      const apiKey = settings.pterodactyl.account_key; // Ersetze dies durch deinen Pterodactyl API-Schlüssel
+      const apiUrl = `${PTERO_API_URL}/api/client/servers/${serverId}/power`;
+
+      // Verwende die entsprechende Aktion für die Pterodactyl API
+      const apiAction = action === 'start' ? 'start' : 'stop';
+
+      const response = await axios.post(apiUrl, {
+        signal: apiAction,
+      }, {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      res.send(`Server ${serverId} ${apiAction === 'start' ? 'gestartet' : 'gestoppt'}.`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Interner Serverfehler.');
+    }
+  });
+
+
+
+
+
+
+
+
+
+  const { pterosocket } = require('pterosocket');
+  const express = require('express');
+  app.use(express.json());
+
+  app.get('/wss', (req, res) => {
+    const server_idnum = req.query.id; // Extrahiere die Server-ID aus der Query-Parameter
+
+    if (!server_idnum) {
+      return res.status(400).send('Server-ID fehlt in der Anfrage.');
+    }
+
+    const origintzui = settings.pterodactyl.domain;
+    const apppkey = settings.pterodactyl.account_key;
+
+    const socket = new pterosocket(origintzui, apppkey, server_idnum);
+
+    socket.on("start", () => {
+
+    });
+
+    let responseSent = false;
+
+    const consoleOutputHandler = (output) => {
+      if (!responseSent) {
+        res.send(output);
+        responseSent = true;
+      }
+    };
+
+    socket.once('console_output', consoleOutputHandler);
+
+    setTimeout(() => {
+      if (!responseSent) {
+        res.send('Keine Konsolenausgabe erhalten.');
+        responseSent = true;
+      }
+    }, 5000);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  app.get("/api/info", async (req, res) => {
+    // Check if the user is logged in
+    if (!req.session.pterodactyl) {
+      return res.json({ error: true, message: "You must be logged in." });
+    }
+
+    try {
+      // Fetch information about nodes
+      const nodesResponse = await fetch(`${settings.pterodactyl.domain}/api/application/nodes`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${settings.pterodactyl.key}`,
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!nodesResponse.ok) {
+        throw new Error(`Failed to fetch node information from Pterodactyl API. Status: ${nodesResponse.statusText}`);
+      }
+
+      const nodesData = await nodesResponse.json();
+
+      // Extract relevant information about nodes
+      const nodesInfo = nodesData.data.map(node => {
+        const resources = node.attributes || {};
+        const usage = node.attributes.allocated_resources || {};
+
+        return {
+          name: node.attributes.name,
+          ram: {
+            used: usage.memory || 0,
+            free: resources.memory ? resources.memory - usage.memory : 0,
+            total: resources.memory || 0,
+          },
+          disk: {
+            used: usage.disk || 0,
+            free: resources.disk_bytes ? resources.disk_bytes - usage.disk : 0,
+            total: resources.disk || 0,
+          },
+        };
+      });
+
+      // Render the EJS template with the fetched information
+      res.json({ nodes: nodesInfo });
+    } catch (error) {
+      console.error("Error fetching information:", error);
+      return res.json({ error: true, message: "An error occurred while fetching information." });
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // ... (your existing code)
+
+  const pterodactylAPI = `${settings.pterodactyl.domain}/api/application/users`;
+
+  app.get("/api/info/user", async (req, res) => {
+    if (!req.session.pterodactyl) {
+      return res.json({ error: true, message: "You must be logged in." });
+    }
+
+    try {
+      const response = await fetch(pterodactylAPI, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${settings.pterodactyl.key}`,
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user information from Pterodactyl API. Status: ${response.statusText}`);
+      }
+
+      const userData = await response.json();
+      const numberOfUsers = userData.meta.pagination.total;
+
+      return res.json({ numberOfUsers });
+    } catch (error) {
+      console.error("Error fetching user information:", error);
+      return res.json({ error: true, message: "An error occurred while fetching user information." });
+    }
+  });
+
+// ... (continue with the rest of your code)
+
+
+
+
+
+
   app.get("/forcedelete", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
@@ -402,3 +614,6 @@ module.exports.load = async function (app, db) {
     return res.json({ created: createdServer ?? false, cost: settings.renewals.cost })
   })
 };
+
+
+

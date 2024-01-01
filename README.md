@@ -47,7 +47,6 @@ Store (v1.0):
 
 ## 📝 Authors
 - [**Privt**](https://github.com/privt00)
-- [**Catspin**]
 
 
 ---
@@ -56,6 +55,6 @@ Store (v1.0):
 
 |Date|Version|Short Description|Long Description|
 |---|---|---|---|
-|2023/12/24|v1.4|4 reales||
+|2023/12/24|v1.0|First Release||
 
 © 2023-2024 TFC-Plex by privt00

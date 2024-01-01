@@ -1,5 +1,5 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <div style="background: #0b0b0f;" class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+    <div style="background: #0b0b0fbf;" class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
       <img src="<%= settings.icon %>" style="margin-left: 20px" width="64px" alt=" ">
         <a style="color: white" class="sidebar-brand brand-logo" href="/dashboard">
             <%= settings.name %>
@@ -46,18 +46,28 @@
         </a>
       </li>-->
 
+
+
         <li class="nav-item menu-items">
-            <a class="nav-link" href="../lv">
-                <span class="menu-title"><i class="fa-regular fa-coins"></i> Linkvertise</span>
+            <a class="nav-link" data-toggle="collapse" href="#joinForRewards" aria-expanded="false" aria-controls="joinForRewards">
+                <span class="menu-title"><i class="fa-regular fa-coins"></i> Earn</span>
             </a>
+            <div class="collapse" id="joinForRewards">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item menu-items">
+                        <a class="nav-link" href="../lv">
+                            <span class="menu-title"><i class="fa-regular fa-coins"></i> Linkvertise</span>
+                        </a>
+                    </li>
+                    <li class="nav-item menu-items">
+                        <a class="nav-link" href="../j4r">
+                            <span class="menu-title"><i class="fa-regular fa-arrow-right-arrow-left"></i> Join for Rewards</span>
+                        </a>
+                </ul>
+            </div>
         </li>
 
 
-
-  <li class="nav-item menu-items">
-            <a class="nav-link" href="../j4r">
-                <span class="menu-title"><i class="fa-regular fa-arrow-right-arrow-left"></i> Join for Rewards</span>
-            </a>
 
       <li class="nav-item menu-items">
         <a class="nav-link" href="../gift">

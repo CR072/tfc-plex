@@ -24,7 +24,9 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "nodemon": "^2.0.15",
+    "path": "^0.12.7",
     "paypal-rest-sdk": "^1.8.1",
+    "pterosocket": "^1.0.6",
     "textflow.js": "^0.1.4",
     "warn": "^1.0.1"
   },

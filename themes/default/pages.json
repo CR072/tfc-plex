@@ -63,7 +63,8 @@
         "tos": "tos.ejs",
         "admin/reghost": "admin-verify.ejs",
         "s/send": "social/send.ejs",
-        "sub": "sub.ejs"
+        "sub": "sub.ejs",
+        "m": "moreinfos.ejs"
 
     },
     "mustbeloggedin": [
