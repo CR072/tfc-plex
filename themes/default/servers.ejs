@@ -84,8 +84,8 @@
                                     <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
 
                                     <h5 style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
-                                    <a href="http://localhost:2000/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=start" class="btn btn-primary bg-success">Start</a>
-                                    <a href="http://localhost:2000/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=stop" class="btn btn-primary bg-danger">Stop</a>
+                                    <a href="/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=start" class="btn btn-primary bg-success">Start</a>
+                                    <a href="/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=stop" class="btn btn-primary bg-danger">Stop</a>
 
                     <div class="row mt-4">
                                     <div class="card mr-3 mb-3" style="background: #17181b">
