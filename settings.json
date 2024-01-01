@@ -1,12 +1,12 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
   "motd": "Change me in settings.json",
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
-  "background": "",
+  "background": "https://cdn.discordapp.com/attachments/1149031791928283229/1191099536643461312/image.png?ex=65a434e3&amp;is=6591bfe3&amp;hm=f350743588833c1f6793248c509213bb36d3e954ec295f5a0ac75023f0c1d106&amp;",
   "banner": "",
   "hostid": "100",
   "claiming": {
