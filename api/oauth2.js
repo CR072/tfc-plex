@@ -176,7 +176,7 @@ nanobar.go(100);
               },
               null,
               (err, str) => {
-                if (err) return res.send('Another account on your IP has been detected, there can only be one account per IP. Think this is a mistake? <a href="https://discord.gg/halexnodes" target="_blank">Join our discord.</a>')
+                if (err) return res.send('Another account on your IP has been detected, there can only be one account per IP. Think this is a mistake? <a href="https://discord.com/invite/BXmzHS9DRA" target="_blank">Join our discord.</a>')
                 res.status(200);
                 res.send(str);
               }
