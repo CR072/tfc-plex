@@ -5,12 +5,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
   <body>
-    <div style="" class="container-scroller">
+    <div  class="container-scroller">
       <%- include('./components/sidebar') %>
-      <div style="" class="container-fluid page-body-wrapper">
+      <div  class="container-fluid page-body-wrapper">
         <%- include('./components/topnav') %>
-        <div style="" class="main-panel">
-          <div style="" class="content-wrapper">
+        <div  class="main-panel">
+          <div  class="content-wrapper">
             <%- include('./components/alert') %>
               <div class="row justify-content-center">
                   <div class="col-md-12 grid-margin stretch-card">
@@ -85,7 +85,10 @@
                                     <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
 
                                     <h5 style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
+
                                     <a href="javascript:void(0);" onclick="openPopup('../control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=start')" class="btn btn-primary bg-success">Start</a>
+
+
 
 <a href="javascript:void(0);" onclick="openPopup('../control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=stop')" class="btn btn-primary bg-danger">Stop</a>
 
