@@ -77,6 +77,7 @@ nanobar.go(100);
   app.get(`/submitlogin`, async (req, res) => {
     let customredirect = req.session.redirect;
     delete req.session.redirect;
+
     if (!req.query.code) return res.send("Missing code.")
 
     const newsettings = require('../settings.json');
@@ -98,6 +99,8 @@ nanobar.go(100);
     );
     if (json.ok == true) {
       let codeinfo = JSON.parse(await json.text());
+      
+
       let scopes = codeinfo.scope;
       let missingscopes = [];
 
@@ -116,6 +119,11 @@ nanobar.go(100);
         }
       );
       let userinfo = JSON.parse(await userjson.text());
+
+
+      if (settings.blacklist.status) {
+        if (settings.blacklist.users.includes(userinfo.id)) return res.send('Your Baned from this host')
+      }
 
       if (settings.whitelist.status) {
         if (!settings.whitelist.users.includes(userinfo.id)) return res.send('Service is under maintenance.')

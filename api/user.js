@@ -1,150 +1,139 @@
-const fetch = require("node-fetch");
-const indexjs = require("../index.js");
-const ejs = require("ejs");
+const settings = require("../settings");
+const fetch = require('node-fetch');
+const express = require('express');
+const app = express();
 
+// Middleware zur Überprüfung, ob der Benutzer ein Administrator ist
+const isAdminMiddleware = (req, res, next) => {
+  // Überprüfen Sie, ob der Benutzer ein Administrator ist
+  // Hier können Sie Ihre eigene Logik implementieren, um den Administratorstatus zu überprüfen
+  // In Ihrem Beispiel verwenden Sie req.session.pterodactyl.root_admin, um den Administratorstatus zu überprüfen
+
+  if (req.session.pterodactyl && req.session.pterodactyl.root_admin === true) {
+    // Der Benutzer ist ein Administrator, fahren Sie fort
+    next();
+  } else {
+    // Der Benutzer ist kein Administrator, leiten Sie ihn um oder senden Sie eine Fehlermeldung
+    res.status(403).json({ error: 'Permission denied' });
+  }
+};
 
 module.exports.load = async function (app, db) {
-    app.post("/admin/users/remove", async (req, res) => {
-        try {
-            let theme = indexjs.get(req);
-            if (!req.session.pterodactyl)
-                return res.json({ success: false, message: alerts.MISSINGUSER, redirect: "login" });
-            let cacheaccount = await fetch(
-                settings.pterodactyl.domain +
-                "/api/application/users/" +
-                req.session.pterodactyl.id +
-                "?include=servers",
-                {
-                    method: "get",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${settings.pterodactyl.key}`,
-                    },
-                }
-            );
-            if ((await cacheaccount.statusText) == "Not Found")
-                return res.json({ success: false, message: alerts.MISSINGUSER, redirect: "login" });
-            let cacheaccountinfo = JSON.parse(await cacheaccount.text());
-            req.session.pterodactyl = cacheaccountinfo.attributes;
-            if (cacheaccountinfo.attributes.root_admin !== true)
-                return res.json({ success: false, message: alerts.MISSINGUSER, redirect: "login" });
-            if (!req.body.user)
-                return res.json({ success: false, message: alerts.MISSINGUSER });
-            let user = req.body.user;
-            if (!await db.get("userinfo-" + user))
-                return res.json({ success: false, message: alerts.INVALIDUSER });
+  // Fügen Sie die isAdminMiddleware direkt vor die spezifische Route hinzu
+  app.get("/api/user", isAdminMiddleware, async (req, res) => {
+    try {
+      let allUsers = [];
 
-            let pteroid = await db.get("users-" + user);
-            const delUserSrvs = await fetch(
-                `${settings.pterodactyl.domain}/api/application/users/${pteroid}?include=servers`,
-                {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${settings.pterodactyl.key}`,
-                    },
-                }
-            );
-            if (delUserSrvs.status == 200) {
-                const serverData = await delUserSrvs.json();
-                if (serverData.attributes.relationships.servers.data.length > 0) {
-                    for (const server of serverData.attributes.relationships.servers.data) {
-                        await deleteServer(server.attributes.id);
-                    }
-                }
-            } else {
-                console.error(
-                    `Failed to fetch server data. Status code: ${delUserSrvs.status}`
-                );
-            }
-            async function deleteServer(serverId) {
-                try {
-                    const delUserSrv = await fetch(
-                        `${settings.pterodactyl.domain}/api/application/servers/${serverId}`,
-                        {
-                            method: "DELETE",
-                            headers: {
-                                Authorization: `Bearer ${settings.pterodactyl.key}`,
-                            },
-                        }
-                    );
-                    console.log(await delUserSrv.json())
-                    if (delUserSrv.status === 204) {
-                        console.log(
-                            `Successfully deleted the server: ${serverId}. That belongs to ${pteroid}`
-                        );
-                    } else {
-                        console.error(
-                            `Failed to delete server ${serverId}. That belongs to ${pteroid}. Status code: ${delUserSrv.status}`
-                        );
-                    }
-                } catch (error) {
-                    console.error(
-                        `Error while deleting server ${serverId}. That belongs to ${pteroid}: ${error}`
-                    );
-                }
-            }
-            const delUserRes = await fetch(
-                `${settings.pterodactyl.domain}/api/application/users/${pteroid}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${settings.pterodactyl.key}`,
-                    },
-                }
-            );
-            try {
-                let selected_ip = await db.get("ip-" + user);
-                let userinfo = await db.get("userinfo-" + user);
+      let page = 1;
+      let totalPages = 1; // Annahme: mindestens eine Seite vorhanden
 
-                if (selected_ip) {
-                    let allips = (await db.get("ips")) || [];
-                    allips = allips.filter((ip) => ip !== selected_ip);
-                    if (allips.length == 0) {
-                        await db.delete("ips");
-                    } else {
-                        await db.set("ips", allips);
-                    }
-                    await db.delete("ip-" + user);
-                }
+      while (page <= totalPages) {
+        const response = await fetch(`${settings.pterodactyl.domain}/api/application/users?page=${page}`, {
+          method: "GET",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${settings.pterodactyl.key}`
+          }
+        });
 
-                let userids = (await db.get("users")) || [];
-                userids = userids.filter((user) => user !== pteroid);
-                if (userids.length == 0) {
-                    await db.delete("users");
-                } else {
-                    await db.set("users", userids);
-                }
-
-                await db.delete("users-" + user);
-                await db.delete("users-" + userinfo.email);
-                await db.delete("users-" + userinfo.id);
-                await db.delete("onboarding-" + user);
-                await db.delete("userinfo-" + user);
-                await db.delete("password-" + user);
-                await db.delete("j4rs-" + userinfo.id);
-                await db.delete("ip-" + userinfo.id);
-                await db.delete("coins-" + user);
-                await db.delete("extra-" + user);
-                await db.delete("package-" + user);
-                await db.delete("createdserver-" + user);
-
-
-
-                return res.json({ success: true, message: "Success!" });
-            } catch (error) {
-                console.error(
-                    `Failed to delete user with ID ${pteroid}:`,
-                    delUserRes.statusText
-                );
-
-                return res.json({ success: false, message: `Failed to delete user ${pteroid}. ${delUserRes.statusText}` });
-            }
-        } catch (error) {
-            return res.json({ success: false, message: "An error occurred", error });
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          throw new Error(`Failed to fetch users: ${response.status} ${response.statusText} - ${errorMessage}`);
         }
-    });
-}
+
+        const json = await response.json();
+        const usersOnPage = json.data.map(user => ({
+          id: user.attributes.id,
+          username: user.attributes.username,
+          firstName: user.attributes.first_name,
+          lastName: user.attributes.last_name,
+          email: user.attributes.email,
+          // Weitere Daten nach Bedarf hinzufügen
+        }));
+
+        allUsers = allUsers.concat(usersOnPage);
+        totalPages = json.meta.pagination.total_pages;
+
+        page++;
+      }
+
+      res.json({ users: allUsers });
+    } catch (error) {
+      console.error(`Error while fetching users: ${error}`);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+
+  
+  app.delete("/api/user/delete/:id", isAdminMiddleware, async (req, res) => {
+    try {
+      const userId = req.params.id;
+
+      const response = await fetch(`${settings.pterodactyl.domain}/api/application/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${settings.pterodactyl.key}`
+        }
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error(`Failed to delete user: ${response.status} ${response.statusText} - ${errorMessage}`);
+        return res.status(response.status).json({ error: "Failed to delete user" });
+      }
+
+      res.json({ success: true, message: "User deleted successfully" });
+    } catch (error) {
+      console.error(`Error while deleting user: ${error}`);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+  app.get("/api/user/search", isAdminMiddleware, async (req, res) => {
+    try {
+      const searchTerm = req.query.term.toLowerCase();
+  
+      const response = await fetch(`${settings.pterodactyl.domain}/api/application/users`, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${settings.pterodactyl.key}`
+        }
+      });
+  
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Failed to fetch users: ${response.status} ${response.statusText} - ${errorMessage}`);
+      }
+  
+      const json = await response.json();
+      const users = json.data.map(user => ({
+        id: user.attributes.id,
+        username: user.attributes.username,
+        firstName: user.attributes.first_name,
+        lastName: user.attributes.last_name,
+        email: user.attributes.email,
+      }));
+  
+      const filteredUsers = users.filter(user =>
+        user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm)
+      );
+  
+      res.json({ users: filteredUsers });
+    } catch (error) {
+      console.error(`Error while searching users: ${error}`);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+
+  
+};

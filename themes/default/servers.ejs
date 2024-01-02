@@ -77,16 +77,31 @@
                                         <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
                                             <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
                                             <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
-                                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+                                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain.replace(/\/$/, '') %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+
                                         </div>
                                     </div>
 
                                     <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
 
                                     <h5 style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
-                                    <a href="http://localhost:2000/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=start" class="btn btn-primary bg-success">Start</a>
-                                    <a href="http://localhost:2000/control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=stop" class="btn btn-primary bg-danger">Stop</a>
+                                    <a href="javascript:void(0);" onclick="openPopup('../control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=start')" class="btn btn-primary bg-success">Start</a>
 
+<a href="javascript:void(0);" onclick="openPopup('../control?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>&action=stop')" class="btn btn-primary bg-danger">Stop</a>
+
+<script>
+    function openPopup(url) {
+      // Popup-Fenster öffnen
+      var popupWindow = window.open(url, 'Popup-Fenster', 'width=1,height=1');
+  
+      // Popup-Fenster nach 0.5 Sekunden schließen
+      setTimeout(function() {
+        if (popupWindow && !popupWindow.closed) {
+          popupWindow.close();
+        }
+      }, 200);
+    }
+  </script>
                     <div class="row mt-4">
                                     <div class="card mr-3 mb-3" style="background: #17181b">
                                         <div class="card-body">

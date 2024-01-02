@@ -64,7 +64,8 @@
         "admin/reghost": "admin-verify.ejs",
         "s/send": "social/send.ejs",
         "sub": "sub.ejs",
-        "m": "moreinfos.ejs"
+        "admin/user": "admin-user.ejs",
+        "plans": "plans.ejs"
 
     },
     "mustbeloggedin": [
@@ -84,7 +85,8 @@
         "/sub",
         "/s/send",
         "/tos",
-        "/shop"
+        "/shop",
+        "/plans"
 
     ],
     "mustbeadmin": [
@@ -94,7 +96,8 @@
         "/admin/coupons",
         "/admin/user",
         "/admin/coins",
-        "/admin/reghost"
+        "/admin/reghost",
+        "admin/user"
     ],
     "variables": {
         "home": {

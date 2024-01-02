@@ -363,25 +363,3 @@
 
 
 
-<script>
-    // Funktion zum Abrufen der HCID über einen AJAX-Aufruf
-    async function getHCID(dcid) {
-        try {
-            const response = await fetch(`/users/id/get/hcid/${dcid}`);
-            const data = await response.json();
-
-            if (data.success) {
-                document.getElementById('hcidResult').innerText = `HCID: ${data.id}`;
-            } else {
-                document.getElementById('hcidResult').innerText = `Fehler: ${data.message}`;
-            }
-        } catch (error) {
-            console.error('Ein Fehler ist aufgetreten:', error);
-            document.getElementById('hcidResult').innerText = 'Ein Fehler ist aufgetreten.';
-        }
-    }
-
-    // Beispielaufruf mit einer festen dcid (Sie können dies dynamisch entsprechend Ihrer Anwendung ändern)
-    getHCID('<%= pterodactyl.username %>');
-
-</script>

@@ -168,6 +168,7 @@ const listener = app.listen(settings.website.port, function () {
     console.log(chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
     const antiVM = require("./sec/antipterovm.js");
     antiVM.load(app, db);
+
 });
 
 
