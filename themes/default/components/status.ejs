@@ -24,7 +24,8 @@
                 <div class=" progress-bar bg-gradient-success" role="progressbar" style="width: <%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>%;" aria-valuenow="<%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>"
                      aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <h5 class="mb-0 ml-2 mt-3"><%= (cpu / (packages.cpu + extraresources.cpu) * 100).toFixed(2) %>%</h5>
+              <h5 class="mb-0 ml-2 mt-3"><%= (((packages.cpu + extraresources.cpu) === 0 || isNaN(cpu / (packages.cpu + extraresources.cpu))) ? NaN : (cpu / (packages.cpu + extraresources.cpu) * 100).toFixed(2)) %>
+                %</h5>
             </div>
           </div>
         </div>
@@ -45,7 +46,7 @@
                 <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (ram / (packages.ram + extraresources.ram)) * 100 %>%;" aria-valuenow="<%= (ram / (packages.ram + extraresources.ram)) * 100 %>"
                      aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <h5 class="mb-0 ml-2 mt-3"><%= ((ram / (packages.ram + extraresources.ram)) * 100).toFixed(2) %>%</h5>
+              <h5 class="mb-0 ml-2 mt-3"><%= (((packages.ram + extraresources.ram) === 0 || isNaN(ram / (packages.ram + extraresources.ram))) ? NaN : ((ram / (packages.ram + extraresources.ram)) * 100).toFixed(2)) %></h5>
             </div>
           </div>
         </div>
@@ -66,7 +67,8 @@
                 <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (disk / (packages.disk + extraresources.disk)) * 100 %>%;" aria-valuenow="<%= (disk / (packages.disk + extraresources.disk)) * 100 %>"
                      aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <h5 class="mb-0 ml-2 mt-3"><%= ((disk / (packages.disk + extraresources.disk)) * 100).toFixed(2) %>%</h5>
+              <h5 class="mb-0 ml-2 mt-3"><%= (((packages.disk + extraresources.disk) === 0 || isNaN(disk / (packages.disk + extraresources.disk))) ? NaN : (disk / (packages.disk + extraresources.disk) * 100).toFixed(2)) %>
+                %</h5>
             </div>
           </div>
         </div>
@@ -92,7 +94,8 @@
                   <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (servers / (packages.servers + extraresources.servers)) * 100 %>%;" aria-valuenow="<%= servers %>"
                        aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <h5 class="mb-0 ml-2 mt-3"><%= ((servers / (packages.servers + extraresources.servers)) * 100).toFixed(2) %>%</h5>
+                <h5 class="mb-0 ml-2 mt-3"><%= (((packages.servers + extraresources.servers) === 0 || isNaN(servers / (packages.servers + extraresources.servers))) ? NaN : (servers / (packages.servers + extraresources.servers) * 100).toFixed(2)) %>
+                  %</h5>
               </div>
             </div>
           </div>
