@@ -46,9 +46,7 @@ Theme Switcher (v1.5.0):
 ## 📝 Authors
 - [**Privt**](https://github.com/privt00)
 
-## Credits
 
-- [**CR072**](https://github.com/cr072)
 
 
 ---
