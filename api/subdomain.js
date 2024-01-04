@@ -2,10 +2,8 @@ const fs = require("fs");
 const indexjs = require("../index.js");
 const settings = require("../settings.json");
 const fetch = require('node-fetch');
-const cloudflareEmail = settings.cloudflare.email;
-const cloudflareAPIKey = settings.cloudflare.api_key;
-const cloudflareZoneID = settings.cloudflare.zone_id;
 
+const { email: cloudflareEmail, api_key: cloudflareAPIKey, zone_id: cloudflareZoneID } = settings.cloudflare;
 
 module.exports.load = async function (app, db) {
     app.get('/domain', async (req, res) => {
@@ -27,46 +25,45 @@ module.exports.load = async function (app, db) {
                 const domain = data.result.name;
                 res.status(200).json({ domain });
             } else {
-                console.error('Failed to fetch domain:', data.errors);
+                console.error('Oops! Something went wrong while fetching the domain:', data.errors);
                 res.status(500).json({ error: 'Failed to fetch domain' });
             }
         } catch (error) {
-            console.error('Error fetching domain:', error);
+            console.error('Oops! Something went wrong while fetching the domain:', error);
             res.status(500).json({ error: 'Failed to fetch domain' });
         }
     });
 
     app.get('/subdomains', async (req, res) => {
         try {
-            let url = `https://api.cloudflare.com/client/v4/zones/${cloudflareZoneID}/dns_records`;
-
-            let options = {
+            const url = `https://api.cloudflare.com/client/v4/zones/${cloudflareZoneID}/dns_records`;
+            const options = {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json', 'X-Auth-Email': `${cloudflareEmail}`, 'Authorization': `Bearer ${cloudflareAPIKey}`}
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Email': cloudflareEmail,
+                    'Authorization': `Bearer ${cloudflareAPIKey}`
+                }
             };
 
-            fetch(url, options)
-                .then(res => res.json())
-                .catch(err => console.error('error:' + err));
             const response = await fetch(url, options);
             const data = await response.json();
+
             if (response.ok) {
-                const domain = data.result.name;
                 res.status(200).json({ data });
             } else {
-                console.error('Failed to fetch domain:', data.errors);
-                res.status(500).json({ error: 'Failed to fetch domain' });
+                console.error('Oops! Something went wrong while fetching subdomains:', data.errors);
+                res.status(500).json({ error: 'Failed to fetch subdomains' });
             }
         } catch (error) {
-            console.error('Error fetching domain:', error);
-            res.status(500).json({ error: 'Failed to fetch domain' });
+            console.error('Oops! Something went wrong while fetching subdomains:', error);
+            res.status(500).json({ error: 'Failed to fetch subdomains' });
         }
     });
 
     app.post('/subdomain/create', async (req, res) => {
         try {
             const { subdomain, target, port } = req.body;
-
             const url = `https://api.cloudflare.com/client/v4/zones/${cloudflareZoneID}/dns_records`;
             const options = {
                 method: 'POST',
@@ -75,20 +72,18 @@ module.exports.load = async function (app, db) {
                     'X-Auth-Email': cloudflareEmail,
                     'Authorization': `Bearer ${cloudflareAPIKey}`
                 },
-                body: JSON.stringify(
-                    {
-                        "type": "SRV",
-                        "data": {
-                            "service": "_minecraft",
-                            "proto": "_tcp",
-                            "name": subdomain,
-                            "priority": 0,
-                            "weight": 0,
-                            "port": port,
-                            "target": target
-                        }
+                body: JSON.stringify({
+                    "type": "SRV",
+                    "data": {
+                        "service": "_minecraft",
+                        "proto": "_tcp",
+                        "name": subdomain,
+                        "priority": 0,
+                        "weight": 0,
+                        "port": port,
+                        "target": target
                     }
-                )
+                })
             };
 
             const response = await fetch(url, options);
@@ -96,14 +91,14 @@ module.exports.load = async function (app, db) {
 
             if (response.ok && data.success) {
                 res.status(200).json({ success: true, domain: data.result.data.name });
-                console.log(`${req.session.userinfo.username} created a subdomain: ${data.result.data.name}`)
+                console.log(`Congratulations! ${req.session.userinfo.username} has created a new subdomain: ${data.result.data.name}`);
             } else {
-                console.error('Failed to createing subdomain:', data.errors);
+                console.error('Oops! Something went wrong while creating subdomain:', data.errors);
                 res.status(500).json({ success: false, error: data.errors });
             }
         } catch (error) {
-            console.error('Error creating subdomain:', error);
-            res.status(500).json({ success: false, error: data.errors });
+            console.error('Oops! Something went wrong while creating subdomain:', error);
+            res.status(500).json({ success: false, error: 'Failed to create subdomain' });
         }
     });
-}
+};
