@@ -1,0 +1,139 @@
+<!--<div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                 
+            </div>
+        -->
+<% if (req.query.err == "ALREADY_OPEN") { %>
+    <div class="alert">
+        You can't open multiple tabs!
+    </div>
+<% } else if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+    <div class="alert">
+        You need at least <%= settings.renewals.cost %> coins to purchase a server renewal!
+    </div>
+<% } if (req.query.success === 'RENEWED') { %>
+    <div class="alert" style="background-color: green;">
+        Succesfully purchased renewal for server!
+    </div>
+<% } if (req.session.newaccount || req.session.password) { %>
+    <div style="background-color: #007fcc; border-radius: 15px" class="alert">
+        <% if (req.session.newaccount) { %>
+            Welcome! You are a first time user<br>
+        <% } %>
+        <% if (req.session.password) { %>
+            Your password has been changed to <%= req.session.password %>, however if you do not save that then you can just reset it via the "Account Settings" page
+        <% } else { %>
+            Please head over to Settings to create a password.
+        <% } %>
+    </div>
+<% } %>
+
+
+
+
+
+
+
+
+<% if (req.query.alert === 'gift') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-check fa-2x text-success"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Gift Claimed!</h3>
+                            <p class="text-muted">The gift has been successfully received! <a href="/christmas/gifts">Go To Your Gifts</a></p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>
+
+
+<% if (req.query.alert === 'gifttoosoon') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Gift Failed to Claimed!</h3>
+                            <p class="text-muted">Pls Wait Util The 20 minutes are over! <a href="/christmas/gifts">Go To Your Gifts</a></p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>
+
+
+<% if (req.query.alert === 'claimtoosoon') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Failed to Claimed!</h3>
+                            <p class="text-muted">Pls Wait Util The next Day you allready claimed you coins today <a href="/gifts">try later Again.</a></p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>
+
+
+<% if (req.query.alert === 'claim') { %>
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+                <div class="card-body">
+                    <!-- Add the content for the longer card here -->                                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-solid fa-circle-check fa-2x text-success"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Claimed Successfuly!</h3>
+                            <p class="text-muted">The Coins got successfully Claimd!</p>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<% } %>

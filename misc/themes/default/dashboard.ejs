@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/head') %>
+
+<body class="bg-theme">
+<div class="container-scroller">
+    <%- include('./components/sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div  class="main-panel">
+            <div class="content-wrapper">
+                <div class="row justify-content-center align-items-center">
+
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card" style="height: 100px;">
+                            <div class="card-body">
+                                <h3>Dashboard</h3>
+                                <p class="text-muted">View your resources & other things here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div id="claimLink" style="display: none;">
+                    <div class="row justify-content-center align-items-center">
+
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card" style="height: 100px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <i class="fa-solid fa-coin fa-2x text-warning"></i>
+                                        </div>
+                                        <div class="box ml-3">
+                                            <h3 class="h3-mobile">Claimed your Daily Coins?</h3>
+                                            <p class="text-muted"><a href="/claim">Claim Your Coins now</a></p>
+                                        </div>
+                                        <div class="col-10">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <%- include('./components/alert') %>
+
+
+                <%- include('./components/status') %>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
+                        <a href="../store" style="text-decoration: none; color: inherit;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <i class="fas fa-bolt fa-2x"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <%- include('./boxes/1') %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+
+
+
+                    <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
+                        <a href="../servers/new" style="text-decoration: none; color: inherit;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <i class="fa-solid fa-plus fa-2x"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <%- include('./boxes/2') %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card" style="height: 150px; overflow-y: scroll;">
+                            <div class="card-body">
+                                <h3>Your Servers:</h3>
+
+
+                                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                                    <p>No servers available.</p>
+                                <% } else { %>
+                                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+
+
+                                        <div class="dropdown float-right mt-2">
+                                            <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+
+                                            <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
+                                                <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
+                                                <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                                                <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
+
+
+
+                                        <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+                                            <option value="<%= name %>"><%= value.name %></option>
+                                        <% } %>
+
+
+
+                                        <hr>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('./components/footer') %>
+
+        </div>
+
+    </div>
+</div>
+<%- include('./components/scripts') %>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Überprüfe, ob das Claiming in den Einstellungen aktiviert ist
+        if (<%= settings.claiming.enabled %>) {
+            // Wenn aktiviert, zeige den Claim-Link an
+            document.getElementById("claimLink").style.display = "block";
+        } else {
+            // Wenn deaktiviert, verstecke den Claim-Link
+            document.getElementById("claimLink").style.display = "none";
+        }
+    });
+</script>

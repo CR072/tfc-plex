@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+    <body>
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <div class="container-scroller">
+      <%- include('./components/sidebar') %>
+           <%- include('./components/topnav') %>
+          <div style="background-color: #111319; margin-top: 60px" class="content-wrapper">
+              <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card" style="height: 100px;">
+                      <div class="card-body">
+                          <h3>Linkvertise</h3>
+                          <p class="text-muted">Earn coins by completing Linkvertise links.</p>
+                      </div>
+                  </div>
+              </div>
+            <% if (req.query.err) { %>
+              <div style="border-radius: 15px;" class="alert">
+                  <% if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+                    You must complete the captcha to prove you are human!
+                <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+                    You submitted an invalid captcha response, try again.
+                <% } %>
+              </div>
+            <% } %>
+            <% if (req.query.success) { %>
+              <div class="alert" style="background-color: #00b950; border-radius: 15px;">
+                Success! <%= settings.linkvertise.coins%> coins were added to your account.
+            </div>
+            <% } %>
+              <div class="row">
+                <div class="col-md-12 grid-margin stretch-card ">
+                    <div class="card ml-3">
+                    <div class="card-body" style="display: none;" id="generate-panel">
+                      <p>Every time you complete a linkvertise link, you will earn <%= settings.linkvertise.coins%> coins!<br>Generate a link below:<br><br>
+                        <button class="btn btn-primary" onclick="generate()">Generate Link</button></p></center>
+									  </div>
+                    <div class="card-body" id="loading-panel">
+                      <center><h3>Loading...</h3></center>
+                    </div>
+                    <div class="card-body" id="error-panel" style="display: none;">
+                      <center><h3>An error occured! Refresh the page and try again</h3></center>
+                    </div>
+                    <div class="card-body" id="cooldown-panel" style="display: none;">
+                      <center>
+                        <h3>You are on cooldown before you can complete another linkvertise link!</h3>
+                        <p>Please wait <span id="cooldown-seconds"></span> seconds before you can complete another link.</p>
+                      </center>
+                    </div>
+                    <div class="card-body" id="dailylimit-panel" style="display: none;">
+                      <center>
+                        <h3>You have reached the maximum number of links you can complete today!</h3>
+                        <p>You can complete more after <span id="daily-timeleft"></span>.</p>
+                      </center>
+                    </div>
+                    <script type="text/javascript">
+                      const loadingPanel = document.getElementById('loading-panel')
+                      fetch(`/api/lvcooldown`).then(res => res.json())
+                      .then(json => {
+                        if (json.cooldown === null) {
+                          const genPanel = document.getElementById('generate-panel')
+                          loadingPanel.style.display = 'none'
+                          return genPanel.style.display = ''
+                        } else if (json.dailyLimit) {
+                          const dailyPanel = document.getElementById('dailylimit-panel')
+                          dailyPanel.style.display = ''
+                          loadingPanel.style.display = 'none'
+                          const timeLeft = document.getElementById('daily-timeleft')
+                          timeLeft.innerHTML = json.readable
+                        } else if (json.error) {
+                          const errorPanel = document.getElementById('error-panel')
+                          loadingPanel.style.display = 'none'
+                          errorPanel.style.display = ''
+                        } else {
+                          loadingPanel.style.display = 'none'
+                          const cooldownPanel = document.getElementById('cooldown-panel')
+                          const cooldownTimer = document.getElementById('cooldown-seconds')
+
+                          setInterval(() => {
+                            const timeLeft = json.cooldown - Date.now()
+                            if (timeLeft < 0) return window.location.replace('/lv')
+                            cooldownTimer.innerHTML = Math.floor(timeLeft / 1000)
+                          }, 1000)
+
+                          cooldownPanel.style.display = ''
+                        }
+                      })
+                      .catch(() => {
+                        loadingPanel.style.display = 'none'
+                        const errorPanel = document.getElementById('error-panel')
+                        errorPanel.style.display = ''
+                      })
+                    </script>
+                  <script type="text/javascript">
+                    function generate() {
+                      window.location.replace(`/lv/gen`)
+                    }
+                  </script>
+              </div>
+            </div>
+
+            </div>
+
+          </div></div>
+
+      <%- include('./components/footer') %>
+      <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+      <script src="../../assets/vendors/select2/select2.min.js"></script>
+      <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+      <script src="../../assets/js/off-canvas.js"></script>
+      <script src="../../assets/js/hoverable-collapse.js"></script>
+      <script src="../../assets/js/misc.js"></script>
+      <script src="../../assets/js/settings.js"></script>
+      <script src="../../assets/js/todolist.js"></script>
+      <script src="../../assets/js/file-upload.js"></script>
+      <script src="../../assets/js/typeahead.js"></script>
+      <script src="../../assets/js/select2.js"></script>
+    </body>
+  </html>

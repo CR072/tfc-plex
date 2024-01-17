@@ -1,0 +1,30 @@
+<div class="card rounded-0" style=" border-radius: 0px 10px; margin-left: 10px; background-image: url(<%= settings.banner %>); background-repeat: no-repeat; background-size: cover">
+
+    <div class=" d-flex justify-content-end rounded-5" style="margin-top: 150px; padding: 10px; height: 100%; background: linear-gradient(70deg, rgba(0,0,0,0.97), rgba(0,0,0,0.88))">
+        <hr>
+        <img class="rounded-circle border-white border-3" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" width="100px" height="100px" alt="pfp">
+
+        <div class="col-md-6 text-light">
+            <h1 class="mt-4" style="margin-right: 20px"><%= userinfo.username %></h1>
+
+            <h6>Informations</h6>
+            <% if (userinfo.avatar) { %>
+                <a class="badge badge-primary badge-pill">Discord Oauth2</a>
+            <% } else { %>
+                <a class="badge badge-primary badge-pill">Email Authentication</a>
+            <% } %>
+            <% if (pterodactyl.root_admin==true) { %> <span class="badge badge-primary badge-pill">Administrator</span>
+            <% } %>
+            <hr>
+            <h6>Badges</h6>
+            <% if (pterodactyl.root_admin==true) { %> <span class="badge badge-danger">admin of <%= settings.name %></span>
+            <% } else { %> <span class="badge badge-success">user of <%= settings.name %></span>
+            <% } %>
+            <% if (userinfo.id=="873121310950191155" ) { %> <span class="badge badge-success">Creator of TFC-Plex</span>
+            <% } %>
+            <hr>
+            <h6>User since</h6>
+            <p id="userSince"></p>
+        </div>
+    </div>
+</div>

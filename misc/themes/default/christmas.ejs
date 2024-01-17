@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Gifts</title>
+
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .large-gift {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="card-title">Your Gifts Count</h1>
+                    <p class="card-text">
+                        <i class="fas fa-gift"></i> You currently have <%= gifts %> gift(s).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+
+    <div id="largeGift" class="large-gift">
+        Click the gift to claim!
+    </div>
+
+    <script>
+        document.getElementById('largeGift').addEventListener('click', function() {
+            alert("Human verification: Complete the challenge to claim the gift!");
+            window.location.href = "/claim-gift";
+        });
+    </script>
+</div>
+
+</body>
+</html>

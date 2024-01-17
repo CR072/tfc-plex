@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+  <body>
+    <div class="container-scroller">
+      <%- include('./components/sidebar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div style="background-color: #111319" class="main-panel">
+          <div style="background-color: #111319" class="content-wrapper">
+
+
+
+              <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card" style="height: 100px;">
+                      <div class="card-body">
+                          <h3>Join for Rewards</h3>
+                          <p class="text-muted">Join discord servers and get extra credits.</p>
+                      </div>
+                  </div>
+              </div>
+
+            <div class="row">
+              <% for (let i = 0, len = settings.api.client.j4r.ads.length; i < len; i++) { %>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card ml-3">
+                    <div class="card-body">
+                      <h4 class="card-title"><%= settings.api.client.j4r.ads[i].name %></h4>
+                      <p class="card-description"> Join this server to receive: <br> <%= settings.api.client.j4r.ads[i].coins %> Coins </p>
+                      <form class="forms-sample">
+                        <a role="button" class="btn btn-primary btn-lg" href="<%= settings.api.client.j4r.ads[i].invite %>" target="_blank">Join Server</a> <a class="btn btn-primary btn-lg" href="../login">Claim reward</a>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+
+            </div>
+          </div>
+          <%- include('./components/footer') %>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/vendors/select2/select2.min.js"></script>
+    <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <%- include('./components/scripts') %>
+    <script src="/assets/js/file-upload.js"></script>
+    <script src="/assets/js/typeahead.js"></script>
+    <script src="/assets/js/select2.js"></script>
+  </body>
+</html>

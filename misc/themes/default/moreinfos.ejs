@@ -1,0 +1,27 @@
+<%- include('./components/head') %>
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">Change User's Plan</div>
+        <hr>
+        <div class="form-group">
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" class="form-control form-control-rounded bottomflat"
+                   placeholder="Search by username, email, or HCID">
+            <select id="userSelect" class="form-control form-control-rounded topflat">
+                <option value="" disabled selected>Select a user</option>
+            </select>
+        </div>
+        <div class="card">
+    <div class="card-body">
+        <div class="card-title">Remove an user</div>
+        <hr>
+        <div class="form-group">
+            <label for="searchInput">User's HCID:</label>
+            <input type="number" id="rmAccId" class="form-control form-control-rounded" placeholder="0069">
+        </div>
+        <div class="form-group">
+            <button onclick="removeAccount()" role="button" class="btn btn-light btn-round px-5"> Remove</button>
+        </div>
+    </div>
+</div>
