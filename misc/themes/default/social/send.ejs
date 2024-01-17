@@ -1,0 +1,29 @@
+<!-- views/sendMessage.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message</title>
+</head>
+<body>
+
+<h1>Send Message</h1>
+
+<form action="/api/messages/send" method="POST">
+    <label for="content">Message Content:</label>
+    <textarea name="content" id="content" rows="4" cols="50" required></textarea>
+
+    <br>
+
+    <label for="user">To User:</label>
+    <input type="text" name="user" id="user" required>
+
+    <br>
+
+    <button type="submit">Send Message</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./components/head') %>
+    <body>
+      <div class="container-scroller">
+      <%- include('./components/sidebar') %>
+        <div class="container-fluid page-body-wrapper">
+           <%- include('./components/topnav') %>
+          <div class="main-panel">
+            <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> Earn Coins </h3>
+            </div>
+            <%- include('./components/ads') %>
+              <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                    <div class="card-body">
+                                  <p> By being on this page, you are supporting the service stay up & running while also earning coins </p>
+                                  <p>Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %>.</p>
+                <p>You will gain coins again in <span id="arciotimer"><%= settings.api.arcio["afk page"].every %></span> seconds</p>
+                       <p>You have gained <span id="arciogainedcoins">0</span> coins this AFK session</p>
+<br>
+<p>Earning Status: <br><button type="button" class="btn btn-success btn-rounded btn-icon"><i class="mdi mdi-check"></i></button>
+                  <script>
+                <%- arcioafktext %>
+            </script>
+          </div>
+              </div>
+            </div>
+          <%- include('./components/footer') %>
+          </div>
+        </div>
+      </div>
+      <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+      <script src="../../assets/vendors/select2/select2.min.js"></script>
+      <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+      <script src="../../assets/js/off-canvas.js"></script>
+      <script src="../../assets/js/hoverable-collapse.js"></script>
+      <script src="../../assets/js/misc.js"></script>
+      <script src="../../assets/js/settings.js"></script>
+      <script src="../../assets/js/todolist.js"></script>
+      <script src="../../assets/js/file-upload.js"></script>
+      <script src="../../assets/js/typeahead.js"></script>
+      <script src="../../assets/js/select2.js"></script>
+    </body>
+  </html>

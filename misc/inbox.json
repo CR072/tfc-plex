@@ -1,0 +1,20 @@
+{
+  "messages": [
+    {
+      "note-1": "@a means everyone gets that message if you put in the discord id of the person only the person gets it",
+      "toUserId": "@a",
+      "fromUser": "System",
+      "content": "Welcome"
+    },
+    {
+      "toUserId": "873121310950191155",
+      "fromUser": "Admin",
+      "content": "message"
+    },
+    {
+      "toUserId": "Benutzer2",
+      "fromUser": "Admin",
+      "content": "message"
+    }
+  ]
+}
