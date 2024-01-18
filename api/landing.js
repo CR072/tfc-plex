@@ -12,9 +12,7 @@ const fetchData = async (endpoint, errorMessage) => {
       }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${errorMessage}: ${response.status} ${response.statusText}`);
-    }
+    if (!response.ok) throw new Error(`Failed to fetch ${errorMessage}: ${response.status} ${response.statusText}`);
 
     return await response.json();
   } catch (error) {
@@ -23,39 +21,35 @@ const fetchData = async (endpoint, errorMessage) => {
   }
 };
 
-const handleRequest = async (req, res, endpoint, resultKey) => {
+const handleRequest = async (req, res, endpoint, resultKey, handler) => {
   try {
     const json = await fetchData(endpoint, resultKey);
-    res.json({ [resultKey]: json.meta.pagination.total });
+    if (handler) await handler(json, req, res);
+    else res.json({ [resultKey]: json.meta.pagination.total });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-module.exports.load = async function (app, db) {
-  app.get("/api/users", async (req, res) => {
-    await handleRequest(req, res, "users", "totalUsers");
-  });
-
-  app.get("/api/nodes", async (req, res) => {
-    await handleRequest(req, res, "nodes", "totalNodes");
-  });
-
-  app.get("/api/locations", async (req, res) => {
-    await handleRequest(req, res, "locations", "totalLocations");
-  });
-
-  app.get("/api/servers", async (req, res) => {
-    try {
-      const json = await fetchData("nodes?include=servers", "nodes and servers");
-
-      const totalServers = json.data.reduce((acc, node) => {
-        return acc + (node.attributes.relationships.servers?.data?.length || 0);
-      }, 0);
-
-      res.json({ totalServers });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+module.exports.load = async (app, db) => {
+  const routes = [
+    { path: "/api/users", endpoint: "users", resultKey: "totalUsers" },
+    { path: "/api/nodes", endpoint: "nodes", resultKey: "totalNodes" },
+    { path: "/api/locations", endpoint: "locations", resultKey: "totalLocations" },
+    {
+      path: "/api/servers",
+      endpoint: "nodes?include=servers",
+      resultKey: "totalServers",
+      handler: async (json, req, res) => {
+        const totalServers = json.data.reduce((acc, node) => acc + (node.attributes.relationships.servers?.data?.length || 0), 0);
+        res.json({ totalServers });
+      }
     }
+  ];
+
+  routes.forEach(({ path, endpoint, resultKey, handler }) => {
+    app.get(path, async (req, res) => {
+      await handleRequest(req, res, endpoint, resultKey, handler);
+    });
   });
 };
