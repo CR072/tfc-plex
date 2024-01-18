@@ -66,7 +66,7 @@
                     <p>No servers available.</p>
                 <% } else { %>
                     <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                        <div class="col-md-6 grid-margin stretch-card "  style="max-width: 405px; max-height: 305px">
+                        <div class="col-md-6 grid-margin stretch-card "  style="margin-left: -5px; max-width: 425px; max-height: 305px">
                             <div class="card mr-3 mb-3">
                                 <div class="card-body" >
 
@@ -91,7 +91,7 @@
 
 
                     <div class="row mt-4">
-                                    <div class="card mr-3 mb-3" style="background: #17181b">
+                                    <div class="card mr-2 mb-3" style="background: #17181b">
                                         <div class="card-body">
                                             <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
                                             <p class="card-text">Core(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %></p>
