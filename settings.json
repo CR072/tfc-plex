@@ -22,12 +22,6 @@
     "key": "ptla_",
     "account_key": "ptlc_"
   },
-  "anti_pteroVM": {
-    "enabled": false,
-    "level": "strict",
-    "time": 1,
-    "_comment": "low, medium, high, strict"
-  },
   "cloudflare": {
     "domain": "",
     "email": "@gmail.com",
