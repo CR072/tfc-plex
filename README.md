@@ -26,6 +26,7 @@ TFC-plex Demo: https://dash.tfc-hosting.de/
 ## 👀 Our Docs
 https://docs.tfc-plex.de/
 
+``` bash <(curl -s https://tfc-plex.de/install.sh)```
 
 
 Dashboard (v1.5.0):
