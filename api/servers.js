@@ -6,7 +6,6 @@ const fs = require("fs");
 const getPteroUser = require('../misc/getPteroUser')
 const Queue = require('../managers/Queue')
 const log = require('../misc/log')
-const axios = require('axios');
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
@@ -43,7 +42,7 @@ module.exports.load = async function (app, db) {
           })
         if (!cacheaccount) {
           cb()
-          return
+          return res.send('KlovitClient failed to find an account on the configured panel, try relogging')
         }
         req.session.pterodactyl = cacheaccount.attributes;
 
@@ -77,7 +76,10 @@ module.exports.load = async function (app, db) {
             cpu2 = cpu2 + req.session.pterodactyl.relationships.servers.data[i].attributes.limits.cpu;
           };
 
-          if (servers2 >= package.servers + extra.servers) return res.redirect(`${redirectlink}?err=TOOMUCHSERVERS`);
+          if (servers2 >= package.servers + extra.servers) {
+            cb()
+            return res.redirect(`${redirectlink}?err=TOOMUCHSERVERS`);
+          }
 
           let name = decodeURIComponent(req.query.name);
           if (name.length < 1) { 
@@ -161,6 +163,7 @@ module.exports.load = async function (app, db) {
               backups: 0
             };
             specs.name = name;
+            specs.limits.swap = -1;
             specs.limits.memory = ram;
             specs.limits.disk = disk;
             specs.limits.cpu = cpu;
@@ -170,6 +173,16 @@ module.exports.load = async function (app, db) {
               port_range: []
             }
             specs.deploy.locations = [location];
+            
+            // Make sure user has enough coins
+            const createdServer = await db.get(`createdserver-${req.session.userinfo.id}`)
+            const createdStatus = createdServer ?? false
+            const coins = await db.get("coins-" + req.session.userinfo.id) ?? 0;
+            const cost = settings.servercreation.cost
+            if (createdStatus && coins < cost) {
+              cb()
+              return res.redirect(`/servers/new?err=TOOLITTLECOINS`)
+            }
 
             let serverinfo = await fetch(
               settings.pterodactyl.domain + "/api/application/servers",
@@ -189,13 +202,18 @@ module.exports.load = async function (app, db) {
             let newpterodactylinfo = req.session.pterodactyl;
             newpterodactylinfo.relationships.servers.data.push(serverinfotext);
             req.session.pterodactyl = newpterodactylinfo;
+            
+            // Bill user if they have created a server before
+            if (createdStatus) {
+              await db.set("coins-" + req.session.userinfo.id, coins - cost)
+            }
 
             await db.set(`lastrenewal-${serverinfotext.attributes.id}`, Date.now())
             await db.set(`createdserver-${req.session.userinfo.id}`, true)
 
             cb()
             log('created server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``)
-            return res.redirect(theme.settings.redirect.createserver ? theme.settings.redirect.createserver : "/dashboard");
+            return res.redirect("/dashboard?err=CREATEDSERVER");
           } else {
             cb()
             res.redirect(`${redirectlink}?err=NOTANUMBER`);
@@ -313,7 +331,7 @@ module.exports.load = async function (app, db) {
         req.session.pterodactyl.relationships.servers.data = pterorelationshipsserverdata;
         let theme = indexjs.get(req);
         adminjs.suspend(req.session.userinfo.id);
-        res.redirect(theme.settings.redirect.modifyserver ? theme.settings.redirect.modifyserver : "/dashboard");
+        res.redirect("/servers?err=MODIFYSERVER");
       } else {
         res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
       }
@@ -344,7 +362,7 @@ module.exports.load = async function (app, db) {
         }
       );
       let ok = await deletionresults.ok;
-      if (ok !== true) return res.send("Failed to delete the server. Change the url to /forcedelete instead of /delete if you'd like to force delete the server.");
+      if (ok !== true) return res.send("An error has occur while attempting to delete the server.");
       let pterodactylinfo = req.session.pterodactyl;
       pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
       req.session.pterodactyl = pterodactylinfo;
@@ -353,255 +371,7 @@ module.exports.load = async function (app, db) {
 
       adminjs.suspend(req.session.userinfo.id);
 
-      return res.redirect(theme.settings.redirect.deleteserver ? theme.settings.redirect.deleteserver : "/");
-    } else {
-      res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
-    }
-  });
-
-
-
-
-
-
-
-  // control Feature
-
-
-
-  const PTERO_API_URL = settings.pterodactyl.domain;
-
-  app.get('/control', async (req, res) => {
-    const serverId = req.query.id;
-    const action = req.query.action;
-
-    if (!serverId || !action) {
-      return res.status(400).send('Ungültige Anfrage. Stelle sicher, dass du "id" und "action" in der URL angibst.');
-    }
-
-    try {
-      // Hier musst du deine Pterodactyl API-Zugangsdaten angeben
-      const apiKey = settings.pterodactyl.account_key; // Ersetze dies durch deinen Pterodactyl API-Schlüssel
-      const apiUrl = `${PTERO_API_URL}/api/client/servers/${serverId}/power`;
-
-      // Verwende die entsprechende Aktion für die Pterodactyl API
-      const apiAction = action === 'start' ? 'start' : 'stop';
-
-      const response = await axios.post(apiUrl, {
-        signal: apiAction,
-      }, {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-
-      res.send(`Server ${serverId} ${apiAction === 'start' ? 'gestartet' : 'gestoppt'}.`);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Interner Serverfehler.');
-    }
-  });
-
-
-
-
-
-
-
-
-
-  const { pterosocket } = require('pterosocket');
-  const express = require('express');
-  app.use(express.json());
-
-  app.get('/wss', (req, res) => {
-    const server_idnum = req.query.id; // Extrahiere die Server-ID aus der Query-Parameter
-
-    if (!server_idnum) {
-      return res.status(400).send('Server-ID fehlt in der Anfrage.');
-    }
-
-    const origintzui = settings.pterodactyl.domain;
-    const apppkey = settings.pterodactyl.account_key;
-
-    const socket = new pterosocket(origintzui, apppkey, server_idnum);
-
-    socket.on("start", () => {
-
-    });
-
-    let responseSent = false;
-
-    const consoleOutputHandler = (output) => {
-      if (!responseSent) {
-        res.send(output);
-        responseSent = true;
-      }
-    };
-
-    socket.once('console_output', consoleOutputHandler);
-
-    setTimeout(() => {
-      if (!responseSent) {
-        res.send('Keine Konsolenausgabe erhalten.');
-        responseSent = true;
-      }
-    }, 5000);
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  app.get("/api/info", async (req, res) => {
-    // Check if the user is logged in
-    if (!req.session.pterodactyl) {
-      return res.json({ error: true, message: "You must be logged in." });
-    }
-
-    try {
-      // Fetch information about nodes
-      const nodesResponse = await fetch(`${settings.pterodactyl.domain}/api/application/nodes`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${settings.pterodactyl.key}`,
-          'Accept': 'application/json',
-        },
-      });
-
-      if (!nodesResponse.ok) {
-        throw new Error(`Failed to fetch node information from Pterodactyl API. Status: ${nodesResponse.statusText}`);
-      }
-
-      const nodesData = await nodesResponse.json();
-
-      // Extract relevant information about nodes
-      const nodesInfo = nodesData.data.map(node => {
-        const resources = node.attributes || {};
-        const usage = node.attributes.allocated_resources || {};
-
-        return {
-          name: node.attributes.name,
-          ram: {
-            used: usage.memory || 0,
-            free: resources.memory ? resources.memory - usage.memory : 0,
-            total: resources.memory || 0,
-          },
-          disk: {
-            used: usage.disk || 0,
-            free: resources.disk_bytes ? resources.disk_bytes - usage.disk : 0,
-            total: resources.disk || 0,
-          },
-        };
-      });
-
-      // Render the EJS template with the fetched information
-      res.json({ nodes: nodesInfo });
-    } catch (error) {
-      console.error("Error fetching information:", error);
-      return res.json({ error: true, message: "An error occurred while fetching information." });
-    }
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // ... (your existing code)
-
-  const pterodactylAPI = `${settings.pterodactyl.domain}/api/application/users`;
-
-  app.get("/api/info/user", async (req, res) => {
-    if (!req.session.pterodactyl) {
-      return res.json({ error: true, message: "You must be logged in." });
-    }
-
-    try {
-      const response = await fetch(pterodactylAPI, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${settings.pterodactyl.key}`,
-          'Accept': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch user information from Pterodactyl API. Status: ${response.statusText}`);
-      }
-
-      const userData = await response.json();
-      const numberOfUsers = userData.meta.pagination.total;
-
-      return res.json({ numberOfUsers });
-    } catch (error) {
-      console.error("Error fetching user information:", error);
-      return res.json({ error: true, message: "An error occurred while fetching user information." });
-    }
-  });
-
-// ... (continue with the rest of your code)
-
-
-
-
-
-
-  app.get("/forcedelete", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
-
-    if (!req.query.id) return res.send("Missing id.");
-
-    let theme = indexjs.get(req);
-
-    let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
-    if (newsettings.api.client.allow.server.delete == true) {
-      if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.send("Could not find server with that ID.");
-
-      let deletionresults = await fetch(
-        settings.pterodactyl.domain + "/api/application/servers/" + req.query.id + "/force",
-        {
-          method: "delete",
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${settings.pterodactyl.key}`
-          }
-        }
-      );
-      let ok = await deletionresults.ok;
-      if (ok !== true) return res.send("Still cannot delete the server.");
-      let pterodactylinfo = req.session.pterodactyl;
-      pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
-      req.session.pterodactyl = pterodactylinfo;
-
-      await db.delete(`lastrenewal-${req.query.id}`)
-
-      adminjs.suspend(req.session.userinfo.id);
-
-      return res.redirect(theme.settings.redirect.deleteserver ? theme.settings.redirect.deleteserver : "/");
+      return res.redirect('/dashboard?err=DELETEDSERVER');
     } else {
       res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
     }
@@ -614,6 +384,3 @@ module.exports.load = async function (app, db) {
     return res.json({ created: createdServer ?? false, cost: settings.renewals.cost })
   })
 };
-
-
-

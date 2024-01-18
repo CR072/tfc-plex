@@ -48,7 +48,7 @@ module.exports.load = async function (app, db) {
         return res.redirect(`/dashboard` + `?success=RENEWED`)
     })
 
-    new CronJob(`0 0 * * *`, () => {
+    new CronJob(`*/20240 * * * * *`, () => {
         if (settings.renewals.status) {
             console.log('Running renewal check...')
             getAllServers().then(async servers => {
@@ -77,7 +77,6 @@ module.exports.load = async function (app, db) {
                     }
                 }
             })
-            console.log('Renewal check over!')
         }
     }, null, true, 'Europe/London')
         .start()

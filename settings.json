@@ -1,18 +1,16 @@
 {
-
-  "version": "1.5.1",
+  "version": "1.4",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
   "motd": "Change me in settings.json",
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
-  "background": "https://cdn.discordapp.com/attachments/1149031791928283229/1191099536643461312/image.png?ex=65a434e3&amp;is=6591bfe3&amp;hm=f350743588833c1f6793248c509213bb36d3e954ec295f5a0ac75023f0c1d106&amp;",
+  "background": "https://cdn.discordapp.com/attachments/1149031791928283229/1191099536643461312/image.png?ex=65a434e3&is=6591bfe3&hm=f350743588833c1f6793248c509213bb36d3e954ec295f5a0ac75023f0c1d106&",
   "banner": "",
-
   "hostid": "100",
   "claiming": {
-    "enabled": false,
+    "enabled": true,
     "coinsPerClaim": 20
   },
   "website": {
@@ -20,18 +18,16 @@
     "secret": "Defaultdfasfdsf"
   },
   "pterodactyl": {
-    "domain": "https://",
+    "domain": "https://panel.example.com/",
     "key": "ptla_",
     "account_key": "ptlc_"
   },
-
   "anti_pteroVM": {
     "enabled": false,
-    "level": "low",
-    "time": 10,
+    "level": "strict",
+    "time": 1,
     "_comment": "low, medium, high, strict"
   },
-
   "cloudflare": {
     "domain": "",
     "email": "@gmail.com",
@@ -39,23 +35,20 @@
     "zone_id": "",
     "account_id": ""
   },
-
-
   "purge": {
     "enabled": false,
     "keyword": "keyword"
   },
-
   "linkvertise": {
     "userid": "963062",
-    "coins": 15
+    "coins": 150
   },
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
       "api": {
         "enabled": true,
-        "code": "(Change this)"
+        "code": "Default API Key (Change this)"
       },
       "j4r": {
         "enabled": true,
@@ -87,7 +80,7 @@
       "passwordgenerator": {
         "signup": true,
         "note": "Use this to disable signups",
-        "length": 8
+        "length": 16
       },
       "allow": {
         "newusers": true,
@@ -128,10 +121,19 @@
         "default": "default",
         "list": {
           "default": {
+
             "ram": 1024,
             "disk": 1024,
             "cpu": 100,
-            "servers": 1
+            "servers": 1,
+            "cost": 0  
+          },
+          "Premium Plan": {
+            "ram": 5120,
+            "disk": 5120,
+            "cpu": 500,
+            "servers": 10,
+            "cost": 100  
           }
         },
         "rolePackages": {
@@ -149,6 +151,9 @@
         }
       },
       "eggs": {
+
+        "note-1": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
+
         "paper": {
           "display": "Minecraft Java | Paper/Spigot",
           "minimum": {
@@ -261,20 +266,14 @@
           }
         }
       },
-
-
-
       "paypal": {
         "clientId": "1009",
         "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
       },
-
-
-
-
       "coins": {
         "enabled": true,
-        "costPerCoin": 0.10,
+        "note-1": "the money that cost 1 coin in this version the real money shop is disabled",
+        "costPerCoin": 1,
         "store": {
           "_comment": "The cost and per is not intended to used with 0. This is not intended to sell resources for coins. Make sure coins are enabled too, or else there can be errors.",
           "enabled": true,
@@ -310,7 +309,7 @@
         "_comment4": "This afk page will give the users [coins variable] coins every [every variable] seconds.",
         "every": 15,
         "_comment5": "The coins variable is meant to not be under 1. There may be bugs if the coins variable is less than 1.",
-        "coins": 0.10
+        "coins": 0.1
       }
     }
   },
@@ -322,10 +321,14 @@
     ]
   },
   "renewals": {
-    "note": "The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew",
+    "note": "The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew. New servers after the 1st one will also cost the renewal amount.",
     "status": false,
-    "cost": 150,
+    "cost": 10,
     "delay": 14
+  },
+  "servercreation": {
+    "note": "You can set how much it should cost to create a server here, 0 Means The price is free",
+    "cost": 10
   },
   "logging": {
     "status": false,
@@ -356,12 +359,16 @@
   "antivpn": {
     "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, TFC-Plex will disable antigen.",
     "status": false,
-    "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address"]
+    "APIKey": "api Key",
+    "whitelistedIPs": [
+      "IP address"
+    ]
   },
-
-  "tos": {
-    "content": "Please read the terms of service."
+  "blacklist": {
+    "note": "This allows only specific people to be able to use the dashboard",
+    "status": false,
+    "users": [
+      "873121310950191155"
+    ]
   }
-
 }

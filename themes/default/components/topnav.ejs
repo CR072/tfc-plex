@@ -94,7 +94,7 @@
         .then(response => response.json())
         .then(data => {
             const inboxMessages = document.getElementById('inboxMessages');
-            const userId = "<%= pterodactyl.username %>"; // Die ID des eingeloggten Benutzers
+
 
             // Überprüfe, ob Nachrichten vorhanden sind
             if (data.messages.length === 0) {
@@ -106,7 +106,7 @@
                 // Iteriere durch die Nachrichten und füge sie dem Dropdown-Menü hinzu
                 data.messages.forEach(message => {
                     // Überprüfe, ob die Nachricht für den eingeloggten Benutzer bestimmt ist
-                    if (message.toUserId === userId) {
+
                         const messageItem = document.createElement('div');
                         messageItem.classList.add('dropdown-item');
                         messageItem.innerHTML = `
@@ -114,8 +114,38 @@
                             <strong>Content:</strong> ${message.content}
                         `;
                         inboxMessages.appendChild(messageItem);
-                    }
+                    
                 });
+            }
+        })
+        .catch(error => console.error('Error fetching inbox data:', error));
+</script>
+
+<style>
+    /* Neue CSS-Regeln für das rote Ausrufezeichen */
+    #inboxDropdown {
+        position: relative;
+    }
+
+    .badge-danger {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+    }
+</style>
+
+<script>
+    // Lade die JSON-Daten über JavaScript
+    fetch('/api/inbox')
+        .then(response => response.json())
+        .then(data => {
+            const inboxIcon = document.getElementById('inboxDropdown');
+
+            // Überprüfe, ob Nachrichten vorhanden sind
+            if (data.messages.length > 0) {
+                // Füge ein rotes Ausrufezeichen als HTML-Span-Element hinzu
+                inboxIcon.innerHTML += '<span class="badge badge-danger rounded-circle">!</span>';
             }
         })
         .catch(error => console.error('Error fetching inbox data:', error));
