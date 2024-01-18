@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5.2",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
@@ -126,14 +126,14 @@
             "disk": 1024,
             "cpu": 100,
             "servers": 1,
-            "cost": 0  
+            "cost": 0
           },
           "Premium Plan": {
             "ram": 5120,
             "disk": 5120,
             "cpu": 500,
             "servers": 10,
-            "cost": 100  
+            "cost": 100
           }
         },
         "rolePackages": {
@@ -371,4 +371,6 @@
       "873121310950191155"
     ]
   }
+
 }
+
