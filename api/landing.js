@@ -23,46 +23,35 @@ const fetchData = async (endpoint, errorMessage) => {
   }
 };
 
-module.exports.load = async function(app, db) {
+const handleRequest = async (req, res, endpoint, resultKey) => {
+  try {
+    const json = await fetchData(endpoint, resultKey);
+    res.json({ [resultKey]: json.meta.pagination.total });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports.load = async function (app, db) {
   app.get("/api/users", async (req, res) => {
-    try {
-      const json = await fetchData("users", "users");
-      res.json({ totalUsers: json.meta.pagination.total });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    await handleRequest(req, res, "users", "totalUsers");
   });
 
   app.get("/api/nodes", async (req, res) => {
-    try {
-      const json = await fetchData("nodes", "nodes");
-      res.json({ totalNodes: json.meta.pagination.total });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    await handleRequest(req, res, "nodes", "totalNodes");
   });
 
   app.get("/api/locations", async (req, res) => {
-    try {
-      const json = await fetchData("locations", "locations");
-      res.json({ totalLocations: json.meta.pagination.total });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    await handleRequest(req, res, "locations", "totalLocations");
   });
 
   app.get("/api/servers", async (req, res) => {
     try {
       const json = await fetchData("nodes?include=servers", "nodes and servers");
 
-      let totalServers = 0;
-      if (json.data && Array.isArray(json.data)) {
-        json.data.forEach((node) => {
-          if (node.attributes.relationships.servers && Array.isArray(node.attributes.relationships.servers.data)) {
-            totalServers += node.attributes.relationships.servers.data.length;
-          }
-        });
-      }
+      const totalServers = json.data.reduce((acc, node) => {
+        return acc + (node.attributes.relationships.servers?.data?.length || 0);
+      }, 0);
 
       res.json({ totalServers });
     } catch (error) {
