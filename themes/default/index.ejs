@@ -1,134 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
 
-  <!DOCTYPE html>
-  <html lang="en">
-  <%- include('./components/head') %>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.tfc-plex.de/css/bootstrap.css">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= settings.name %></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="copyright" content="<%= settings.name %>">
+    <meta property="og:type" content="website">
+    <meta name="author" content="TFC-plex">
+    <meta property="og:description" content="<%= settings.name %> | Powered by TFC-Plex.">
+    <meta name="twitter:title" content="<%= settings.name %>">
+    <meta name="twitter:description" content="<%= settings.name %> | Powered by TFC-Plex.">
+    <meta name="twitter:image" content="<%= settings.icon %>">
+    <meta name="twitter:image:src" content="<%= settings.icon %>">
+    <meta property="og:title" content="<%= settings.name %>">
+    <meta property="og:image" content="<%= settings.icon %>">
+    <meta name="twitter:card" content="<%= settings.icon %>">
 
-  <style>
-    @keyframes floatUpDown {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-30px);
-      }
-    }
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    .floating-image {
-      animation: floatUpDown 7s ease-in-out infinite;
-    }
+</head>
 
-    .animated-text {
-      display: inline-block;
-      overflow: hidden;
-    }
-
-    .animated-text span {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
-
-
-    <body class="bg-dark">
-
-
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="z-index: 1;">
-      <div class="container-fluid">
-
-        <a class="navbar-brand" href="#">
-
-          <h1 style="color: #cbcbcb">   <img src="<%= settings.icon %>" alt="Logo" width="75" height="75" class="d-inline-block align-text-top">
-  <%= settings.name %></h1>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-
-
-          </ul>
-
-
-
-
-   <% if (!req.session.userinfo)  { %>
-              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white" href="<%= extra.home.buttontext.loggedout.link %>">Login</a>
-            <% } else { %>
-              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white; margin-right: 10px" href="<%= extra.home.buttontext.loggedin.link %>">Login as <%= req.session.userinfo.username %>#<%= req.session.userinfo.discriminator %></a><br />
-              <a role="button" class="btn text-light rounded-5" style="border: 2px solid white" href="<%= extra.home.buttontext.loggedout.link %>">Login on a different account</a>
-            <% } %></a>
-        </div>
-      </div>
-
-
-
-    </nav>
-
-
-
-    <header class="bg-dark py-5">
-      <div class="container px-5">
-        <div class="row gx-5 align-items-center justify-content-center">
-          <div class="col-lg-8 col-xl-7 col-xxl-6">
-            <div class="my-5 text-center text-xl-start">
-
-              <h2 class="display-5 fw-normal text-white">Create a Powerful server at
-              </h2>
-              <h1 class="display-5 fw-bolder text-white mb-2"><%= settings.name %></h1>
-
-
-
-              <p class="lead fw-normal text-white-50 mb-4"><%= settings.motd %></p>
-              <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/login">Get Started</a>
-
-
-              </div>
+<body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed " style="
+  background-color: rgb(15, 23, 44);
+  background-image: radial-gradient(at 98% 15%, rgb(64, 19, 131) 0, transparent 58%), radial-gradient(at 6% 25%, rgb(67, 27, 136) 0, transparent 32%), radial-gradient(at 92% 93%, rgb(33, 69, 128) 0, transparent 25%);
+">
+    <div class="h-full">
+        <!--Nav-->
+        <div class="w-full container mx-auto">
+            <div class="w-full flex items-center justify-between">
+                <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"><%= settings.name %></span>
+                </a>
             </div>
-          </div>
-          <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center" style="background: radial-gradient(#1c446e 40%, #212529 70%);"><img class="img-fluid rounded-3 my-5 floating-image" src="https://www.ovhcloud.com/sites/default/files/styles/desktop_full_width/public/2021-01/SD-Advance.png" alt="...">
-          </div>
         </div>
+
+        <!--Main-->
+        <div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+            <!--Left Col-->
+            <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden" style="margin-top: -150px;">
+                <h1 class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+                    Create a Powerful Server on
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+                        <%= settings.name %>
+                    </span>
+                    with the best Hardware.
+                </h1>
+                <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
+                    <%= settings.motd %>
+                </p>
+
+                <div class="mb-4 flex justify-center md:justify-start">
+                    <a href="/dashboard" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                        Go to Client
+                    </a>
+                    <a href="/panel" class="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800">
+                        Go to Panel
+                    </a>
+                </div>
+            </div>
+
+            <!--Right Col-->
+            <div class="w-full xl:w-3/5 p-12 overflow-hidden" style="margin-top: -150px;">
+              <img class="mx-auto w-full md:w-4/5 transform -rotate-1 transition hover:scale-105 scale-75 duration-700 ease-in-out hover:rotate-6" src="<%= settings.icon %>" />
+          </div>
+
+          <section id="team" class="w-full md:w-3/5 p-12 overflow-hidden text-center mx-auto">
+            <!-- Statistics Section -->
+            <div class="text-center mt-12">
+                <h2 class="text-5xl font-bold text-white mb-20"><%= settings.name %> Statistics </h2>
+                <hr class="mb-20">
+        
+                <!-- Individual Statistic Cards -->
+                <div class="flex flex-wrap justify-center items-center">
+                    <!-- Statistic Card for Active Users -->
+                    <div class="w-full md:w-1/2 mb-4">
+                        <div class="">
+                            <div class="relative pb-4">
+                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">
+                                <span id="users">---</span>
+                            </h3>
+                            <p class="font-heading text-lg"> Active Users </p>
+                        </div>
+                    </div>
+        
+                    <!-- Statistic Card for Servers -->
+                    <div class="w-full md:w-1/2 mb-4">
+                        <div class="">
+                            <div class="relative pb-4">
+                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">
+                                <span id="servers">---</span>
+                            </h3>
+                            <p class="font-heading text-lg"> Servers </p>
+                        </div>
+                    </div>
+        
+
+        
+                    <!-- Statistic Card for Locations -->
+                    <div class="w-full md:w-1/2 mb-4">
+                        <div class="">
+                            <div class="relative pb-4">
+                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">
+                                <span id="locations">---</span>
+                            </h3>
+                            <p class="font-heading text-lg"> Locations </p>
+                        </div>
+                    </div>
+        
+                    <!-- Statistic Card for Nodes -->
+                    <div class="w-full md:w-1/2 mb-4">
+                        <div class="">
+                            <div class="relative pb-4">
+                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2">
+                                <span id="nodes">---</span>
+                            </h3>
+                            <p class="font-heading text-lg"> Nodes </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        
+
+          <!--Footer-->
+          <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
+              <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2022-2024</a>
+              <a class="text-blue-500 no-underline hover:no-underline" href="https://github.com/privt00/tfc-plex">TFC-Plex</a>
+          </div>
       </div>
-    </header>
-
-
-
-      <%- include('./components/scripts') %>
-    <div style="margin-top: 10%">
-    <%- include('./components/footer') %>
-    </div>
-
-    </body>
   </div>
-  </html>
 
+    <script>
+        async function servers() {
+            const serverInfo = document.getElementById("servers");
+            const response = await fetch('/api/servers');
+            const json = await response.json();
+            const infoString = `${json.totalServers}`;
+            serverInfo.innerText = infoString;
+        }
+        servers();
+        async function users() {
+            const users = document.getElementById("users");
+            const response = await fetch('/api/users');
+            const json = await response.json();
+            const usersr = `${json.totalUsers}`;
+            users.innerText = usersr;
+        }
+        users();
+        async function locations() {
+            const locations = document.getElementById("locations");
+            const response = await fetch('/api/locations');
+            const json = await response.json();
+            const location = `${json.totalLocations}`;
+            locations.innerText = location;
+        }
+        locations();
+        async function nodes() {
+            const node = document.getElementById("nodes");
+            const response = await fetch('/api/nodes');
+            const json = await response.json();
+            const nodes = `${json.totalNodes}`;
+            node.innerText = nodes;
+        }
+        nodes();
+    </script>
+</body>
 
-
-
-
-
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Login to access the dashboard.">
-    <meta name="keywords" content="hosting, free hosting, mc, mc hosting, minecraft, witchly, witchlyhost, witchly.host">
-    <meta name="author" content="Dashboard">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
+</html>
