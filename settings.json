@@ -24,21 +24,7 @@
   },
 
 
-        "oauth2": {
-        "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "",
-        "secret": "",
-        "link": "http://localhost:2000",
-        "callbackpath": "/callback",
-        "prompt": false,
-        "ip": {
-          "trust x-forwarded-for": true,
-          "block": [],
-          "duplicate check": false
-        }
-      },
-
-
+    
   "google": {
     "enabled": false,
     "_comment1": "you can get these details from https://console.cloud.google.com/",
@@ -119,6 +105,21 @@
         "overresourcessuspend": false
       },
 
+
+        
+  "oauth2": {
+    "_comment": "Go to https://discord.dev/ and create an application to set these up.",
+    "id": "",
+    "secret": "",
+    "link": "http://localhost:2000",
+    "callbackpath": "/callback",
+    "prompt": false,
+    "ip": {
+      "trust x-forwarded-for": true,
+      "block": [],
+      "duplicate check": false
+    }
+  },
       "ratelimits": {
         "/callback": 2,
         "/create": 1,
