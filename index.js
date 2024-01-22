@@ -66,9 +66,11 @@ module.exports.renderdataeval =
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
 	const JavaScriptObfuscator = require('javascript-obfuscator');
 
+
  
     let renderdata = {
       req: req,
+      
       settings: newsettings,
       userinfo: req.session.userinfo,
       packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
@@ -83,7 +85,9 @@ module.exports.renderdataeval =
       pterodactyl: req.session.pterodactyl,
       theme: theme.name,
       extra: theme.settings.variables,
-	  db: db
+      referid: req.session.userinfo ? await db.get("referiduser-" + req.session.userinfo.id) : null,
+	  db: db,
+
     };
     if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
       renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
@@ -134,16 +138,7 @@ console.log(chalk.white("+ | ✅ "));
 // Load the website.
 
 
-// URL der PHP-API
-const phpApiUrl = 'https://tfc-plex.de/api/hosts.php';
 
-// Erhöhe die Anzahl um 1
-axios.post(phpApiUrl)
-    .then(response => {
-    })
-    .catch(error => {
-        console.error('error loading PHP-API: ', error.message);
-    });
 
 
 console.log(chalk.grey("- | Loading Website"));
@@ -213,12 +208,25 @@ app.use(function (req, res, next) {
 console.log(chalk.grey("- | Loading API"));
 
 
-let apifiles = fs.readdirSync('./api').filter(file => file.endsWith('.js'));
 
-apifiles.forEach(file => {
-    let apifile = require(`./api/${file}`);
-    apifile.load(app, db);
-});
+
+function loadApiFiles(directory, app, db) {
+    const files = fs.readdirSync(directory);
+  
+    for (const file of files) {
+      const filePath = `${directory}/${file}`;
+      if (fs.statSync(filePath).isDirectory()) {
+        loadApiFiles(filePath, app, db);
+      } else if (file.endsWith('.js')) {
+        const apiFile = require(`./${filePath}`);
+        apiFile.load(app, db);
+      }
+    }
+  }
+  
+  loadApiFiles('./api', app, db);
+
+
 
 app.all("*", async (req, res) => {
     if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");

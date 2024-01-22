@@ -48,7 +48,7 @@ module.exports.load = async function (app, db) {
         return res.redirect(`/dashboard` + `?success=RENEWED`)
     })
 
-    new CronJob(`*/20240 * * * * *`, () => {
+    new CronJob(`0 0 * * *`, () => {
         if (settings.renewals.status) {
             console.log('Running renewal check...')
             getAllServers().then(async servers => {
@@ -59,11 +59,11 @@ module.exports.load = async function (app, db) {
 
                     if (lastRenew > Date.now()) continue
                     if ((Date.now() - lastRenew) > (settings.renewals.delay * 86400000)) {
-                        // Server hasn't paid for renewal and is due to get deleted (YIKES)
+                        // Server hasn't paid for renewal and gets suspended
                         let deletionresults = await fetch(
-                            settings.pterodactyl.domain + "/api/application/servers/" + id,
+                            settings.pterodactyl.domain + "/api/application/servers/" + id + "/suspend",
                             {
-                                method: "delete",
+                                method: "post",
                                 headers: {
                                     'Content-Type': 'application/json',
                                     "Authorization": `Bearer ${settings.pterodactyl.key}`
@@ -77,8 +77,9 @@ module.exports.load = async function (app, db) {
                     }
                 }
             })
+            console.log('Renewal check over!')
         }
-    }, null, true, 'Europe/London')
+    }, null, true, settings.timezone)
         .start()
 
 };

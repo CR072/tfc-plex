@@ -42,7 +42,7 @@ module.exports.load = async function (app, db) {
           })
         if (!cacheaccount) {
           cb()
-          return res.send('KlovitClient failed to find an account on the configured panel, try relogging')
+          return
         }
         req.session.pterodactyl = cacheaccount.attributes;
 
@@ -76,10 +76,7 @@ module.exports.load = async function (app, db) {
             cpu2 = cpu2 + req.session.pterodactyl.relationships.servers.data[i].attributes.limits.cpu;
           };
 
-          if (servers2 >= package.servers + extra.servers) {
-            cb()
-            return res.redirect(`${redirectlink}?err=TOOMUCHSERVERS`);
-          }
+          if (servers2 >= package.servers + extra.servers) return res.redirect(`${redirectlink}?err=TOOMUCHSERVERS`);
 
           let name = decodeURIComponent(req.query.name);
           if (name.length < 1) { 
@@ -163,7 +160,6 @@ module.exports.load = async function (app, db) {
               backups: 0
             };
             specs.name = name;
-            specs.limits.swap = -1;
             specs.limits.memory = ram;
             specs.limits.disk = disk;
             specs.limits.cpu = cpu;
@@ -173,16 +169,6 @@ module.exports.load = async function (app, db) {
               port_range: []
             }
             specs.deploy.locations = [location];
-            
-            // Make sure user has enough coins
-            const createdServer = await db.get(`createdserver-${req.session.userinfo.id}`)
-            const createdStatus = createdServer ?? false
-            const coins = await db.get("coins-" + req.session.userinfo.id) ?? 0;
-            const cost = settings.servercreation.cost
-            if (createdStatus && coins < cost) {
-              cb()
-              return res.redirect(`/servers/new?err=TOOLITTLECOINS`)
-            }
 
             let serverinfo = await fetch(
               settings.pterodactyl.domain + "/api/application/servers",
@@ -202,18 +188,13 @@ module.exports.load = async function (app, db) {
             let newpterodactylinfo = req.session.pterodactyl;
             newpterodactylinfo.relationships.servers.data.push(serverinfotext);
             req.session.pterodactyl = newpterodactylinfo;
-            
-            // Bill user if they have created a server before
-            if (createdStatus) {
-              await db.set("coins-" + req.session.userinfo.id, coins - cost)
-            }
 
             await db.set(`lastrenewal-${serverinfotext.attributes.id}`, Date.now())
             await db.set(`createdserver-${req.session.userinfo.id}`, true)
 
             cb()
             log('created server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``)
-            return res.redirect("/dashboard?err=CREATEDSERVER");
+            return res.redirect(theme.settings.redirect.createserver ? theme.settings.redirect.createserver : "/dashboard");
           } else {
             cb()
             res.redirect(`${redirectlink}?err=NOTANUMBER`);
@@ -331,7 +312,7 @@ module.exports.load = async function (app, db) {
         req.session.pterodactyl.relationships.servers.data = pterorelationshipsserverdata;
         let theme = indexjs.get(req);
         adminjs.suspend(req.session.userinfo.id);
-        res.redirect("/servers?err=MODIFYSERVER");
+        res.redirect(theme.settings.redirect.modifyserver ? theme.settings.redirect.modifyserver : "/dashboard");
       } else {
         res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
       }
@@ -362,7 +343,7 @@ module.exports.load = async function (app, db) {
         }
       );
       let ok = await deletionresults.ok;
-      if (ok !== true) return res.send("An error has occur while attempting to delete the server.");
+      if (ok !== true) return res.send("Failed to delete the server. Change the url to /forcedelete instead of /delete if you'd like to force delete the server.");
       let pterodactylinfo = req.session.pterodactyl;
       pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
       req.session.pterodactyl = pterodactylinfo;
@@ -371,7 +352,44 @@ module.exports.load = async function (app, db) {
 
       adminjs.suspend(req.session.userinfo.id);
 
-      return res.redirect('/dashboard?err=DELETEDSERVER');
+      return res.redirect(theme.settings.redirect.deleteserver ? theme.settings.redirect.deleteserver : "/");
+    } else {
+      res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
+    }
+  });
+
+  app.get("/forcedelete", async (req, res) => {
+    if (!req.session.pterodactyl) return res.redirect("/login");
+
+    if (!req.query.id) return res.send("Missing id.");
+
+    let theme = indexjs.get(req);
+
+    let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
+    if (newsettings.api.client.allow.server.delete == true) {
+      if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.send("Could not find server with that ID.");
+
+      let deletionresults = await fetch(
+        settings.pterodactyl.domain + "/api/application/servers/" + req.query.id + "/force",
+        {
+          method: "delete",
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${settings.pterodactyl.key}`
+          }
+        }
+      );
+      let ok = await deletionresults.ok;
+      if (ok !== true) return res.send("Still cannot delete the server.");
+      let pterodactylinfo = req.session.pterodactyl;
+      pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
+      req.session.pterodactyl = pterodactylinfo;
+
+      await db.delete(`lastrenewal-${req.query.id}`)
+
+      adminjs.suspend(req.session.userinfo.id);
+
+      return res.redirect(theme.settings.redirect.deleteserver ? theme.settings.redirect.deleteserver : "/");
     } else {
       res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
     }

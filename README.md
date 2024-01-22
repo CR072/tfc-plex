@@ -3,7 +3,7 @@
 ![image](https://cdn.tfc-plex.de/img/gitlogo.png)
 <p align="center" dir="auto">Trusted by 19 host and 2843 users.</p>
 <p align="center">
-  <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=v1.5.2 Downloads"/></a>
+  <a><img src="https://img.shields.io/github/downloads/privt00/tfc-plex/total?color=blue&label=v1.5.0 Downloads"/></a>
   <a href="https://discord.gg/BXmzHS9DRA"><img src="https://img.shields.io/discord/1175441775972860076?color=blue&label=Discord&logo=tfc-plex&logoColor=blue" alt="discord" /></a>
   <a href="https://docs.tfc-plex.de/"><img alt="Docs" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Docs&up_color=blue&up_message=Online&url=https://docs.tfc-plex.de/"></a>
   <a href="https://tfc-plex.de"><img alt="Website" src="https://img.shields.io/website?down_color=lightred&down_message=Offline&label=Website&up_color=blue&up_message=Online&url=https://tfc-plex.de"></a>
@@ -26,7 +26,6 @@ TFC-plex Demo: https://dash.tfc-hosting.de/
 ## 👀 Our Docs
 https://docs.tfc-plex.de/
 
-``` bash <(curl -s https://tfc-plex.de/install.sh)```
 
 
 Dashboard (v1.5.0):

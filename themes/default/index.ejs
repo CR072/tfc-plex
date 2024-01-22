@@ -67,8 +67,9 @@
 
             <!--Right Col-->
             <div class="w-full xl:w-3/5 p-12 overflow-hidden" style="margin-top: -150px;">
-              <img class="mx-auto w-full md:w-4/5 transform -rotate-1 transition hover:scale-105 scale-75 duration-700 ease-in-out hover:rotate-6" src="<%= settings.icon %>" />
-          </div>
+                <!-- Add responsive class to hide the logo on small screens -->
+                <img class="mx-auto w-full md:w-4/5 transform -rotate-1 transition hover:scale-105 scale-75 duration-700 ease-in-out hover:rotate-6 hidden md:block" src="<%= settings.icon %>" />
+            </div>
 
           <section id="team" class="w-full md:w-3/5 p-12 overflow-hidden text-center mx-auto">
             <!-- Statistics Section -->

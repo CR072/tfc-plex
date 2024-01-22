@@ -59,13 +59,18 @@
         "servers": "servers.ejs",
         "credits": "credits.ejs",
         "lv": "lv.ejs",
+        "lp": "lp.ejs",
         "shop": "buycoins.ejs",
         "tos": "tos.ejs",
         "admin/reghost": "admin-verify.ejs",
         "s/send": "social/send.ejs",
         "sub": "sub.ejs",
         "admin/user": "admin-user.ejs",
-        "plans": "plans.ejs"
+        "admin/server": "admin-server.ejs",
+        "register": "auth-register.ejs",
+        "login": "auth-login.ejs",
+        "plans": "plans.ejs",
+        "refarl": "refarl.ejs"
 
     },
     "mustbeloggedin": [
@@ -78,6 +83,7 @@
         "/store",
         "/coins",
         "/lv",
+        "/lp",
         "/shop",
         "/earn",
         "/redeem",
@@ -86,7 +92,8 @@
         "/s/send",
         "/tos",
         "/shop",
-        "/plans"
+        "/plans",
+        "/refarl"
 
     ],
     "mustbeadmin": [
@@ -97,7 +104,8 @@
         "/admin/user",
         "/admin/coins",
         "/admin/reghost",
-        "admin/user"
+        "admin/user",
+        "admin/server"
     ],
     "variables": {
         "home": {
