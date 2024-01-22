@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/head') %>
+<body>
+<div class="container-scroller">
+    <%- include('./components/adminsidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div class="main-panel">
+            <div style="background-color: #111319" class="content-wrapper">
+                <h2>Servers</h2>
+
+                <p class="text-gray">Manage all the servers</p>
+
+                <!-- Suchleiste -->
+                <input type="text" id="searchInput" placeholder="Search servers">
+
+                <!-- Serverliste -->
+                <div class="table-responsive bg-dark">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <!-- Weitere Spalten nach Bedarf hinzufügen -->
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="serverListBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <%- include('./components/footer') %>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<%- include('./components/scripts') %>
+
+<script>
+    $(document).ready(function () {
+        // Funktion zum Rendern der Serverliste
+        function renderServerList(servers) {
+            var serverListBody = $("#serverListBody");
+            serverListBody.empty();
+
+            servers.forEach(function (server) {
+                var row = $("<tr>");
+                row.append("<td class='text-white fs-bold'>" + server.id + "</td>");
+                row.append("<td class='text-white'>" + server.name + "</td>");
+                // Weitere Spalten nach Bedarf hinzufügen
+                row.append("<td> <button class='deleteServerBtn' data-server-id='" + server.id + "'>Delete</button></td>");
+                serverListBody.append(row);
+            });
+
+            // Füge den Event-Handler für den Delete-Button hinzu
+            $(".deleteServerBtn").click(function () {
+                var serverId = $(this).data("server-id");
+                deleteServer(serverId);
+            });
+        }
+
+        // API-Anfrage an /api/server
+        $.get("/api/server", function (data) {
+            if (data.servers && data.servers.length > 0) {
+                renderServerList(data.servers);
+            } else {
+                $("#serverListBody").append("<tr><td colspan='3'>No servers found</td></tr>");
+            }
+        });
+
+        // Suche nach Servern
+        $("#searchInput").on("input", function () {
+            var searchTerm = $(this).val().toLowerCase();
+
+            // API-Anfrage an /api/server/search
+            $.get("/api/server/search", { term: searchTerm }, function (data) {
+                if (data.servers && data.servers.length > 0) {
+                    renderServerList(data.servers);
+                } else {
+                    $("#serverListBody").html("<tr><td colspan='3'>No matching servers found</td></tr>");
+                }
+            });
+        });
+
+        // Funktion zum Löschen eines Servers
+        function deleteServer(serverId) {
+            // API-Anfrage an /api/server/delete/:id
+            $.ajax({
+                url: "/api/server/delete/" + serverId,
+                type: "DELETE",
+                success: function (data) {
+                    // Aktualisiere die Serverliste nach dem Löschen
+                    $.get("/api/server", function (updatedData) {
+                        if (updatedData.servers && updatedData.servers.length > 0) {
+                            renderServerList(updatedData.servers);
+                        } else {
+                            $("#serverListBody").html("<tr><td colspan='3'>No servers found</td></tr>");
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error("Failed to delete server: " + error.responseText);
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

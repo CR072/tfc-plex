@@ -1,0 +1,124 @@
+{
+    "index": "index.ejs",
+    "notfound": "404.ejs",
+    "redirect": {
+        "callback": "/dashboard",
+        "logout": "/",
+       	"createserver": "/servers?err=CREATED",
+        "deleteserver": "/servers",
+        "updateservers": "/servers",
+        "failedcreateserver": "/servers/new",
+        "failedmodifyserver": "/servers/edit",
+        "setplan": "/admin",
+        "failedsetplan": "/admin",
+        "createserverdisabled": "/servers/new?err=disabled",
+        "modifyserverdisabled": "/servers/modify?err=disabled",
+        "deleteserverdisabled": "/delete?err=disabled",
+        "regenpassword": "/settings",
+        "setresources": "/admin",
+        "failedsetresources": "/admin",
+        "giftresources": "/gift",
+        "failedgiftresources": "/gift",
+        "renewserver": "/dashboard",	
+        "setcoins": "/admin",	
+        "failedsetcoins": "/admin",	
+        "purchaseram": "/store",	
+        "failedpurchaseram": "/store",	
+        "purchasedisk": "/store",	
+        "failedpurchasedisk": "/store",	
+        "purchasecpu": "/store",	
+        "failedpurchasecpu": "/store",	
+        "purchaseservers": "/store",	
+        "failedpurchaseservers": "/store",
+        "arcioerror": "/dashboard?err=arcio",
+        "missingorinvalidcouponcode": "/redeem",
+        "successfullyredeemedcoupon": "/redeem",
+        "couponcreationfailed": "/admin",
+        "couponcreationsuccess": "/admin",
+        "couponrevokefailed": "/admin",
+        "couponrevokesuccess": "/admin",
+        "removeaccountfailed": "/admin",
+        "removeaccountsuccess": "/admin"
+
+    },
+    "pages": {
+        "dashboard": "dashboard.ejs",
+        "servers/new": "create.ejs",
+        "servers/edit": "edit.ejs",
+        "admin": "admin.ejs",
+        "admin/plans": "admin-plans.ejs",
+        "admin/resources": "admin-resources.ejs",
+        "admin/coupons": "admin-coupons.ejs",
+        "admin/coins": "admin-coins.ejs",
+        "redeem": "redeem.ejs",
+        "settings": "settings.ejs",
+        "gift": "gift.ejs",
+        "j4r": "j4r.ejs",
+        "afk": "afk.ejs",
+        "store": "store.ejs",
+        "servers": "servers.ejs",
+        "credits": "credits.ejs",
+        "lv": "lv.ejs",
+        "lp": "lp.ejs",
+        "shop": "buycoins.ejs",
+        "tos": "tos.ejs",
+        "admin/reghost": "admin-verify.ejs",
+        "s/send": "social/send.ejs",
+        "sub": "sub.ejs",
+        "admin/user": "admin-user.ejs",
+        "admin/server": "admin-server.ejs",
+        "register": "auth-register.ejs",
+        "login": "auth-login.ejs",
+        "plans": "plans.ejs",
+        "refarl": "refarl.ejs"
+
+    },
+    "mustbeloggedin": [
+        "/dashboard",
+        "/servers/new",
+        "/servers/edit",
+        "/settings",
+        "/j4r",
+        "/gift",
+        "/store",
+        "/coins",
+        "/lv",
+        "/lp",
+        "/shop",
+        "/earn",
+        "/redeem",
+        "/servers",
+        "/sub",
+        "/s/send",
+        "/tos",
+        "/shop",
+        "/plans",
+        "/refarl"
+
+    ],
+    "mustbeadmin": [
+        "/admin",
+        "/admin/plans",
+        "/admin/resources",
+        "/admin/coupons",
+        "/admin/user",
+        "/admin/coins",
+        "/admin/reghost",
+        "admin/user",
+        "admin/server"
+    ],
+    "variables": {
+        "home": {
+
+            "admin": "admin",
+            "buttontext": {
+                "loggedin": {
+                    "link": "/dashboard"
+                },
+                "loggedout": {
+                    "link": "/login"
+                }
+            }
+        }
+    }
+}

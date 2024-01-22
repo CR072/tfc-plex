@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/head') %>
+
+<body class="bg-theme">
+<div class="container-scroller">
+    <%- include('./components/sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+        <div  class="main-panel">
+            <div class="content-wrapper">
+                <div class="row justify-content-center align-items-center">
+
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card" style="height: 100px;">
+                            <div class="card-body">
+                                <h3>Referrel</h3>
+                                <p class="text-muted">Earn Coins By Inviting Your Friends</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="card-body">
+                  <% if (req.query.err) { %>
+                    <div class="alert-box danger-alert">
+                      <div class="alert">
+                        <% if (req.query.err == "INVALIDDETAILS") { %>
+                          <p>You Have Not Filled All The Details Correctly.</p>
+                        <% } %>
+                      </div>
+                    </div>    
+                  <% } else if (req.query.success) { %> 
+                    <div class="alert-box success-alert">
+                      <div class="alert">
+                        <% if (req.query.success == "UPDATEDREFERID") { %>
+                          <p>Your Refer ID Has Been Successfuly Updated To <%= referid %> </p>
+                        <% } %>
+                      </div>
+                    </div> 
+                  <% } %>
+                  <div class="card" style="padding: 20px;">
+                  <div class="d-flex justify-content-between align-items-center"></div>
+                        <div class="text"><p class="text-medium"></p></div>
+                        <a> </a>
+                        
+                        <div class="input-style-1">
+                          <label>ReferId:</label>
+                          
+                          <input placeholder="<%=pterodactyl.username%>" type="text" id="id" value="<%=pterodactyl.username%>" />
+                          
+                      </div>
+
+                      
+                        <a href="#0" class="main-btn primary-btn btn-sm btn-hover" ><%- settings.api.client.oauth2.link %>/referal/code?referid=<%=pterodactyl.username%></a>
+                    </div>
+              </div>
+          </div>
+          <a></a>
+
+        
+
+
+
+
+
+<%- include('./components/footer') %>
+
+
+
+
+
+<%- include('./components/scripts') %>
+</body>
+</html> 
