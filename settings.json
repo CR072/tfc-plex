@@ -22,6 +22,38 @@
     "key": "ptla_",
     "account_key": "ptlc_"
   },
+
+
+        "oauth2": {
+        "_comment": "Go to https://discord.dev/ and create an application to set these up.",
+        "id": "",
+        "secret": "",
+        "link": "http://localhost:2000",
+        "callbackpath": "/callback",
+        "prompt": false,
+        "ip": {
+          "trust x-forwarded-for": true,
+          "block": [],
+          "duplicate check": false
+        }
+      },
+
+
+  "google": {
+    "enabled": false,
+    "_comment1": "you can get these details from https://console.cloud.google.com/",
+    "clientid": ".apps.googleusercontent.com",
+    "clientsecret": "",
+    "link": "http://localhost:2000"
+  },
+
+
+  "referral": {
+    "enabled": true,
+    "coinsPerReferral": 10
+  },
+  
+
   "cloudflare": {
     "domain": "",
     "email": "@gmail.com",
@@ -86,19 +118,7 @@
         },
         "overresourcessuspend": false
       },
-      "oauth2": {
-        "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "",
-        "secret": "",
-        "link": "http://localhost:2000",
-        "callbackpath": "/callback",
-        "prompt": false,
-        "ip": {
-          "trust x-forwarded-for": true,
-          "block": [],
-          "duplicate check": false
-        }
-      },
+
       "ratelimits": {
         "/callback": 2,
         "/create": 1,
@@ -144,9 +164,11 @@
           "package": null
         }
       },
+      
+      "note-1": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
       "eggs": {
 
-        "note-1": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
+
 
         "paper": {
           "display": "Minecraft Java | Paper/Spigot",
