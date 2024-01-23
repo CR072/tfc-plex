@@ -15,34 +15,27 @@
   },
   "website": {
     "port": 2000,
-    "secret": "Defaultdfasfdsf"
+    "secret": "( Change that )"
   },
   "pterodactyl": {
     "domain": "https://panel.example.com/",
     "key": "ptla_",
     "account_key": "ptlc_"
   },
-
-
-    
   "google": {
     "enabled": false,
-    "_comment1": "you can get these details from https://console.cloud.google.com/",
+    "_comment": "you can get these details from https://console.cloud.google.com/",
     "clientid": ".apps.googleusercontent.com",
-    "clientsecret": "",
+    "clientsecret": "YOUR_SECRET_CLIENT",
     "link": "http://localhost:2000"
   },
-
-
   "referral": {
     "enabled": true,
     "coinsPerReferral": 10
   },
-  
-
   "cloudflare": {
     "domain": "",
-    "email": "@gmail.com",
+    "email": "exemple@example.com",
     "api_key": "",
     "zone_id": "",
     "account_id": ""
@@ -51,8 +44,12 @@
     "enabled": false,
     "keyword": "keyword"
   },
+  "paypal": {
+    "clientId": "0000",
+    "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
+  },
   "linkvertise": {
-    "userid": "963062",
+    "userid": "000000",
     "coins": 150
   },
   "database": "sqlite://database.sqlite",
@@ -104,9 +101,6 @@
         },
         "overresourcessuspend": false
       },
-
-
-        
   "oauth2": {
     "_comment": "Go to https://discord.dev/ and create an application to set these up.",
     "id": "",
@@ -136,7 +130,6 @@
         "default": "default",
         "list": {
           "default": {
-
             "ram": 1024,
             "disk": 1024,
             "cpu": 100,
@@ -165,12 +158,8 @@
           "package": null
         }
       },
-      
       "note-1": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
       "eggs": {
-
-
-
         "paper": {
           "display": "Minecraft Java | Paper/Spigot",
           "minimum": {
@@ -283,10 +272,6 @@
           }
         }
       },
-      "paypal": {
-        "clientId": "1009",
-        "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
-      },
       "coins": {
         "enabled": true,
         "note-1": "the money that cost 1 coin in this version the real money shop is disabled",
@@ -356,10 +341,10 @@
         "create server": true,
         "gifted coins": true,
         "modify server": true,
-        "buy servers": true,
-        "buy ram": true,
-        "buy cpu": true,
-        "buy disk": true
+        "server purchased": true,
+        "ram purchased": true,
+        "cpu purchased": true,
+        "disk purchased": true
       },
       "admin": {
         "set coins": true,
@@ -376,7 +361,7 @@
   "antivpn": {
     "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, TFC-Plex will disable antigen.",
     "status": false,
-    "APIKey": "api Key",
+    "APIKey": "API Key",
     "whitelistedIPs": [
       "IP address"
     ]
@@ -385,9 +370,7 @@
     "note": "This allows only specific people to be able to use the dashboard",
     "status": false,
     "users": [
-      "873121310950191155"
+      "000000000000000000"
     ]
   }
-
 }
-
