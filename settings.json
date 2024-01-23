@@ -49,7 +49,7 @@
     "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
   },
   "linkvertise": {
-    "userid": "000000",
+    "userid": "963062",
     "coins": 150
   },
   "database": "sqlite://database.sqlite",
