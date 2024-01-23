@@ -4,7 +4,7 @@ const indexjs = require("../index.js");
 const adminjs = require("./admin.js");
 const fs = require("fs");
 const getPteroUser = require('../misc/getPteroUser')
-const Queue = require('../managers/Queue')
+const Queue = require('../misc/Queue')
 const log = require('../misc/log')
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
