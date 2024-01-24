@@ -14,7 +14,6 @@ if (settings.pterodactyl.domain.slice(-1) == "/")
 const fetch = require('node-fetch');
 
 const indexjs = require("../index.js");
-const arciotext = (require("./arcio.js")).text;
 
 const fs = require("fs");
 

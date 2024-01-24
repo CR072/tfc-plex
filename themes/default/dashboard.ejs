@@ -10,7 +10,6 @@
         <div  class="main-panel">
             <div class="content-wrapper">
                 <div class="row justify-content-center align-items-center">
-
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card" style="height: 100px;">
                             <div class="card-body">
@@ -19,9 +18,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
 
                 <div id="claimLink" style="display: none;">
                     <div class="row justify-content-center align-items-center">
@@ -45,17 +42,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-
                 <%- include('./components/alert') %>
-
-
                 <%- include('./components/status') %>
-
-
-
 
                 <div class="row">
                     <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
@@ -67,18 +57,17 @@
                                             <i class="fas fa-bolt fa-2x"></i>
                                         </div>
                                         <div class="col-10">
-                                            <%- include('./boxes/1') %>
+                                            <div class="box">
+                                                <h3 class="card-title">Buy more resources</h3>
+                                                <p class="text-muted ">You can buy more resources here if you dont have enaugh recources</p><br>
+                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../store">Buy Extra Resources</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
-
-
-
-
-
 
                     <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
                         <a href="../servers/new" style="text-decoration: none; color: inherit;">
@@ -89,7 +78,11 @@
                                             <i class="fa-solid fa-plus fa-2x"></i>
                                         </div>
                                         <div class="col-10">
-                                            <%- include('./boxes/2') %>
+                                            <div class="box">
+                                                <h3 class="card-title">Create Server</h3>
+                                                <p class="text-muted ">Deploy a new Server.</p><br>
+                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../servers/new">Buy Extra Resources</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,14 +91,11 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card" style="height: 150px; overflow-y: scroll;">
                             <div class="card-body">
                                 <h3>Your Servers:</h3>
-
-
                                 <% if (pterodactyl.relationships.servers.data.length == 0) { %>
                                     <p>No servers available.</p>
                                 <% } else { %>
@@ -126,13 +116,9 @@
 
                                         <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
 
-
-
                                         <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
                                             <option value="<%= name %>"><%= value.name %></option>
                                         <% } %>
-
-
 
                                         <hr>
                                     <% } %>
@@ -142,11 +128,8 @@
                     </div>
                 </div>
             </div>
-
             <%- include('./components/footer') %>
-
         </div>
-
     </div>
 </div>
 <%- include('./components/scripts') %>
@@ -154,12 +137,11 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Überprüfe, ob das Claiming in den Einstellungen aktiviert ist
         if (<%= settings.claiming.enabled %>) {
-            // Wenn aktiviert, zeige den Claim-Link an
+            // If activated, display the claim link
             document.getElementById("claimLink").style.display = "block";
         } else {
-            // Wenn deaktiviert, verstecke den Claim-Link
+            // If deactivated, hide the claim link
             document.getElementById("claimLink").style.display = "none";
         }
     });

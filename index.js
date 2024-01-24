@@ -7,7 +7,7 @@ const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
-const arciotext = require('./sec/arciotext')
+const arciotext = require('./misc/arciotext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
