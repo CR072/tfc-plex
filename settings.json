@@ -92,6 +92,7 @@
         "length": 16
       },
       "allow": {
+        "signup": true,
         "newusers": true,
         "regen": true,
         "server": {
@@ -100,21 +101,20 @@
           "delete": true
         },
         "overresourcessuspend": false
-      
-  "oauth2": {
-    "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-    "id": "",
-    "secret": "",
-    "link": "http://localhost:2000",
-    "callbackpath": "/callback",
-    "prompt": false,
-    "ip": {
-      "trust x-forwarded-for": true,
-      "block": [],
-      "duplicate check": false
-    }
-  }
-  },
+      },
+      "oauth2": {
+        "_comment": "Go to https://discord.dev/ and create an application to set these up.",
+        "id": "1147241759961792553",
+        "secret": "DBDrr9skoCqJavScSn_hJIE8M5eGN_zF",
+        "link": "http://localhost:2000",
+        "callbackpath": "/callback",
+        "prompt": false,
+        "ip": {
+          "trust x-forwarded-for": true,
+          "block": [],
+          "duplicate check": false
+        }
+      },
       "ratelimits": {
         "/callback": 2,
         "/create": 1,
