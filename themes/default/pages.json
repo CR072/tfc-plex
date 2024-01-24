@@ -70,7 +70,8 @@
         "register": "auth-register.ejs",
         "login": "auth-login.ejs",
         "plans": "plans.ejs",
-        "refarl": "refarl.ejs"
+        "refarl": "refarl.ejs",
+        "admin/settings": "admin-settings.ejs"
 
     },
     "mustbeloggedin": [
@@ -94,6 +95,7 @@
         "/shop",
         "/plans",
         "/refarl"
+        
 
     ],
     "mustbeadmin": [
@@ -105,7 +107,8 @@
         "/admin/coins",
         "/admin/reghost",
         "admin/user",
-        "admin/server"
+        "admin/server",
+        "admin/settings"
     ],
     "variables": {
         "home": {

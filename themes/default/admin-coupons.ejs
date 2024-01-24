@@ -52,6 +52,38 @@
     </div>
     <script src="/assets/vendors/select2/select2.min.js"></script>
     <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script>
+        async function submitPlan() {
+            let id = encodeURIComponent(document.getElementById("IDPlan").value);
+            let packagename = encodeURIComponent(document.getElementById("package").value);
+            window.location.href = "/setplan?id=" + id + "&package=" + packagename
+        }
+        async function submitSet() {
+            let id = encodeURIComponent(document.getElementById("IDSet").value);
+            let cpu = encodeURIComponent(document.getElementById("SetCPU").value);
+            let ram = encodeURIComponent(document.getElementById("SetRAM").value);
+            let disk = encodeURIComponent(document.getElementById("SetDisk").value);
+            let servers = encodeURIComponent(document.getElementById("SetServers").value);
+            window.location.href = "/setresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitAdd() {
+            let id = encodeURIComponent(document.getElementById("IDAdd").value);
+            let cpu = encodeURIComponent(document.getElementById("AddCPU").value);
+            let ram = encodeURIComponent(document.getElementById("AddRAM").value);
+            let disk = encodeURIComponent(document.getElementById("AddDisk").value);
+            let servers = encodeURIComponent(document.getElementById("AddServers").value);
+            
+            window.location.href = "/addresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitRemove() {
+            let id = encodeURIComponent(document.getElementById("IDRemove").value);
+            let cpu = encodeURIComponent(document.getElementById("RemoveCPU").value);
+            let ram = encodeURIComponent(document.getElementById("RemoveRAM").value);
+            let disk = encodeURIComponent(document.getElementById("RemoveDisk").value);
+            let servers = encodeURIComponent(document.getElementById("RemoveServers").value);
+            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+    </script>
     <%- include('./components/scripts') %>
     <script src="/assets/js/file-upload.js"></script>
     <script src="/assets/js/typeahead.js"></script>

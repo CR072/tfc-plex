@@ -7,8 +7,8 @@
       <%- include('./components/sidebar') %>
       <div class="container-fluid page-body-wrapper">
         <%- include('./components/topnav') %>
-        <div style="background-color: #111319" class="main-panel">
-          <div style="background-color: #111319" class="content-wrapper">
+        <div  class="main-panel">
+          <div  class="content-wrapper">
            <h2>Edit Server</h2>
            <p class="text-gray">Edit the resources of your server.</p>
             <% if (req.query.err) { %>
@@ -62,18 +62,18 @@
             </div>
         <% } %>
         <% if (req.query.id) { %>
-            <% if (pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id).length == 1) {
-                let serverinfo = pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id)[0];
-                let attemptegg = null;
-                let attemptname = null;
-                for (let [name, value] of Object.entries(settings.api.client.eggs)) {
-                    if (settings.api.client.eggs[name].info.egg == serverinfo.attributes.egg) {
-                        attemptegg = settings.api.client.eggs[name];
-                        attemptname = name;
-                    };
+          <% if (pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id).length == 1) {
+            let serverinfo = pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id)[0];
+            let attemptegg = null;
+            let attemptname = null;
+            for (let [name, value] of Object.entries(eggconfig)) {
+                if (eggconfig[name].info.egg == serverinfo.attributes.egg) {
+                    attemptegg = eggconfig[name];
+                    attemptname = name;
                 };
-                let egginfo = attemptegg ? attemptegg.display : "???";
-            %>
+            };
+            let egginfo = attemptegg ? attemptegg.display : "???";
+        %>
             <div class="row">
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
@@ -81,35 +81,37 @@
                     <form class="forms-sample">
                       <div class="form-group">
                         <label for="exampleInputUsername1">Server Name</label>
-                        <input  style="border-radius: 15px; padding: 8px;" type="text" class="form-control" value="<%= serverinfo.attributes.name %> | Changing this will not do anything, use the panel">
+                        <input  style="border-radius: 1px; padding: 8px;" type="text" class="form-control" value="<%= serverinfo.attributes.name %> | Changing this will not do anything, use the panel">
                       </div>
                       <div class="form-group">
                         <label for="InputCPU">CPU</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="120" value="<%= serverinfo.attributes.limits.cpu/100 %>">
+                        <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="120" value="<%= serverinfo.attributes.limits.cpu/100 %>">
                       </div>
                       <div class="form-group">
                         <label for="InputRAM">RAM</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="2048" value="<%= serverinfo.attributes.limits.memory/1024 %>">
+                        <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="2048" value="<%= serverinfo.attributes.limits.memory/1024 %>">
                       </div>
                       <div class="form-group">
                         <label for="InputDisk">Disk</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="20480" value="<%= serverinfo.attributes.limits.disk/1024 %>">
+                        <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="20480" value="<%= serverinfo.attributes.limits.disk/1024 %>">
                       </div>
                       <div class="form-group">
                         <label for="InputEgg">Egg</label><BR>
-                        <select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 15px; padding: 8px;" disabled>
-                          <% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
+                        <select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 5px; padding: 8px;" disabled>
+                          <% for (let [name, value] of Object.entries(eggs)) { %>
                             <option value="<%= name %>"><%= value.display %></option>
                           <% } %>
                         </select>
                       </div>
-                      <a role="button" class="btn btn-primary" href="javascript: submitChanges()">Apply Changes</a>
+                      <button class="form-control form-control-rounded" href="javascript: submitChanges()">Apply Changes</button>
+
+
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+  
           <% } else { %>
                 <p style="margin-left: 5%;">Could not find server with the provided ID.</p>
             <% } %>
@@ -117,8 +119,8 @@
             <p style="margin-left: 5%;">Missing server ID.</p>
         <% } %>
           </div>
-          <%- include('./components/footer') %>
-        </div>
+
+
       </div>
     </div>
     <script src="/assets/vendors/select2/select2.min.js"></script>

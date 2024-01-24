@@ -2,12 +2,13 @@
 
 // Load packages.
 
-
+global.eggconfig = require('./eggs.json')
 const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
-const arciotext = require('./misc/arciotext')
+
+
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -70,6 +71,7 @@ module.exports.renderdataeval =
  
     let renderdata = {
       req: req,
+      eggs: eggconfig,
       
       settings: newsettings,
       userinfo: req.session.userinfo,
@@ -89,16 +91,7 @@ module.exports.renderdataeval =
 	  db: db,
 
     };
-    if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
-      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
-        let token = "\${req.session.arcsessiontoken}";
-        let everywhat = \${newsettings.api.arcio["afk page"].every};
-        let gaincoins = \${newsettings.api.arcio["afk page"].coins};
-        let arciopath = "\${newsettings.api.arcio["afk page"].path.replace(/\\\\/g, "\\\\\\\\").replace(/"/g, "\\\\\\"")}";
 
-        \${arciotext}
-      \`);
-    };
 
     return renderdata;
   })();`;
@@ -232,7 +225,7 @@ app.all("*", async (req, res) => {
     if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");
     let theme = indexjs.get(req);
     let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-    if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.random().toString(36).substring(2, 15);
+   
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
         ejs.renderFile(

@@ -26,6 +26,7 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
+                                <th>Admin</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -59,6 +60,7 @@
                 row.append("<td class='text-white'>" + user.firstName + "</td>");
                 row.append("<td class='text-white'>" + user.lastName + "</td>");
                 row.append("<td class='text-white'>" + user.email + "</td>");
+                row.append("<td class='text-white'>" + user.rootAdmin + "<input type='hidden' value='" + user.rootAdmin + "'></td>");
                 row.append("<td> <button class='deleteUserBtn' data-user-id='" + user.id + "'>Delete</button></td>");
                 userListBody.append(row);
             });

@@ -7,121 +7,139 @@
       <%- include('./components/sidebar') %>
       <div class="container-fluid page-body-wrapper">
         <%- include('./components/topnav') %>
-        <div class="main-panel">
-          <div style="background-color: #111319" class="content-wrapper">
-           <h2>Deploy Server</h2>
-
-           <p class="text-gray">Deploy your new server.</p>
-
-
-
-
-
-
-            <% if (req.query.err) { %>
-            <div style="border-radius: 15px;" class="alert">
-                <% if (req.query.err == "MISSINGVARIABLE") { %>
-                    You have not filled out all of the server information.
-                <% } else if (req.query.err == "NOTANUMBER") { %>
-                    RAM, disk and CPU must be a number.
-                <% } else if (req.query.err == "ERRORONCREATE") { %>
-                    An error was reported by the Panel while attempting to create the server.
-                <% } else if (req.query.err == "BIGSERVERNAME") { %>
-                    Your server name must be less than <b>191</b> characters.
-                <% } else if (req.query.err == "TOOMUCHSERVERS") { %>
-                    Too many servers!
-                <% } else if (req.query.err == "PREMIUMLOCATION") { %>
-                    Please select a location.
-                <% } else if (req.query.err == "TOOLITTLECOINS") { %>
-                    There was an unknown backend error while attempting to create the server.
-                <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
-                    You must complete the captcha to prove you are human!
-                <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
-                    You submitted an invalid captcha response, try again.
-                <% } else { %>
-                    <% if (req.query.num) { %>
-                        <% if (!isNaN(parseFloat(req.query.num))) { %>
-                            <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
-                                You must make a server with at least <b><%= req.query.num %></b>
-                                <% if (req.query.err.slice(-3) == "RAM") { %>
-                                    MB RAM
-                                <% } else if (req.query.err.slice(-4) == "DISK") { %>
-                                    MB disk
-                                <% } else { // CPU %>
-                                    % CPU
-                                <% } %>
-                                if you want to create a server with the server type you have selected.
-                            <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
-                                With the selected server type, you can have a maximum of <b><%= req.query.num %></b>
-                                <% if (req.query.err.slice(-3) == "RAM") { %>
-                                    MB RAM
-                                <% } else if (req.query.err.slice(-4) == "DISK") { %>
-                                    MB disk
-                                <% } else { // CPU %>
-                                    % CPU
-                                <% } %>
-                                on the server.
-                            <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
-                                You don't have enough resources to make this server.
-                            <% } else { %>
-                                An unknown error occurred while attempting to create the server.
-                            <% } %>
-                        <% } else { %>
-
-                        <% } %>
-                    <% } else { %>
-                    <% } %>
-                <% } %>
-            </div>
-        <% } %>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
+        <%
+        let ram = 0;
+        let disk = 0;
+        let cpu = 0;
+        let backups = 1;
+        let allocations = 1;
+        let databases = 1;
+        let servers = 1;
+        
+        if (pterodactyl && pterodactyl.relationships && pterodactyl.relationships.servers && pterodactyl.relationships.servers.data) {
+          servers = pterodactyl.relationships.servers.data.length;
+        
+          pterodactyl.relationships.servers.data.forEach(server => {
+            const limits = server.attributes.limits;
+            const feature_limits = server.attributes.feature_limits; // Fetching feature_limits
+        
+            if (limits && typeof limits.memory === "number") {
+              ram += limits.memory;
+            }
+            if (limits && typeof limits.disk === "number") {
+              disk += limits.disk;
+            }
+            if (limits && typeof limits.cpu === "number") {
+              cpu += limits.cpu;
+            }
+            if (feature_limits && typeof feature_limits.backups === "number") {
+              backups += feature_limits.backups;
+            }
+            if (feature_limits && typeof feature_limits.allocations === "number") {
+              allocations += feature_limits.allocations;
+            }
+            if (feature_limits && typeof feature_limits.databases === "number") {
+              databases += feature_limits.databases;
+            }
+          });
+        }
+        %>
+            <div id="createBox" class="card" style="margin-top: 100px; height: 800px; overflow-y: scroll; width: 900px; overflow-x: hidden;">
+              <div class="card-content">
+                <div class="row row-group m-0">
                   <div class="card-body">
-                    <form class="forms-sample">
-                      <div class="form-group">
-                        <label for="InputName">Server Name</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="text" class="form-control" id="InputName" placeholder="My Server">
-                      </div>
-                      <div class="form-group">
-                        <label for="InputCPU">CPU</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="1">
-                      </div>
-                      <div class="form-group">
-                        <label for="InputRAM">RAM</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="2">
-                      </div>
-                      <div class="form-group">
-                        <label for="InputDisk">Disk</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="40">
-                      </div>
-                      <div class="form-group">
-                        <label for="InputLoc">Location</label><BR>
-                        <select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 15px; padding: 8px;" id="InputLoc">
-                          <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
-                            <option value="<%= name %>"><%= value.name %></option>
-                          <% } %>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="InputEgg">Egg</label><BR>
-                        <select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 15px; padding: 8px;" id="InputEgg">
-                          <% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
-                            <option value="<%= name %>"><%= value.display %></option>
-                          <% } %>
-                        </select>
-                      </div>
-                      <a role="button" id="create-btn" class="btn btn-primary" href="javascript: submitNew()">Deploy Server</a>
-                    </form>
+                    <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-alt"></i></span></h5>
+                    <h6 style="color:white">Server Name:</h6>
+                    <input id="SRVname" class="form-control form-control-rounded" type="text"
+                      placeholder="<%= userinfo.username%>'s Server" value="<%= userinfo.username%>'s Server" name="fname">
+                  </div>
+                </div>
+        
+                <div class="row row-group m-0">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"> <span class="float-right"><i
+                          class="bi bi-chat-quote-fill"></i></span></h5>
+                    <h6 style="color:white">Describe your server:</h6>
+                    <textarea id="SRVdescription" class="form-control form-control-rounded" type="text"
+                      placeholder="<%= userinfo.username%>'s really nice server that is used to play minecraft"  rows="2" name="fname"></textarea>
+                  </div>
+                </div>
+        
+                <div class="row row-group mt-0">
+                  <div class="card-body">
+                    <h5 class="text-white m-0"> <span class="float-right"><i
+                          class="fa-solid fa-memory"></i></span></h5>
+                    <h6 style="color:white">how much RAM you need? (mb):</h6>
+                    <input id="SRVram" class="form-control form-control-rounded" type="text" placeholder="ram in MB"
+                      value="<%= packages.ram + extraresources.ram - ram %>" name="fname">
+                  </div>
+        
+                  <div class="card-body">
+                    <h5 class="text-white mt-2"> <span class="float-right"><i
+                          class="fa-solid fa-hard-drive"></i></span></h5>
+                    <h6 style="color:white">how much Stoarge you need? (mb):</h6>
+                    <input id="SRVdisk" class="form-control form-control-rounded" type="text"
+                      placeholder="disk in MB" value="<%= packages.disk + extraresources.disk - disk %>" name="fname">
+                  </div>
+        
+                  <div class="card-body">
+                    <h5 class="text-white mt-2"> <span class="float-right"><i
+                          class="fa-solid fa-microchip"></i></span></h5>
+                    <h6 style="color:white">CPU 100 = 1 core:</h6>
+                    <input id="SRVcpu" class="form-control form-control-rounded" type="text"
+                      placeholder="cpu in %" value="<%= packages.cpu + extraresources.cpu - cpu %>" name="fname">
+                  </div>
+                  </div>
+        
+                  
+                    </div>
+        
+                  <div class="row row-group m-0">
+                    <div class="card-body">
+                      <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-plugin"></i></span></h5>
+                      <h6 style="color:white">What do You Want to Host?</h6>
+                      <ul class="software-list">
+                        <% for (let [name, value] of Object.entries(eggs)) { %>
+                        <li class="software-item" data-egg="<%= name %>">
+                          <img class="software-banner" src="<%= value.banner %>">
+                          <%= value.display %>
+                        </li>
+                        <% } %>
+                      </ul>
+                    </div>
+                  </div>
+        
+                <div class="row row-group m-0">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"> <span class="float-right"><i
+                          class="bi bi-geo-alt-fill"></i></span></h5>
+                    <h6 style="color:white">in which Country should your server stand in?</h6>
+                    <ul class="location-list">
+                      <% for (let [name, value, short] of Object.entries(settings.api.client.locations)) { %>
+                        <li class="location-item" value="<%= name %>">
+                          <img class="location-flag" src="<%= value.flag %>">
+                          <%= value.short %> -
+                            <%= value.name %>
+                        </li>
+                        <% } %>
+                    </ul>
+                  </div>
+                </div>
+        
+                <div class="row row-group m-0">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-check2"></i></span></h5>
+                    <button class="form-control form-control-rounded"
+                     onclick="submitNew()">Deploy new server</button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <%- include('./components/footer') %>
-        </div>
-      </div>
-    </div>
+            <div id="loading" style="display: none;" class="card mt-3">
+              <div class="text-center card-content p-2"><br><br>
+        
+              </div>
+            </div>
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="../../assets/vendors/select2/select2.min.js"></script>
     <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
@@ -146,3 +164,203 @@
     <script src="/assets/js/select2.js"></script>
   </body>
 </html>
+<script>
+  let inputLOCC = "";
+
+  function setINPLOC(num) {
+    inputLOCC = num;
+    console.log(num);
+  }
+
+  function submitNew() {
+    const cbox = document.getElementById("createBox");
+    const loading = document.getElementById("loading");
+    cbox.style.display = 'none'
+    loading.style.display = 'block';
+    const name = encodeURIComponent(document.getElementById("SRVname").value);
+    const softwareItems = document.getElementsByClassName("software-item");
+    let selectedEgg;
+
+    for (let i = 0; i < softwareItems.length; i++) {
+      if (softwareItems[i].classList.contains("selected")) {
+        selectedEgg = softwareItems[i].dataset.egg;
+        break;
+      }
+    }
+
+    if (!selectedEgg) {
+      Swal.fire({
+        title: 'Alert!',
+        text: 'Please select a server software!',
+        icon: 'error'
+      });
+      cbox.style.display = 'block'
+      loading.style.display = 'none';
+      return;
+    }
+
+    const ram = encodeURIComponent(document.getElementById("SRVram").value);
+    const disk = encodeURIComponent(document.getElementById("SRVdisk").value);
+    const cpu = encodeURIComponent(document.getElementById("SRVcpu").value);
+    const backups = 2;
+    const databases =1;
+    const allocations =1;
+    const description = encodeURIComponent(document.getElementById("SRVdescription").value);
+
+    const locationItems = document.getElementsByClassName("location-item");
+    let selectedLocation;
+
+    for (let i = 0; i < locationItems.length; i++) {
+      if (locationItems[i].classList.contains("selected")) {
+        selectedLocation = locationItems[i].getAttribute("value");
+        break;
+      }
+    }
+
+    if (!selectedLocation) {
+      Swal.fire({
+        title: 'Alert!',
+        text: 'Please select a server location!',
+        icon: 'error'
+      });
+      cbox.style.display = 'block'
+      loading.style.display = 'none';
+      return;
+    }
+
+    const queryParams = new URLSearchParams({
+      name: name,
+      description: description,
+      egg: selectedEgg,
+      ram: ram,
+      disk: disk,
+      cpu: cpu,
+      backups: backups,
+      allocations: allocations,
+      databases: databases,
+      location: selectedLocation
+    });
+
+    fetch(`/create?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success === true) {
+          toastr.success(data.message, 'Success!');
+          window.location.reload();
+        } else if (data.redirect) {
+          window.location.href = data.redirect
+        } else {
+          toastr.error(data.message, 'Error!');
+          cbox.style.display = 'block'
+          loading.style.display = 'none';
+        }
+      })
+      .catch(error => {
+        console.error("An error occurred:", error);
+      });
+
+
+  }
+
+  const softwareItems = document.getElementsByClassName("software-item");
+  for (let i = 0; i < softwareItems.length; i++) {
+    softwareItems[i].addEventListener("click", function() {
+      for (let j = 0; j < softwareItems.length; j++) {
+        softwareItems[j].classList.remove("selected");
+        softwareItems[j].style.display = 'block';
+      }
+      this.classList.add("selected");
+    });
+  }
+
+  const locationItems = document.getElementsByClassName("location-item");
+  for (let i = 0; i < locationItems.length; i++) {
+    locationItems[i].addEventListener("click", function() {
+      for (let j = 0; j < locationItems.length; j++) {
+        locationItems[j].style.display = 'block';
+        locationItems[j].classList.remove("selected");
+      }
+      this.classList.add("selected");
+    });
+  }
+
+  const eggItems = document.getElementsByClassName("egg-item");
+  for (let i = 0; i < eggItems.length; i++) {
+    eggItems[i].addEventListener("click", function() {
+      for (let j = 0; j < eggItems.length; j++) {
+        eggItems[j].classList.remove("selected");
+      }
+      this.style.display = 'none';
+      this.classList.add("selected");
+    });
+  }
+</script>
+<style>
+
+  .location-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .location-item {
+    border: 0 solid #e5eaef;
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 250px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  .location-item.selected {
+    background-color: rgba(0, 0, 0, .2);
+    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
+  }
+
+  .location-flag {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .software-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .software-item {
+    border: 0 solid #e5eaef;
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 250px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  .software-banner {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .software-item.selected {
+    background-color: rgba(0, 0, 0, .2);
+    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
+  }
+</style>

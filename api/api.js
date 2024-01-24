@@ -1,5 +1,5 @@
 const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
+const adminjs = require("./admin/admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
@@ -45,7 +45,10 @@ module.exports.load = async function (app, db) {
       ram: 0,	
       disk: 0,	
       cpu: 0,	
-      servers: 0	
+      servers: 0,	
+      backups: 0,
+      allocations: 0,
+      databases: 0
     };
     package["name"] = packagename;
 
@@ -430,3 +433,4 @@ app.post("/api/createcoupon", async (req, res) => {
     return null;
   }
 };
+

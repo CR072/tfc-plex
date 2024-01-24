@@ -85,30 +85,54 @@
 
                                     <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
 
-                                    <h5 style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
+                                    <h5 id="server<%= pterodactyl.relationships.servers.data[i].attributes.id %>" style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
 
 
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                          // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
+                                          <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                                            fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
+                                              .then(response => response.json())
+                                              .then(data => {
+                                                // Extract only the hours from the response
+                                                const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
+                                      
+                                                // Update the DOM with the server ID and renewal time
+                                                const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
+                                                if (serverElement) {
+                                                  serverElement.innerHTML += `,  <br> <br>Expire in: ${hours} days`;
+                                                }
+                                              })
+                                              .catch(error => {
+                                                // Handle errors
+                                                console.error(error);
+                                              });
+                                          <% } %>
+                                        });
+                                      </script>
 
 
                     <div class="row mt-4">
                                     <div class="card mr-2 mb-3" style="background: #17181b">
                                         <div class="card-body">
                                             <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
-                                            <p class="card-text">Core(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %></p>
+                                            <p class="card-text">Core <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %> Core/s</p>
                                         </div>
                                     </div>
 
                                     <div class="card mr-3 mb-3" style="background: #17181b">
                                         <div class="card-body">
                                             <h5 class="card-title"><i class="mdi mdi-layers"></i> RAM</h5>
-                                            <p class="card-text">GB(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %></p>
+                                            <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GB/s</p>
                                         </div>
                                     </div>
 
                                     <div class="card mb-3" style="background: #17181b">
                                         <div class="card-body">
                                             <h5 class="card-title"><i class="mdi mdi-harddisk"></i> Disk</h5>
-                                            <p class="card-text">GB(s): <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %></p>
+                                            <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GB/s</p>
                                         </div>
                                     </div>
 
