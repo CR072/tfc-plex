@@ -384,13 +384,3 @@ function getCookie(req, cname) {
 }
 
 console.log(chalk.white("+ | ✅ "));
-
-
-// Load the addons files.
-
-let addons = fs.readdirSync('./addons').filter(file => file.endsWith('.js'));
-
-addons.forEach(file => {
-    let addons = require(`./addons/${file}`);
-    addons.load(app, db);
-});
