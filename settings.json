@@ -100,7 +100,7 @@
           "delete": true
         },
         "overresourcessuspend": false
-      },
+      
   "oauth2": {
     "_comment": "Go to https://discord.dev/ and create an application to set these up.",
     "id": "",
