@@ -89,29 +89,7 @@
 
 
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                          // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
-                                          <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                                            fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
-                                              .then(response => response.json())
-                                              .then(data => {
-                                                // Extract only the hours from the response
-                                                const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
-                                      
-                                                // Update the DOM with the server ID and renewal time
-                                                const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
-                                                if (serverElement) {
-                                                  serverElement.innerHTML += `,  <br> <br>Expire in: ${hours} days`;
-                                                }
-                                              })
-                                              .catch(error => {
-                                                // Handle errors
-                                                console.error(error);
-                                              });
-                                          <% } %>
-                                        });
-                                      </script>
+
 
 
                     <div class="row mt-4">
@@ -144,7 +122,30 @@
                 <% } %>
           </div>
           </div>
+                                  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
+        <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+            fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract only the hours from the response
+                    const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
 
+                    // Update the DOM with the server ID and renewal time
+                    const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
+                    if (serverElement) {
+                        const expirationText = isNaN(hours) ? "N/A" : `${hours} days`;
+                        serverElement.innerHTML += `,  <br> <br>Expire in: ${expirationText}`;
+                    }
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error(error);
+                });
+        <% } %>
+    });
+</script>
           <%- include('./components/footer') %>
         </div>
       </div>
