@@ -6,8 +6,6 @@
       <%- include('./components/adminsidebar') %>
       <div class="container-fluid page-body-wrapper">
         <%- include('./components/topnav') %>
-
-
               <div class="col-lg-6">
                 <div class="card" style="margin-top: 100px; width: 800px;">
                   <form id="nestEggForm">
@@ -15,7 +13,7 @@
                       <div class="card-title">Add Eggs</div>
                       <hr>
                       <div class="form-group">
-                        <label for="input-7">select the icon of the egg:</label>
+                        <label for="input-7">Choose the egg's icon:</label>
                         <input id="banner" class="form-control form-control-rounded">
                       </div>
                       <div class="form-group">
@@ -57,7 +55,6 @@
                   }
                 </script>
                 
-                
                 <script>
                   const bann = document.getElementById("banner");
                   const ban = document.getElementById("ban");border-ra
@@ -66,7 +63,6 @@
                     ban.src = bann.value;
                   });
                 </script>
-
 
                 <style>
                   .egg-list {
@@ -199,16 +195,7 @@
                       .catch(error => console.error('Error updating settings:', error));
                   });
 
-                </script>
-
-
-
-
-              
-            </div>
-
-</body>
-
+          </script>         
+      </div>
+  </body>
 </html>
-</body>
-
