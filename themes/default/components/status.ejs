@@ -15,7 +15,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Cpu</h6>
+            <h6 class="card-title text-muted mb-0"><%= lang.cpu.label %></h6>
             <div class="d-flex align-items-center align-self-start">
               <h5 class="mb-0"><%= cpu/100 %> / <%= (packages.cpu/100 + extraresources.cpu/100) %> <i class="fa-solid fa-microchip  fa-x4 ml-3"></i></h5>
             </div>
@@ -36,7 +36,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Ram</h6>
+            <h6 class="card-title text-muted mb-0"><%= lang.ram.label %></h6>
             <div class="d-flex align-items-center align-self-start">
               <h5 class="mb-0 ml-2"><%= (ram / 1024) %> / <%= (packages.ram / 1024 + extraresources.ram / 1024).toFixed(2) %> GB <i class="fa fa-memory fa-x4 ml-3"></i></h5>
             </div>
@@ -57,7 +57,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-9">
-            <h6 class="card-title text-muted mb-0">Disk</h6>
+            <h6 class="card-title text-muted mb-0"><%= lang.disk.label %></h6>
             <div class="d-flex align-items-center align-self-start">
               <h5 class="mb-0"><%= disk/1024 %> / <%= (packages.disk/1024 + extraresources.disk/1024).toFixed(2) %> GB <i class="fa-solid fa-hard-drive fa-x4 ml-3"></i></h5>
             </div>
@@ -74,16 +74,11 @@
     </div>
   </div>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-
-
-
-
-
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-9">
-              <h6 class="card-title text-muted mb-0">Slots</h6>
+              <h6 class="card-title text-muted mb-0"><%= lang.slots.label %></h6>
               <div class="d-flex align-items-center align-self-start">
                 <h5 class="mb-0"><%= servers %> / <%= packages.servers + extraresources.servers %> <i class="fa-solid fa-server fa-x4 ml-3"></i></h5>
               </div>
@@ -97,18 +92,6 @@
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
     </div>
-
-
-
-
-</div>
+  </div>
 </div>

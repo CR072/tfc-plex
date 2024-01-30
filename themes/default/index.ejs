@@ -45,11 +45,11 @@
             <!--Left Col-->
             <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden" style="margin-top: -150px;">
                 <h1 class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-                    Create a Powerful Server on
+                    <%= lang.motd_p1 %>
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
                         <%= settings.name %>
                     </span>
-                    with the best Hardware.
+                    <%= lang.motd_p2 %>
                 </h1>
                 <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
                     <%= settings.motd %>
@@ -57,10 +57,10 @@
 
                 <div class="mb-4 flex justify-center md:justify-start">
                     <a href="/dashboard" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                        Go to Client
+                        <%= lang.go_to_client %>
                     </a>
                     <a href="/panel" class="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800">
-                        Go to Panel
+                        <%= lang.go_to_panel %>
                     </a>
                 </div>
             </div>
@@ -74,7 +74,7 @@
           <section id="team" class="w-full md:w-3/5 p-12 overflow-hidden text-center mx-auto">
             <!-- Statistics Section -->
             <div class="text-center mt-12">
-                <h2 class="text-5xl font-bold text-white mb-20"><%= settings.name %> Statistics </h2>
+                <h2 class="text-5xl font-bold text-white mb-20"><%= settings.name %> <%= lang.statistics %> </h2>
                 <hr class="mb-20">
         
                 <!-- Individual Statistic Cards -->
@@ -88,7 +88,7 @@
                             <h3 class="text-3xl font-bold mb-2">
                                 <span id="users">---</span>
                             </h3>
-                            <p class="font-heading text-lg"> Active Users </p>
+                            <p class="font-heading text-lg"> <%= lang.active_users %> </p>
                         </div>
                     </div>
         
@@ -101,7 +101,7 @@
                             <h3 class="text-3xl font-bold mb-2">
                                 <span id="servers">---</span>
                             </h3>
-                            <p class="font-heading text-lg"> Servers </p>
+                            <p class="font-heading text-lg"> <%= lang.servers %> </p>
                         </div>
                     </div>
         
@@ -116,7 +116,7 @@
                             <h3 class="text-3xl font-bold mb-2">
                                 <span id="locations">---</span>
                             </h3>
-                            <p class="font-heading text-lg"> Locations </p>
+                            <p class="font-heading text-lg"> <%= lang.locations %> </p>
                         </div>
                     </div>
         
@@ -129,7 +129,7 @@
                             <h3 class="text-3xl font-bold mb-2">
                                 <span id="nodes">---</span>
                             </h3>
-                            <p class="font-heading text-lg"> Nodes </p>
+                            <p class="font-heading text-lg"> <%= lang.nodes %> </p>
                         </div>
                     </div>
                 </div>

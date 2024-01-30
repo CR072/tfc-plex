@@ -1,138 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('./components/head') %>
-  <body>
-    <div class="container-scroller">
-      <%- include('./components/sidebar') %>
-      <div class="container-fluid page-body-wrapper">
-        <%- include('./components/topnav') %>
-        <div class="main-panel">
-          <div style="background-color: #111319" class="content-wrapper">
-
-            <div class="col-md-12 grid-margin stretch-card">
-              <div class="card" style="height: 100px;">
-                <div class="card-body">
-                  <h3>Resources Store</h3>
-                  <p class="text-muted">Buy extra resources to upgrade your server.</p>
-                </div>
+<%- include('./components/head') %>
+<body>
+  <div class="container-scroller">
+    <%- include('./components/sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+      <%- include('./components/topnav') %>
+      <div class="main-panel">
+        <div style="background-color: #111319" class="content-wrapper">
+  
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height: 100px;">
+              <div class="card-body">
+                <h3><%= lang.resources_store %></h3>
+                <p class="text-muted"><%= lang.buy_extra_resources_description %></p>
               </div>
             </div>
-
-
-
-            <% if (req.query.err) { %>
-              <% if (req.query.err !== "none") { %>
-                <div style="border-radius: 15px;" class="alert">
-                  <% if (req.query.err == "CANNOTAFFORD") { %>
-                    Insufficient funds.
-                  <% } else if (req.query.err == "MAXCPUEXCEETED") { %>
-                    You have reached the cpu limit!
-                  <% } else if (req.query.err == "MAXRAMEXCEETED") { %>
-                    You have reached the RAM limit!
-                  <% } else if (req.query.err == "MAXDISKEXCEETED") { %>
-                    You have reached the disk limit!
-                  <% } else if (req.query.err == "MAXSERVERSEXCEETED") { %>
-                    You have reached the servers limit!
-                  <% } %>
-                </div>
-              <% } else if (req.query.err == "none") { %>
-                <div class="alert" style="background-color: #00d415; border-radius: 15px;">
-                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                  Success!
-                </div>
-              <% } %>
+          </div>
+  
+          <% if (req.query.err) { %>
+            <% if (req.query.err !== "none") { %>
+              <div style="border-radius: 15px;" class="alert">
+                <% if (req.query.err == "CANNOTAFFORD") { %>
+                  <%= lang.insufficient_funds %>
+                <% } else if (req.query.err == "MAXCPUEXCEETED") { %>
+                  <%= lang.cpu_limit_exceeded %>
+                <% } else if (req.query.err == "MAXRAMEXCEETED") { %>
+                  <%= lang.ram_limit_exceeded %>
+                <% } else if (req.query.err == "MAXDISKEXCEETED") { %>
+                  <%= lang.disk_limit_exceeded %>
+                <% } else if (req.query.err == "MAXSERVERSEXCEETED") { %>
+                  <%= lang.servers_limit_exceeded %>
+                <% } %>
+              </div>
+            <% } else if (req.query.err == "none") { %>
+              <div class="alert" style="background-color: #00d415; border-radius: 15px;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <%= lang.success %>
+              </div>
             <% } %>
-            <div class="row ml-1">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <form class="forms-sample" action="/buycpu">
-                      <div class="form-group">
-                        <label style="font-weight: normal;">Cpu</label><BR>
-                        <select name="amount" class="form-control" style="border-radius: 15px; padding: 8px;">
-                          <option value=1><%= settings.api.client.coins.store.cpu.per %>% CPU - <%= settings.api.client.coins.store.cpu.cost %> coins</option>
-                          <option value=2><%= settings.api.client.coins.store.cpu.per * 2 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 2 %> coins</option>
-                        </select>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Purchase</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <form class="forms-sample" action="/buyram">
-                      <div class="form-group">
-                        <label style="font-weight: normal;">Ram</label><BR>
-                        <select name="amount" class="form-control" style="border-radius: 15px; padding: 8px;">
-                          <option value=1><%= settings.api.client.coins.store.ram.per %>MB RAM - <%= settings.api.client.coins.store.ram.cost %> coins</option>
-                          <option value=2><%= settings.api.client.coins.store.ram.per * 2 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 2 %> coins</option>
-                          <option value=3><%= settings.api.client.coins.store.ram.per * 3 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 3 %> coins</option>
-                          <option value=4><%= settings.api.client.coins.store.ram.per * 4 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 4 %> coins</option>
-                        </select>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Purchase</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <form class="forms-sample" action="/buydisk">
-                      <div class="form-group">
-                        <label style="font-weight: normal;">Disk</label><BR>
-                        <select name="amount" class="form-control" style="border-radius: 15px; padding: 8px;">
-                          <option value=1><%= settings.api.client.coins.store.disk.per %>MB Disk - <%= settings.api.client.coins.store.disk.cost %> coins</option>
-                          <option value=2><%= settings.api.client.coins.store.disk.per * 2 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 2 %> coins</option>
-                          <option value=3><%= settings.api.client.coins.store.disk.per * 3 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 3 %> coins</option>
-                          <option value=4><%= settings.api.client.coins.store.disk.per * 4 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 4 %> coins</option>
-                          <option value=5><%= settings.api.client.coins.store.disk.per * 5 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 5 %> coins</option>
-                        </select>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Purchase</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <form class="forms-sample" action="/buyservers">
-                      <div class="form-group">
-                        <label style="font-weight: normal;">Servers</label><BR>
-                        <select name="amount" class="form-control" style="border-radius: 15px; padding: 8px;">
-                          <option value=1><%= settings.api.client.coins.store.servers.per %> Server - <%= settings.api.client.coins.store.servers.cost %> coins</option>
-                          <option value=2><%= settings.api.client.coins.store.servers.per * 2 %> Servers - <%= settings.api.client.coins.store.servers.cost * 2 %> coins</option>
-                          <option value=3><%= settings.api.client.coins.store.servers.per * 3 %> Servers - <%= settings.api.client.coins.store.servers.cost * 3 %> coins</option>
-                          <option value=4><%= settings.api.client.coins.store.servers.per * 4 %> Servers - <%= settings.api.client.coins.store.servers.cost * 4 %> coins</option>
-                        </select>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Purchase</button>
-                    </form>
-                  </div>
+          <% } %>
+  
+          <div class="row ml-1">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" action="/buycpu">
+                    <div class="form-group">
+                      <label style="font-weight: normal;"><%= lang.cpu.label %></label><BR>
+                      <select name="amount" class="form-control software-item text-white" style="border-radius: 5px; padding: 8px;">
+                        <option value=1><%= settings.api.client.coins.store.cpu.per %>% CPU - <%= settings.api.client.coins.store.cpu.cost %> coins</option>
+                        <option value=2><%= settings.api.client.coins.store.cpu.per * 2 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 2 %> coins</option>
+                      </select>
+                    </div>
+                    <button class="software-item text-white" type="submit"><%= lang.purchase %></button>
+                  </form>
                 </div>
               </div>
             </div>
+  
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" action="/buyram">
+                    <div class="form-group">
+                      <label style="font-weight: normal;"><%= lang.ram.label %></label><BR>
+                      <select name="amount" class="form-control software-item text-white" style="border-radius: 5px; padding: 8px;">
+                        <option value=1><%= settings.api.client.coins.store.ram.per %>MB RAM - <%= settings.api.client.coins.store.ram.cost %> coins</option>
+                        <option value=2><%= settings.api.client.coins.store.ram.per * 2 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 2 %> coins</option>
+                        <option value=3><%= settings.api.client.coins.store.ram.per * 3 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 3 %> coins</option>
+                        <option value=4><%= settings.api.client.coins.store.ram.per * 4 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 4 %> coins</option>
+                      </select>
+                    </div>
+                    <button class="software-item text-white" type="submit"><%= lang.purchase %></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" action="/buydisk">
+                    <div class="form-group">
+                      <label style="font-weight: normal;"><%= lang.disk.label %></label><BR>
+                      <select name="amount" class="form-control software-item text-white" style="border-radius: 5px; padding: 8px;">
+                        <option value=1><%= settings.api.client.coins.store.disk.per %>MB Disk - <%= settings.api.client.coins.store.disk.cost %> coins</option>
+                        <option value=2><%= settings.api.client.coins.store.disk.per * 2 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 2 %> coins</option>
+                        <option value=3><%= settings.api.client.coins.store.disk.per * 3 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 3 %> coins</option>
+                        <option value=4><%= settings.api.client.coins.store.disk.per * 4 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 4 %> coins</option>
+                        <option value=5><%= settings.api.client.coins.store.disk.per * 5 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 5 %> coins</option>
+                      </select>
+                    </div>
+                    <button class="software-item text-white" type="submit"><%= lang.purchase %></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" action="/buyservers">
+                    <div class="form-group">
+                      <label style="font-weight: normal;"><%= lang.slots.label %></label><BR>
+                      <select name="amount" class="form-control software-item text-white" style="border-radius: 5px; padding: 8px;">
+                        <option value=1><%= settings.api.client.coins.store.servers.per %> Slots - <%= settings.api.client.coins.store.servers.cost %> coins</option>
+                        <option value=2><%= settings.api.client.coins.store.servers.per * 2 %> Slots - <%= settings.api.client.coins.store.servers.cost * 2 %> coins</option>
+                        <option value=3><%= settings.api.client.coins.store.servers.per * 3 %> Slots - <%= settings.api.client.coins.store.servers.cost * 3 %> coins</option>
+                        <option value=4><%= settings.api.client.coins.store.servers.per * 4 %> Slots - <%= settings.api.client.coins.store.servers.cost * 4 %> coins</option>
+                      </select>
+                    </div>
+                    <button class="software-item text-white" type="submit"><%= lang.purchase %></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+  
           </div>
           <%- include('./components/footer') %>
         </div>
       </div>
     </div>
-    <script src="/assets/vendors/select2/select2.min.js"></script>
-    <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-    <script>
-      async function submitChanges() {
-        let ram = encodeURIComponent(document.getElementById("InputRAM").value);
-        let disk = encodeURIComponent(document.getElementById("InputDisk").value);
-        let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
-        document.location.href = `/modify?id=<%= req.query.id %>&ram=${ram}&disk=${disk}&cpu=${cpu}`;
-      };
-    </script>
-    <%- include('./components/scripts') %>
-    <script src="/assets/js/file-upload.js"></script>
-    <script src="/assets/js/typeahead.js"></script>
-    <script src="/assets/js/select2.js"></script>
-  </body>
+  </div>
+  <script src="/assets/vendors/select2/select2.min.js"></script>
+  <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script>
+    async function submitChanges() {
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+      let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+      document.location.href = `/modify?id=<%= req.query.id %>&ram=${ram}&disk=${disk}&cpu=${cpu}`;
+    };
+  </script>
+  <%- include('./components/scripts') %>
+  <script src="/assets/js/file-upload.js"></script>
+  <script src="/assets/js/typeahead.js"></script>
+  <script src="/assets/js/select2.js"></script>
+</body>
 </html>

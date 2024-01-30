@@ -7,28 +7,27 @@
       <%- include('./components/sidebar') %>
       <div class="container-fluid page-body-wrapper">
         <%- include('./components/topnav') %>
-        <div  class="main-panel">
-          <div  class="content-wrapper">
-           <h2>Edit Server</h2>
-           <p class="text-gray">Edit the resources of your server.</p>
+        <div class="main-panel">
+          <div class="content-wrapper">
+           <h2><%= lang.tilte_edit %></h2>
+           <p class="text-gray"><%= lang.description_edit %></p>
             <% if (req.query.err) { %>
-            <div style="border-radius: 15px;" class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <div style="border-radius: 15px;" class="alert">  
                 <% if (req.query.err == "MISSINGVARIABLE") { %>
-                    You have not filled out all of the server information.
+                  <%= lang.missingvariable %>
                 <% } else if (req.query.err == "ERRORONMODIFY") { %>
-                    There has been an error while attempting to modifying your server. Please alert an administrator to fix this problem.
+                  <%= lang.erroronmodify %>
                 <% } else if (req.query.err == "MISSINGEGG") { %>
-                    The server type for this server is not registered as a valid server type, therefore your server's RAM, disk and/or CPU could not be changed.
+                  <%= lang.missingegg %>
                 <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
-                  You must complete the captcha to prove you are human!
+                  <%= lang.mustcompletecaptcha %>
                 <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
-                  You submitted an invalid captcha response, try again.
+                  <%= lang.invalidcaptchareponse %>
                 <% } else { %>
                     <% if (req.query.num) { %>
                         <% if (!isNaN(parseFloat(req.query.num))) { %>
                             <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
-                                You must make a server with at least <b><%= req.query.num %></b>
+                              <%= lang.toolittleresources %> <b><%= req.query.num %></b>
                                 <% if (req.query.err.slice(-3) == "RAM") { %>
                                     MB RAM
                                 <% } else if (req.query.err.slice(-4) == "DISK") { %>
@@ -36,9 +35,9 @@
                                 <% } else { // CPU %>
                                     % CPU
                                 <% } %>
-                                if you want to modified a server with the server type you have selected.
+                                <%= lang.modified_type_server %>
                             <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
-                                With the selected server type, you can have a maximum of <b><%= req.query.num %></b>
+                              <%= lang.maximumof %> <b><%= req.query.num %></b>
                                 <% if (req.query.err.slice(-3) == "RAM") { %>
                                     MB RAM
                                 <% } else if (req.query.err.slice(-4) == "DISK") { %>
@@ -46,17 +45,17 @@
                                 <% } else { // CPU %>
                                     % CPU
                                 <% } %>
-                                on the server.
+                                <%= lang.ontheserver %>
                             <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
-                                The server could not be modified because you have requested to modified a server that exceeds your plan.
+                              <%= lang.not_modified_server %>
                             <% } else { %>
-                                There has been an error while attempting to modify your server. Please alert an administrator to fix this problem.
+                              <%= lang.erroralertadmin %>
                             <% } %>
                         <% } else { %>
-                            There has been an error while attempting to modify your server. Please alert an administrator to fix this problem.
+                          <%= lang.erroralertadmin %>
                         <% } %>
                     <% } else { %>
-                        There has been an error while attempting to modify your server. Please alert an administrator to fix this problem.
+                      <%= lang.erroralertadmin %>
                     <% } %>
                 <% } %>
             </div>
@@ -80,32 +79,30 @@
                   <div class="card-body">
                     <form class="forms-sample">
                       <div class="form-group">
-                        <label for="exampleInputUsername1">Server Name</label>
+                        <label for="exampleInputUsername1"><%= lang.server_name %></label>
                         <input  style="border-radius: 1px; padding: 8px;" type="text" class="form-control" value="<%= serverinfo.attributes.name %> | Changing this will not do anything, use the panel">
                       </div>
                       <div class="form-group">
-                        <label for="InputCPU">CPU</label>
+                        <label for="InputCPU"><%= lang.cpu.label %></label>
                         <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="120" value="<%= serverinfo.attributes.limits.cpu/100 %>">
                       </div>
                       <div class="form-group">
-                        <label for="InputRAM">RAM</label>
+                        <label for="InputRAM"><%= lang.ram.label %></label>
                         <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="2048" value="<%= serverinfo.attributes.limits.memory/1024 %>">
                       </div>
                       <div class="form-group">
-                        <label for="InputDisk">Disk</label>
+                        <label for="InputDisk"><%= lang.disk.label %></label>
                         <input style="border-radius: 1px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="20480" value="<%= serverinfo.attributes.limits.disk/1024 %>">
                       </div>
                       <div class="form-group">
-                        <label for="InputEgg">Egg</label><BR>
+                        <label for="InputEgg"><%= lang.egg %></label><BR>
                         <select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 5px; padding: 8px;" disabled>
                           <% for (let [name, value] of Object.entries(eggs)) { %>
                             <option value="<%= name %>"><%= value.display %></option>
                           <% } %>
                         </select>
                       </div>
-                      <button class="form-control form-control-rounded" href="javascript: submitChanges()">Apply Changes</button>
-
-
+                      <button type="button" class="form-control form-control-rounded" onclick="sc234()"><%= lang.apply_change %></button>
                     </form>
                   </div>
                 </div>
@@ -113,10 +110,10 @@
             </div>
   
           <% } else { %>
-                <p style="margin-left: 5%;">Could not find server with the provided ID.</p>
+                <p style="margin-left: 5%;"><%= lang.not_find_server_id %></p>
             <% } %>
         <% } else { %>
-            <p style="margin-left: 5%;">Missing server ID.</p>
+            <p style="margin-left: 5%;"><%= lang.missing_server_id %></p>
         <% } %>
           </div>
 
@@ -126,11 +123,11 @@
     <script src="/assets/vendors/select2/select2.min.js"></script>
     <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script>
-      async function submitChanges() {
+      async function sc234() {
         let ram = encodeURIComponent(document.getElementById("InputRAM").value * 1024);
         let disk = encodeURIComponent(document.getElementById("InputDisk").value * 1024);
         let cpu = encodeURIComponent(document.getElementById("InputCPU").value * 100);
-        document.location.href = `/modify?id=<%= req.query.id %>&ram=${ram}&disk=${disk}&cpu=${cpu}`;
+        window.location.href = `/modify?id=<%= req.query.id %>&ram=${ram}&disk=${disk}&cpu=${cpu}`;
       };
     </script>
     <%- include('./components/scripts') %>

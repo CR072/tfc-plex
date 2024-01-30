@@ -48,7 +48,7 @@
               <div class="card-content">
                 <div class="row row-group m-0">
                   <div class="card-body">
-                    <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-alt"></i></span></h5>
+                    <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
                     <h6 style="color:white">Server Name:</h6>
                     <input id="SRVname" class="form-control form-control-rounded" type="text"
                       placeholder="<%= userinfo.username%>'s Server" value="<%= userinfo.username%>'s Server" name="fname">
@@ -57,8 +57,7 @@
         
                 <div class="row row-group m-0">
                   <div class="card-body">
-                    <h5 class="text-white mb-0"> <span class="float-right"><i
-                          class="bi bi-chat-quote-fill"></i></span></h5>
+                    <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
                     <h6 style="color:white">Describe your server:</h6>
                     <textarea id="SRVdescription" class="form-control form-control-rounded" type="text"
                       placeholder="<%= userinfo.username%>'s really nice server that is used to play minecraft"  rows="2" name="fname"></textarea>
@@ -96,7 +95,7 @@
         
                   <div class="row row-group m-0">
                     <div class="card-body">
-                      <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-plugin"></i></span></h5>
+                      <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
                       <h6 style="color:white">What do You Want to Host?</h6>
                       <ul class="software-list">
                         <% for (let [name, value] of Object.entries(eggs)) { %>
@@ -111,14 +110,12 @@
         
                 <div class="row row-group m-0">
                   <div class="card-body">
-                    <h5 class="text-white mb-0"> <span class="float-right"><i
-                          class="bi bi-geo-alt-fill"></i></span></h5>
+                    <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
                     <h6 style="color:white">in which Country should your server stand in?</h6>
                     <ul class="location-list">
                       <% for (let [name, value, short] of Object.entries(settings.api.client.locations)) { %>
                         <li class="location-item" value="<%= name %>">
                           <img class="location-flag" src="<%= value.flag %>">
-                          <%= value.short %> -
                             <%= value.name %>
                         </li>
                         <% } %>
@@ -128,7 +125,7 @@
         
                 <div class="row row-group m-0">
                   <div class="card-body">
-                    <h5 class="text-white mb-0"> <span class="float-right"><i class="bi bi-check2"></i></span></h5>
+                    <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
                     <button class="form-control form-control-rounded"
                      onclick="submitNew()">Deploy new server</button>
                   </div>
@@ -173,6 +170,7 @@
   }
 
   function submitNew() {
+
     const cbox = document.getElementById("createBox");
     const loading = document.getElementById("loading");
     cbox.style.display = 'none'
@@ -240,7 +238,7 @@
       databases: databases,
       location: selectedLocation
     });
-
+    window.location.href = '/servers?err=SUCCESS';
     fetch(`/create?${queryParams.toString()}`, {
         method: 'GET',
         headers: {
@@ -251,13 +249,14 @@
       .then(data => {
         if (data.success === true) {
           toastr.success(data.message, 'Success!');
-          window.location.reload();
+          window.location.href = '/servers?err=SUCCESS';
         } else if (data.redirect) {
-          window.location.href = data.redirect
+          window.location.href = '/servers?err=SUCCESS';
         } else {
           toastr.error(data.message, 'Error!');
           cbox.style.display = 'block'
           loading.style.display = 'none';
+          window.location.href = '/servers?err=SUCCESS';
         }
       })
       .catch(error => {
@@ -300,67 +299,3 @@
     });
   }
 </script>
-<style>
-
-  .location-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .location-item {
-    border: 0 solid #e5eaef;
-    background-color: rgba(255, 255, 255, .2);
-    border-radius: 5px;
-    padding: 10px;
-    min-width: 250px;
-    margin: 5px;
-    cursor: pointer;
-  }
-
-  .location-item.selected {
-    background-color: rgba(0, 0, 0, .2);
-    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
-  }
-
-  .location-flag {
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-
-  .software-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .software-item {
-    border: 0 solid #e5eaef;
-    background-color: rgba(255, 255, 255, .2);
-    border-radius: 5px;
-    padding: 10px;
-    min-width: 250px;
-    margin: 5px;
-    cursor: pointer;
-  }
-
-  .software-banner {
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-
-  .software-item.selected {
-    background-color: rgba(0, 0, 0, .2);
-    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
-  }
-</style>

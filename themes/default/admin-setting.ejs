@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./components/head') %>
+
+<body>
+
+  <div class="container-scroller">
+
+    <%- include('./components/adminsidebar') %>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <%- include('./components/topnav') %>
+
+      <div class="col-lg-6">
+
+        <form action="/saveSettings" method="post" id="settingsForm" class=" grid-gap d-grid" style="margin-top: 100px;">
+
+          <!-- Step 1 -->
+          <div class="step card" id="step1">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="name" name="name" placeholder="Name" value="<%= settings.name %>" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="letter" name="letter" value="<%= settings.letter %>" placeholder="Initials" required>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step card" id="step2">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="motd" name="motd" value="<%= settings.motd %>" placeholder="motd" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="icon" name="icon" value="<%= settings.icon %>" placeholder="icon url" required>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step card" id="step3">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="discord" name="discord" value="<%= settings.discord %>" placeholder="discord invite link" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="background" name="background" value="<%= settings.background %>" placeholder="background url" required>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step card" id="step4">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="pterodactyl_domain" name="pterodactyl_domain" value="<%= settings.pterodactyl.domain %>" placeholder="Pterodactyl Domain" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="pterodactylkey" name="pterodactyl_key" value="<%= settings.pterodactyl.key %>" placeholder="API Key" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="accountKey" name="pterodactyl_account_key" value="<%= settings.pterodactyl.account_key %>" placeholder="Admin Account Key" required>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step card" id="step5">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="oauth2_id" name="oauth2[id]" value="<%= settings.api.client.oauth2.id %>" placeholder="OAuth2 ID" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="oauth2_secret" name="oauth2[secret]" value="<%= settings.api.client.oauth2.secret %>" placeholder="OAuth2 Secret" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="oauth2_link" name="oauth2[link]" value="<%= settings.api.client.oauth2.link %>" placeholder="OAuth2 Link" required>
+            </div>
+          </div>
+
+          <!-- Add additional fields for OAuth2 settings here -->
+
+          
+        </form>
+
+        <!-- Notification Bar -->
+
+        <div id="notificationBar" class="notification-bar row d-flex">
+          <p>You made changes. Do you want to save them?</p>
+         <button type="submit" class="btn btn-success" style="margin-left: 533px;">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    .login-container h1 {
+      color: #333;
+    }
+
+    .software-item {
+      cursor: auto;
+    }
+
+    .card {
+      margin: 20px;
+      width: 300px;
+      padding: 20px;
+    }
+
+    .notification-bar {
+      margin-left: 200px;
+      margin-top: -100px;
+      width: 950px;
+      background-color: #060606;
+      color: white;
+      padding: 10px;
+      z-index: 100000;
+    }
+  </style>
+
+  <script src="/assets/js/file-upload.js"></script>
+  <script src="/assets/js/typeahead.js"></script>
+  <script src="/assets/js/select2.js"></script>
+
+</body>
+
+</html>

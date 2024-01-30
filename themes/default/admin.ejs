@@ -10,6 +10,16 @@
           <div style="background-color: #111319" class="content-wrapper">
            <h2>Admin</h2>
            <p class="text-gray">Use tfc-plex's admin settings.</p>
+
+
+
+
+
+
+
+
+
+
             <% if (req.query.err) { %>
               <% if (req.query.err !== "none") { %>
                 <div style="border-radius: 15px;" class="alert">
@@ -44,6 +54,108 @@
 					Success! You have created a coupon code with the name of: <%= req.query.code %>
 					</div>
 				    <% } %>
+            <script>
+              async function fetchAndDisplayNodeStats() {
+                try {
+                  const nodeStatsResponse = await fetch('/node_stats_dsa');
+                  const nodeStatsData = await nodeStatsResponse.json();
+                  const nodeStatsTableBody = document.getElementById('nodeStatsTableBody');
+                  
+                  // Leere die Tabelle, bevor neue Daten hinzugefügt werden
+                  nodeStatsTableBody.innerHTML = '';
+            
+                  // Überprüfe, ob Daten vorhanden sind
+                  if (nodeStatsData.data && nodeStatsData.data.length > 0) {
+                    // Füge die Node-Statistiken zur Tabelle hinzu
+                    nodeStatsData.data.forEach(node => {
+                      const attributes = node.attributes;
+                      const row = document.createElement('tr');
+                      row.innerHTML = `
+                        <td>${attributes.id}</td>
+                        <td>${attributes.name}</td>
+                        <td>${attributes.memory} MB</td>
+                      
+                        <td>${attributes.disk} MB</td>
+                        
+                      `;
+                      nodeStatsTableBody.appendChild(row);
+                    });
+                  } else {
+                    // Füge eine Meldung hinzu, wenn keine Daten vorhanden sind
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.innerHTML = '<td colspan="5">Keine Node-Statistiken verfügbar</td>';
+                    nodeStatsTableBody.appendChild(noDataRow);
+                  }
+                } catch (error) {
+                  console.error('Fehler beim Abrufen der Node-Statistiken:', error.message);
+                }
+              }
+            
+              // Rufe die Node-Statistiken auf und zeige sie beim Laden der Seite an
+              document.addEventListener('DOMContentLoaded', fetchAndDisplayNodeStats);
+            </script>
+            
+
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Statistics</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <thead>
+                            <tr>
+                              <th>total users</th>
+                              <th> total servers </th>
+                              <th> total locations </th>
+                              <th> total Nodes </th>
+                              
+                            </tr>
+                          </thead>
+                          <td>  <span id="users">---</span> </td>
+                          <td>  <span id="servers">---</span> </td>
+                          <td>  <span id="locations">---</span> </td>
+                          <td>  <span id="nodes">---</span> </td>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Node Stats</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Node Name</th>
+                            <th>RAM</th>
+                           
+                            <th>Disk</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody id="nodeStatsTableBody">
+                          <!-- Hier werden die Node-Statistiken eingefügt -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
             <div class="row">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -58,6 +170,45 @@
               </div>
             </div>
             </div>
+
+
+
+            <script>
+              async function servers() {
+                  const serverInfo = document.getElementById("servers");
+                  const response = await fetch('/api/servers');
+                  const json = await response.json();
+                  const infoString = `${json.totalServers}`;
+                  serverInfo.innerText = infoString;
+              }
+              servers();
+              async function users() {
+                  const users = document.getElementById("users");
+                  const response = await fetch('/api/users');
+                  const json = await response.json();
+                  const usersr = `${json.totalUsers}`;
+                  users.innerText = usersr;
+              }
+              users();
+              async function locations() {
+                  const locations = document.getElementById("locations");
+                  const response = await fetch('/api/locations');
+                  const json = await response.json();
+                  const location = `${json.totalLocations}`;
+                  locations.innerText = location;
+              }
+              locations();
+              async function nodes() {
+                  const node = document.getElementById("nodes");
+                  const response = await fetch('/api/nodes');
+                  const json = await response.json();
+                  const nodes = `${json.totalNodes}`;
+                  node.innerText = nodes;
+              }
+              nodes();
+          </script>
+
+
                                     <script>
                                         fetch("https://tfc-plex.de/version/index.html")
                                             .then(res => Promise.resolve(res.json()).then(ver => {
@@ -70,6 +221,10 @@
                                                     document.getElementById("latestversion").innerHTML = `<span>tfc-plex is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
                                                 };
                                             }));
+
+
+
+                                            
                                     </script>
             <div class="row">
               <div class="col-md-12 grid-margin stretch-card">
@@ -80,7 +235,7 @@
                       <div class="form-group">
 
 
-                          <a href="javascript:void(0);" onclick="openPopup()" class="btn btn-primary">View latest version</a> <a href="https://discord.gg/mTAbrDXv" target="_blank" class="btn btn-primary">Get support</a>
+                          <a href="javascript:void(0);" onclick="openPopup()" class="software-item text-white">View latest version</a> <a href="https://discord.gg/mTAbrDXv" target="_blank" class="software-item text-white">Get support</a>
                     </form>
 
 

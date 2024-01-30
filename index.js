@@ -24,14 +24,8 @@ if (typeof atob === 'undefined') {
 
 // Load settings.
 
-
-
 console.log(chalk.grey("- | Loading settings"));
-
-
 const settings = require("./settings.json");
-
-
 const crypto = require('crypto');
 
 // Überprüfe und randomisiere den Wert von hostid.
@@ -62,10 +56,13 @@ const defaultthemesettings = {
 };
 
 
+
+
 module.exports.renderdataeval =
     `(async () => {
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
 	const JavaScriptObfuscator = require('javascript-obfuscator');
+    const newlang = JSON.parse(require("fs").readFileSync('./languages/' + settings.language + '/lang.json'));
 
 
  
@@ -74,6 +71,7 @@ module.exports.renderdataeval =
       eggs: eggconfig,
       
       settings: newsettings,
+      lang: newlang,
       userinfo: req.session.userinfo,
       packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
       extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
@@ -98,6 +96,10 @@ module.exports.renderdataeval =
 
 
 console.log(chalk.white("+ | ✅ "));
+
+
+
+
 
 // Load database
 
@@ -150,24 +152,40 @@ app.use(express.json({
     verify: undefined
 }));
 console.log(chalk.white("+ | ✅ "));
-const listener = app.listen(settings.website.port, function () {
-    console.log(chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
-    console.log(chalk.whiteBright("TFC-Plex V" + settings.version + " is online at " + settings.api.client.oauth2.link + " "));
-    console.log(chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
+const listener = app.listen(settings.website.port, async function () {
+
+    console.log(chalk.blueBright(" _______________________________________________________________ "));
+    console.log(chalk.blueBright('/') + chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――") + chalk.blueBright('\\'));
+    console.log(chalk.blueBright('|') + chalk.white("TFC-Plex") + chalk.white(" Checking for updates..."),chalk.blueBright("                               |"));
+
+    try {
+      let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
+
+      const response = await axios.get(`https://api.github.com/repos/privt00/tfc-plex/releases/latest`);
+      const latestVersion = response.data.tag_name;
+  
+
+      if (latestVersion !== "v" + newsettings.version) {
+        console.log(chalk.blueBright('|') + chalk.white("TFC-Plex") + chalk.yellow(" New version available!"),chalk.blueBright("       |"));
+        console.log(chalk.blueBright('|') + chalk.white("TFC-Plex") + chalk.white(` Current Version: ${newsettings.version}, Latest Version: ${latestVersion}`),chalk.blueBright("       |"));
+      } else {
+        console.log(chalk.blueBright('|') + chalk.white("TFC-Plex") + chalk.white(" Your application is up-to-date."),chalk.blueBright("                       |"));
+      }
+    } catch (error) {
+      console.error(chalk.blueBright('|') + chalk.white("TFC-Plex") + chalk.red(" Error checking for updates:"), error.message);
+    }
+    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
+    console.log(chalk.blueBright('|') + chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――") + chalk.blueBright("|"));
+    if (settings.installing) {
+        console.log(chalk.blueBright('|') + chalk.whiteBright(`TFC-Plex V${newsettings.version} is online at ${settings.api.client.oauth2.link}/setup`),chalk.blueBright("       |"));
+    } else {
+        console.log(chalk.blueBright('|') + chalk.whiteBright(`TFC-Plex V${newsettings.version} is online at ${settings.api.client.oauth2.link}`),chalk.blueBright("             |"));
+    }
+    console.log(chalk.blueBright('|') + chalk.blueBright("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――") + chalk.blueBright("|"));
 
 
-});
 
-
-
-
-
-
-
-
-
-
-
+  });
 
 
 var cache = false;
@@ -200,9 +218,6 @@ app.use(function (req, res, next) {
 
 console.log(chalk.grey("- | Loading API"));
 
-
-
-
 function loadApiFiles(directory, app, db) {
     const files = fs.readdirSync(directory);
   
@@ -221,15 +236,30 @@ function loadApiFiles(directory, app, db) {
 
 
 
+
+  
+
+  // that is if a error comes
+const errora = ("<style> body{background:url(https://www.creativefabrica.com/wp-content/uploads/2023/10/05/Galaxy-Space-Texture-Background-Graphics-80827385-1-580x387.jpg);background-size:cover; background-repeat: no-repeat ; justify-content: center; align-items: center; display: flex; height: 100vh; } h1{ color: #fff; }</style><h1>Internal Server Error Pleas Contact Admin or Join the <a href='https://discord.com/invite/BXmzHS9DRA'>Discord</a></h1>");
+
+
 app.all("*", async (req, res) => {
+
+
+
     if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");
     let theme = indexjs.get(req);
     let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
    
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
+   
+   
+
+   
         ejs.renderFile(
             `./themes/${theme.name}/${theme.settings.notfound}`,
+
 
             await eval(indexjs.renderdataeval),
             null,
@@ -240,7 +270,7 @@ app.all("*", async (req, res) => {
                     if (err) {
                         console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
                         console.log(err);
-                        return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+                        return res.send(errora);
                     }
 
                     res.status(200);
@@ -263,7 +293,7 @@ app.all("*", async (req, res) => {
                     if (err) {
                         console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
                         console.log(err);
-                        return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+                        return res.send(errora);
                     }
 
                     return res.send(str);
@@ -276,18 +306,11 @@ app.all("*", async (req, res) => {
                     if (err) {
                         console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
                         console.log(err);
-                        return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+                        return res.send(errora);
                     }
 
                     return res.send(str);
                 }
-
-
-
-
-
-
-
 
                 ejs.renderFile(
                     `./themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
@@ -299,7 +322,7 @@ app.all("*", async (req, res) => {
                         if (err) {
                             console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
                             console.log(err);
-                            return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+                            return res.send(errora);
                         }
 
                         res.status(200);
@@ -320,7 +343,7 @@ app.all("*", async (req, res) => {
             if (err) {
                 console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
                 console.log(err);
-                return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+                return res.send(errora);
             }
 
             res.status(200);
@@ -384,13 +407,3 @@ function getCookie(req, cname) {
 }
 
 console.log(chalk.white("+ | ✅ "));
-
-
-// Load the addons files.
-
-let addons = fs.readdirSync('./addons').filter(file => file.endsWith('.js'));
-
-addons.forEach(file => {
-    let addons = require(`./addons/${file}`);
-    addons.load(app, db);
-});

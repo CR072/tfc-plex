@@ -2,7 +2,7 @@
     "index": "index.ejs",
     "notfound": "404.ejs",
     "redirect": {
-        "callback": "/dashboard",
+        "callback": "/dashboard?news=true&loggedin=true",
         "logout": "/",
        	"createserver": "/servers?err=CREATED",
         "deleteserver": "/servers",
@@ -71,7 +71,8 @@
         "login": "auth-login.ejs",
         "plans": "plans.ejs",
         "refarl": "refarl.ejs",
-        "admin/settings": "admin-settings.ejs"
+        "admin/settings": "admin-settings.ejs",
+        "admin/setting": "admin-setting.ejs"
 
     },
     "mustbeloggedin": [
@@ -108,7 +109,8 @@
         "/admin/reghost",
         "admin/user",
         "admin/server",
-        "admin/settings"
+        "admin/settings",
+        "/admin/setting"
     ],
     "variables": {
         "home": {

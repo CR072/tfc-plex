@@ -10,6 +10,7 @@ if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 };
 module.exports.load = async function (app, db) {
+
   app.get("/updateinfo", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
     const cacheaccount = await getPteroUser(req.session.userinfo.id, db)
@@ -220,6 +221,11 @@ module.exports.load = async function (app, db) {
 
 
 module.exports.load = async function (app, db) {
+  const ptlaUrl = settings.pterodactyl.domain;
+  const ptlaApi = settings.pterodactyl.Key;
+  const ptlaAcc = settings.pterodactyl.account_key;
+
+
 
 
   app.get("/modify", async (req, res) => {
@@ -332,6 +338,54 @@ module.exports.load = async function (app, db) {
     }
   });
 
+  app.get('/api/servers/resources/:id', async (req, res) => {
+    try {
+        // Fetch server resources from Pterodactyl API
+        let response = await fetch(`${ptlaUrl}/api/client/servers/${req.params.id}/resources`, {
+            "method": "GET",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${ptlaAcc}`
+            },
+        });
+
+        // Parse the response JSON
+        const data = await response.json();
+
+        // Check if data is defined before accessing properties
+        if (data && data && data.attributes) {
+            const success = data.success;
+            const state = data.attributes.current_state;
+
+            // Send the response with state and is_suspended
+            res.json({ success, state, is_suspended: data.attributes.is_suspended });
+        } else {
+            // If data is not defined or lacks necessary properties, handle the error
+            res.json({ success: false, is_suspended: true });
+        }
+    } catch (error) {
+        // Handle errors
+        try {
+            let response2 = await fetch(`${ptlaUrl}/api/client/servers/${req.params.id}`, {
+                "method": "GET",
+                "headers": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${ptlaAcc}`
+                }
+            });
+
+            const data2 = await response2.json();
+            console.error(error);
+            const is_suspended = data2.attributes.is_suspended;
+            res.json({ success: false, is_suspended: is_suspended });
+        } catch (innerError) {
+            console.error(innerError);
+            res.json({ success: false, is_suspended: true });
+        }
+    }
+});
 
   app.get("/delete", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");

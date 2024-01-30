@@ -6,25 +6,56 @@
       <%- include('./components/sidebar') %>
         <div class="container-fluid page-body-wrapper">
            <%- include('./components/topnav') %>
-        <div style="background-color: #111319" class="main-panel">
-          <div style="background-color: #111319" class="content-wrapper">
+        <div  class="main-panel">
+          <div  class="content-wrapper">
 
            <h2>AFK Page</h2>
            <p class="text-gray">Earn coins by staying on this page.</p>
               <div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card">
+                  <div class="card">
                     <div class="card-body">
-                <h4>You are currently earning!</h4>
-                <p>Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %></p>
-                <p>Warning: You may be redirected back to the dashboard page if the page is frozen by the browser or there is an adblocker on</p>
-                  <script>
-                <%- arcioafktext %>
-            </script>
-                 </div>
+                      <h4>You are currently earning!</h4>
+                      <p>You will earn money by staying on this page</p>
+                      <p>Warning: You may be redirected back to the dashboard page if the page is frozen by the browser or there is an adblocker on</p>
+                      <div id="coinsDisplay"></div>
+
+                  
+
+<script src="<%- settings.adscript %>"></script>
+
+<script>
+
+
+
+                        const userId = '<%- userinfo.id %>'; 
+
+                        // Funktion zum Senden des Heartbeat-Signals alle 2 Sekunden
+                        function sendHeartbeat() {
+                          fetch(`/earn-coins?userId=${userId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                              document.getElementById('coinsDisplay').innerHTML = `<p>Coins: ${data.coins}</p>`;
+                            })
+                            .catch(error => console.error('Error sending heartbeat:', error));
+                        }
+
+                        // Heartbeat-Signal alle 2 Sekunden senden
+                        setInterval(() => {
+                          sendHeartbeat();
+                        }, 60000);
+
+                        // Initial die Coins laden
+                        sendHeartbeat();
+                      </script>
+                    </div>
+                    <div class="card mt-5" id="advertisement-container">
+                      <!-- Der Anzeigeninhalt wird hier eingefügt -->
+                  </div>  
+                  </div>
+        
+                </div>
               </div>
-            </div>
-            </div>
            </div>
           <%- include('./components/footer') %>
           </div>

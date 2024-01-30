@@ -1,205 +1,87 @@
 <!DOCTYPE html>
+
+<!DOCTYPE html>
+<!--
+ * APPENDIX FOR LEGAL PURPOSES *
+   Copyright (c) 2024, privt00
+   Copyright (c) 2024, CR072 and the HolaClient project
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+ *--------------------------------------------------------------------------
+ *   _    _       _        _____ _ _            _   
+ * | |  | |     | |      / ____| (_)          | |  
+ * | |__| | ___ | | __ _| |    | |_  ___ _ __ | |_ 
+ * |  __  |/ _ \| |/ _` | |    | | |/ _ \ '_ \| __|
+ * | |  | | (_) | | (_| | |____| | |  __/ | | | |_ 
+ * |_|  |_|\___/|_|\__,_|\_____|_|_|\___|_| |_|\__|
+ *--------------------------------------------------------------------------
+ *
+ * @author CR072 <crazymath072@holaclient.tech>
+ * @license Apache-2.0
+ * 
+ * https://holaclient.tech
+ * 
+ * © 2022-2024 HolaClient
+-->
+
+
+
 <html lang="en">
   <%- include('./components/head') %>
+
   <body>
+    
     <div class="container-scroller">
+      
       <%- include('./components/adminsidebar') %>
+      
       <div class="container-fluid page-body-wrapper">
+
         <%- include('./components/topnav') %>
 
 
               <div class="col-lg-6">
+                
                 <div class="card" style="margin-top: 100px; width: 800px;">
+                  <div style="border-radius: 15px;" class="alert bg-transparent " style="height: 0px;"></div>
                   <form id="nestEggForm">
                     <div class="card-body">
                       <div class="card-title">Add Eggs</div>
                       <hr>
-                      <div class="form-group">
-                        <label for="input-7">select the icon of the egg:</label>
-                        <input id="banner" class="form-control form-control-rounded">
-                      </div>
+
                       <div class="form-group">
                         <label for="input-6">Nest:</label>
-                        <div class="row row-group m-0" id="nestList"></div>
+                        <div class="row row-group m-0" id="nestList">
+                        </div>
                       </div>
                       <div class="form-group">
                         <label for="input-7">Egg:</label>
-                        <div class="row row-group m-0" id="eggList"></div>
+                        <div class="row row-group m-0" id="eggList">
                       </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="input-7">egg icon:</label>
+                      <input id="banner" class="form-control form-control-rounded">
+                    </div>
                       <div class="form-group">
-                        <button role="button" type="submit" class="btn btn-light btn-round px-5">Add</button>
+                        <button role="button" type="submit" class="software-item text-white">Add</button>
                       </div>
                     </div>
                   </form>
                 </div>
-                <script>
-                  async function removeEgg() {
-                    const selectElement = document.getElementById("eggs");
-                    const selectedOption = selectElement.options[selectElement.selectedIndex];
                 
-                    if (!selectedOption) {
-                      toastr.error("", "Please select an egg to remove it!");
-                      return;
-                    }
-                
-                    const selectedEgg = selectedOption.value;
-                    const rmEgg = await fetch(`/admin/eggs/remove/${selectedEgg}`)
-                      .then(response => response.json())
-                      .then(data => {
-                        if (data.success === true) {
-                          selectElement.removeChild(selectedOption);
-                          toastr.success("", data.message);
-                          toastr.info(`Please reload the settings to sync the current changed!`, 'Changes detected!');
-                        } else {
-                          toastr.error('', data.message);
-                        }
-                      });
-                  }
-                </script>
-                
-                
-                <script>
-                  const bann = document.getElementById("banner");
-                  const ban = document.getElementById("ban");border-ra
-
-                  bann.addEventListener("input", function () {
-                    ban.src = bann.value;
-                  });
-                </script>
-
-
-                <style>
-                  .egg-list {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                  }
-
-                  .egg-item {
-                    border: 0 solid #e5eaef;
-                    background-color: rgba(255, 255, 255, .2);
-                    border-radius: 5px;
-                    padding: 10px;
-                    min-width: 200px;
-                    margin: 5px;
-                    cursor: pointer;
-                  }
-
-                  .egg-item:hover {
-                    background-color: #333333;
-                  }
-
-                  .egg-item.selected {
-                    background-color: rgba(0, 0, 0, .2);
-                    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
-                  }
-
-                  .egg-name {
-                    color: white;
-                    font-weight: bold;
-                  }
-
-                  .egg-ram {
-                    color: white;
-                    margin-left: 5px;
-                  }
-
-                  @media (max-width: 768px) {
-                    .egg-list {
-                      justify-content: center;
-                    }
-                  }
-                </style>
-
-                <script>
-                  fetch('/api/nests')
-                    .then(response => response.json())
-                    .then(data => {
-                      const nestList = document.getElementById('nestList');
-
-                      data.nests.forEach(nest => {
-                        const nestItem = document.createElement('div');
-                        nestItem.classList.add('egg-item');
-                        nestItem.textContent = nest.attributes.name;
-                        nestItem.setAttribute('data-id', nest.attributes.id);
-
-                        nestItem.addEventListener('click', () => {
-                          clearSelection(nestList);
-                          nestItem.classList.add('selected');
-                          populateEggs(nestItem.getAttribute('data-id'));
-                        });
-
-                        nestList.appendChild(nestItem);
-                      });
-
-                      const populateEggs = (nestId) => {
-                        const eggList = document.getElementById('eggList');
-                        eggList.innerHTML = '';
-
-                        fetch(`/api/nests/${nestId}/eggs`)
-                          .then(response => response.json())
-                          .then(data => {
-                            data.eggs.forEach(egg => {
-                              const eggItem = document.createElement('div');
-                              eggItem.classList.add('egg-item');
-                              eggItem.textContent = egg.attributes.name;
-                              eggItem.setAttribute('data-id', egg.attributes.id);
-
-                              eggItem.addEventListener('click', () => {
-                                clearSelection(eggList);
-                                eggItem.classList.add('selected');
-                              });
-
-                              eggList.appendChild(eggItem);
-                            });
-                          })
-                          .catch(error => console.error('Error fetching eggs:', error));
-                      };
-
-                      const clearSelection = (list) => {
-                        const items = list.getElementsByClassName('egg-item');
-                        Array.from(items).forEach(item => item.classList.remove('selected'));
-                      };
-                    })
-                    .catch(error => console.error('Error fetching nests:', error));
-
-                  document.getElementById('nestEggForm').addEventListener('submit', function (event) {
-                    event.preventDefault();
-
-                    const nestItems = document.getElementById('nestList').getElementsByClassName('egg-item');
-                    const selectedNestItem = Array.from(nestItems).find(item => item.classList.contains('selected'));
-                    const nestId = selectedNestItem ? selectedNestItem.getAttribute('data-id') : '';
-
-                    const eggItems = document.getElementById('eggList').getElementsByClassName('egg-item');
-                    const selectedEggItem = Array.from(eggItems).find(item => item.classList.contains('selected'));
-                    const eggId = selectedEggItem ? selectedEggItem.getAttribute('data-id') : '';
-                    let banner = document.getElementById("banner").value
-                    if (!banner) {
-                      banner = "/cdn/eggs/minecraft.png"
-                    }
-                    fetch('/api/settings', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({ nestId, eggId, banner })
-                    })
-                      .then(response => response.json())
-                      .then(data => {
-                        if (data.success) {
-                          toastr.success(`Successfully added the egg with ID: ${eggId}!`, 'Success!');
-                          toastr.info(`Please reload the settings to sync the current changed!`, 'Changes detected!');
-                        } else {
-                          toastr.error('Failed to add Egg!', 'Error!');
-                        }
-                      })
-                      .catch(error => console.error('Error updating settings:', error));
-                  });
-
-                </script>
+                <script src="https://cdn.tfc-plex.de/js/eggs.js"></script>
 
 
 

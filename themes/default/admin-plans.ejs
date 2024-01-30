@@ -8,27 +8,27 @@
         <%- include('./components/topnav') %>
         <div class="main-panel">
           <div style="background-color: #111319" class="content-wrapper">
-           <h2>Plans</h2>
-           <p class="text-gray">Change the plan of users.</p>
+           <h2><%= lang.title_admin_plans %></h2>
+           <p class="text-gray"><%= lang.descriptions_admin_plans %></p>
             <div class="row">
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Set user's plan</h4>
+                    <h4 class="card-title"><%= lang.card_title_set_plan %></h4>
                     <form class="forms-sample">
                       <div class="form-group">
-                        <label for="IDPlan">Discord User ID</label>
+                        <label for="IDPlan"><%= lang.label_id_plan %></label>
                         <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" placeholder="Enter user ID" id="IDSet">
                       </div>
                       <div class="form-group">
-                        <label for="InputPackage">Plan</label><BR>
+                        <label for="InputPackage"><%= lang.label_package_plan %></label><BR>
                         <select class="form-control" style="border-radius: 15px; padding: 8px;" id="package">
                           <% for (let [name, value] of Object.entries(settings.api.client.packages.list)) { %>
                             <option value="<%= name %>"><%= name %> (RAM: <%= value.ram %>MB, Disk: <%= value.disk %>MB, CPU: <%= value.cpu %>%, Servers: <%= value.servers %>)</option>
                           <% } %>
                         </select>
                       </div>
-                      <a role="button" class="btn btn-primary" href="javascript: submitPlan()">Submit</a><br><br><p>You cannot set a plan which is managed by the automatic role rewards, tfc-plex requires you to create a duplicate plan if you want to do that.</p>
+                      <a role="button" class="software-item text-white" href="javascript: submitPlan()"><%= lang.bouton_submit_plan %></a><br><br><p>You cannot set a plan which is managed by the automatic role rewards, tfc-plex requires you to create a duplicate plan if you want to do that.</p>
                     </form>
                   </div>
                 </div>
@@ -45,31 +45,6 @@
             let id = encodeURIComponent(document.getElementById("IDPlan").value);
             let packagename = encodeURIComponent(document.getElementById("package").value);
             window.location.href = "/setplan?id=" + id + "&package=" + packagename
-        }
-        async function submitSet() {
-            let id = encodeURIComponent(document.getElementById("IDSet").value);
-            let cpu = encodeURIComponent(document.getElementById("SetCPU").value);
-            let ram = encodeURIComponent(document.getElementById("SetRAM").value);
-            let disk = encodeURIComponent(document.getElementById("SetDisk").value);
-            let servers = encodeURIComponent(document.getElementById("SetServers").value);
-            window.location.href = "/setresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
-        }
-        async function submitAdd() {
-            let id = encodeURIComponent(document.getElementById("IDAdd").value);
-            let cpu = encodeURIComponent(document.getElementById("AddCPU").value);
-            let ram = encodeURIComponent(document.getElementById("AddRAM").value);
-            let disk = encodeURIComponent(document.getElementById("AddDisk").value);
-            let servers = encodeURIComponent(document.getElementById("AddServers").value);
-            
-            window.location.href = "/addresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
-        }
-        async function submitRemove() {
-            let id = encodeURIComponent(document.getElementById("IDRemove").value);
-            let cpu = encodeURIComponent(document.getElementById("RemoveCPU").value);
-            let ram = encodeURIComponent(document.getElementById("RemoveRAM").value);
-            let disk = encodeURIComponent(document.getElementById("RemoveDisk").value);
-            let servers = encodeURIComponent(document.getElementById("RemoveServers").value);
-            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
         }
     </script>
     <%- include('./components/scripts') %>

@@ -1,23 +1,8 @@
-
-
 <nav style="background: #0b0b0fbf; z-index: 1" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
-
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-
         <a class="navbar-brand brand-logo-mini text-white" href="../dashboard"><%= settings.letter %> </a>
     </div>
-
-
     <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-
-
-
-
-
-
-
-
-
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="inboxDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,32 +12,27 @@
                     <div id="inboxMessages"></div>
                 </div>
             </li>
-
             <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                     <div class="navbar-profile">
                         <p class="mb-0 mr-2 d-none d-sm-block navbar-profile-name"><%= userinfo.username %></p>
                         <img class="img-xs rounded-circle" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" alt="">
-
-
                     </div>
                 </a>
                 <div style="background: rgba(0, 0, 0, 0.91);; padding: 15px; border-radius: 16px;" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                     <div class="dropdown-divider"></div>
 
+                    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="../settings">
+                        <div class="preview-item-content">
+                            <p class="preview-subject mb-1"><p class="user-subtitle"><%= userinfo.username %></p></p>
+                        </div>
+                    </a>
 
-
-    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="../settings">
-        <div class="preview-item-content">
-            <p class="preview-subject mb-1"><p class="user-subtitle"><%= userinfo.username %></p></p>
-        </div>
-    </a>
-
-    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="">
-        <div class="preview-item-content">
-            <p class="preview-subject mb-1"><p class="user-subtitle"><%= packagename %> plan</p></p>
-        </div>
-    </a>
+                    <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="">
+                        <div class="preview-item-content">
+                            <p class="preview-subject mb-1"><p class="user-subtitle"><%= packagename %> plan</p></p>
+                        </div>
+                    </a>
 
                     <a style="border-radius: 16px; padding: 10px" class="dropdown-item preview-item" href="/afk">
                         <div class="preview-item-content">
@@ -87,23 +67,19 @@
     </div>
 </nav>
 
-
 <script>
-    // Lade die JSON-Daten über JavaScript
     fetch('/api/inbox')
         .then(response => response.json())
         .then(data => {
             const inboxMessages = document.getElementById('inboxMessages');
 
-
-            // Überprüfe, ob Nachrichten vorhanden sind
+            //Check if messages are available
             if (data.messages.length === 0) {
                 const noNewInboxes = document.createElement('div');
                 noNewInboxes.classList.add('dropdown-item', 'text-muted');
                 noNewInboxes.textContent = 'No new inboxes';
                 inboxMessages.appendChild(noNewInboxes);
             } else {
-                // Iteriere durch die Nachrichten und füge sie dem Dropdown-Menü hinzu
                 data.messages.forEach(message => {
                     // Überprüfe, ob die Nachricht für den eingeloggten Benutzer bestimmt ist
 
@@ -122,9 +98,17 @@
 </script>
 
 <style>
-    /* Neue CSS-Regeln für das rote Ausrufezeichen */
     #inboxDropdown {
         position: relative;
+    }
+
+    .dropdown-item {
+        transition: transform 0.3s ease, font-size 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        color: white;
+        transform: translateX(5px) scale(0.95);
     }
 
     .badge-danger {
@@ -150,10 +134,6 @@
         })
         .catch(error => console.error('Error fetching inbox data:', error));
 </script>
-
-
-
-
 
 <script>
     // Annahme: settings.hostid und settings.name sind die zu überprüfende Host-ID und der Name

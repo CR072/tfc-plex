@@ -11059,6 +11059,53 @@ input[type="button"].btn-block {
   .custom-range:disabled::-ms-thumb {
     background-color: #adb5bd; }
 
+
+                  .egg-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                  }
+
+                  .egg-item {
+                    border: 0 solid #e5eaef;
+                    background-color: rgba(255, 255, 255, .2);
+                    border-radius: 5px;
+                    padding: 10px;
+                    min-width: 200px;
+                    margin: 5px;
+                    cursor: pointer;
+                  }
+
+                  .egg-item:hover {
+                    background-color: #333333;
+                  }
+
+                  .egg-item.selected {
+                    background-color: rgba(0, 0, 0, .2);
+                    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
+                  }
+
+                  .egg-name {
+                    color: white;
+                    font-weight: bold;
+                  }
+
+                  .egg-ram {
+                    color: white;
+                    margin-left: 5px;
+                  }
+
+                  @media (max-width: 768px) {
+                    .egg-list {
+                      justify-content: center;
+                    }
+                  }
+
+
+
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
@@ -22148,6 +22195,70 @@ html, body {
   transition: all .3s ease;
 }
 
+
+.location-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.location-item {
+  border: 0 solid #e5eaef;
+  background-color: rgba(255, 255, 255, .2);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 250px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.location-item.selected {
+  background-color: rgba(0, 0, 0, .2);
+  box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
+}
+
+.location-flag {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.software-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.software-item {
+  border: 0 solid #e5eaef;
+  background-color: rgba(255, 255, 255, .2);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 250px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.software-banner {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.software-item.selected {
+  background-color: rgba(0, 0, 0, .2);
+  box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .45)
+}
+
+
 .switcher-icon{
   width: 40px;
   height: 40px;
@@ -22208,6 +22319,9 @@ html, body {
   border: 0px solid black;
 
 }
+
+
+
 
 
 #theme1 {

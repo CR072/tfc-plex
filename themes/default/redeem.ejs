@@ -13,8 +13,8 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card" style="height: 100px;">
                         <div class="card-body">
-                            <h3>Redeem Coupon</h3>
-                            <p class="text-muted">Redeem a coupon.</p>
+                            <h3><%= lang.redeem_coupon %></h3>
+                            <p class="text-muted"> <%= lang.redeem_a_coupon %>.</p>
                         </div>
                     </div>
                 </div>
@@ -25,11 +25,11 @@
 							<% if (req.query.err == "MISSINGCOUPONCODE") { %>
 								You have not provided a coupon code.
 							<% } else if (req.query.err == "INVALIDCOUPONCODE") { %>
-								Invalid coupon code. Was it claimed already?
+								 <%= lang.invalid_coupon_code_Was_it_claimed_already %>.
 							<% } else if (req.query.err == "SUCCESSCOUPONCODE") { %>
-								Success!
+								<%= lang.coupon_success %>.
 							<% } else { %>
-								Coupon failure.
+								<%= lang.coupon_failure %>.
 							<% } %>
 							</div>
 						<% } %>
@@ -38,10 +38,10 @@
                 <div class="card ml-3">
                   <div class="card-body">
 									<form action="/coupon_redeem">
-                                           <label for="code">Coupon</label>
+                                           <label for="code"><%= lang.coupon %></label>
 											<input style="border-radius: 5px; padding: 8px;" type="text" class="form-control" placeholder="Enter your coupon code here" name="code">
 											<br>
-											<button class="btn btn-primary">Redeem</button>
+											<button class="software-item text-white"><%= lang.redeem %></button>
 									</form>
                   </div>
                 </div>

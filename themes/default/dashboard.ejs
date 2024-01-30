@@ -13,12 +13,125 @@
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card" style="height: 100px;">
                             <div class="card-body">
-                                <h3>Dashboard</h3>
-                                <p class="text-muted">View your resources & other things here.</p>
+                                <h3><%= lang.dashboard %></h3>
+                                <p class="text-muted"><%= lang.view_resources %></p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+<style>
+
+
+    .md{
+        transition: all 4.5s;
+    }
+
+
+    .md {
+        position: fixed;
+        /* Stay in place */
+        z-index: 90;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: 0.5s;
+    }
+
+
+    .modal-c {
+        margin: auto;
+        padding: 40px;
+
+        border-radius: 16px;
+        margin-top: 12%;
+        transition: 0.5s
+    }
+
+
+    .custom-div {
+    width: 30%;
+    margin-left: 675px;
+    margin-top: 150px;
+  }
+
+  /* Media Query für Bildschirme mit einer Breite von 600 Pixeln oder weniger */
+  @media (max-width: 600px) {
+    .custom-div {
+      width: 100%; /* Vollständige Breite des Bildschirms */
+      margin-left: 0; /* Kein linker Rand */
+      margin-top: 150px; /* Beibehaltung des oberen Rands */
+    }
+  }
+
+
+</style>
+
+
+
+
+
+
+<!-- The Modal -->
+<% if (req.query.news) { %>
+    <div class="md" >
+        <div class="custom-div" role="document" ">
+            <div class="card modal-c"> 
+                <div class="modal-title">
+                    <h2 class="modal-title text-gray text-xl font-bold">
+                        <span class="inline-block bg-dark px-2 pb-1 pt-2 text-center align-baseline text-sm font-bold leading-none text-white" style="border-radius: 4px;">TFC-Plex</span>
+                        <span class="inline-block bg-gray px-2 pb-1 pt-2 text-center align-baseline text-sm leading-none text-black-700">News</span>
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-gray-900 text-xl font-bold mb-2">
+                            <div class="container-fluid card px-4 py-2.5">
+                                <div class="d-flex justify-content-between align-items-center gap-4">
+                                    <p class="text-sm text-white mb-0">
+                                        Welcome back 👋! You've logged in as <strong class="font-semibold">@<%= userinfo.username %></strong>
+                                    </p>
+      
+                                </div>
+                            </div>
+                    </h2>
+                    <p class="text-gray-600 font-medium">What can I do here?</p>
+                    <ul class="list-disc ml-5 text-gray-500 mb-4">
+                        <li>Create, edit & delete servers</li>
+                        <li>Earn & spend coins to buy resources</li>
+                        <li>Reset credentials & manage account</li>
+                        <li>More!</li>
+                    </ul>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                        <a href="../dashboard" class="btn software-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<% } %>
+
+
+
+
+
+
 
                 <div id="claimLink" style="display: none;">
                     <div class="row justify-content-center align-items-center">
@@ -31,8 +144,8 @@
                                             <i class="fa-solid fa-coin fa-2x text-warning"></i>
                                         </div>
                                         <div class="box ml-3">
-                                            <h3 class="h3-mobile">Claimed your Daily Coins?</h3>
-                                            <p class="text-muted"><a href="/claim">Claim Your Coins now</a></p>
+                                            <h3 class="h3-mobile"><%= lang.claimed_daily_coins %></h3>
+                                            <p class="text-muted"><a href="/claim"><%= lang.claim_coins_now %></a></p>
                                         </div>
                                         <div class="col-10">
 
@@ -58,9 +171,9 @@
                                         </div>
                                         <div class="col-10">
                                             <div class="box">
-                                                <h3 class="card-title">Buy more resources</h3>
-                                                <p class="text-muted ">You can buy more resources here if you dont have enaugh recources</p><br>
-                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../store">Buy Extra Resources</a>
+                                                <h3 class="card-title"><%= lang.buy_more_resources %></h3>
+                                                <p class="text-muted "><%= lang.buy_more_resources_description %></p><br>
+                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../store"><%= lang.buy_extra_resources %></a>
                                             </div>
                                         </div>
                                     </div>
@@ -79,9 +192,9 @@
                                         </div>
                                         <div class="col-10">
                                             <div class="box">
-                                                <h3 class="card-title">Create Server</h3>
-                                                <p class="text-muted ">Deploy a new Server.</p><br>
-                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../servers/new">Buy Extra Resources</a>
+                                                <h3 class="card-title"><%= lang.create_server %></h3>
+                                                <p class="text-muted "><%= lang.deploy_new_server %></p><br>
+                                                <a class="btn btn-primary btn-lg invisible" style="border-radius: 5px;" href="../servers/new"><%= lang.buy_extra_resources %></a>
                                             </div>
                                         </div>
                                     </div>
@@ -91,41 +204,72 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card" style="height: 150px; overflow-y: scroll;">
+
+
+
+
+
+                
+
+
+                    <div class="row ">
+                        <div class="col-12 grid-margin ">
+                          <div class="card" >
                             <div class="card-body">
-                                <h3>Your Servers:</h3>
-                                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
-                                    <p>No servers available.</p>
-                                <% } else { %>
-                                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-
-
-                                        <div class="dropdown float-right mt-2">
-                                            <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            </button>
-
-                                            <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
-                                                <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Delete</a>
-                                                <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
-                                                <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
+                              <h4 class="card-title"><%= lang.your_servers %>:</h4>
+                              <div class="table-responsive" style="overflow-x: hidden; max-height: 95px; overflow-y: scroll;">
+                                <table class="table" style="overflow-x: hidden;">
+                                  <thead>
+                                    <tr>
+                                      <th><%= lang.server_name %></th>
+                                      <th> <%= lang.cpu.label %> </th>
+                                      <th> <%= lang.ram.label %> </th>
+                                      <th> <%= lang.disk.label %> </th>
+                                      <th style="position: relative; left: 115px;"> <%= lang.options %> </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody style="overflow-x: hidden;">
+                                      <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                                        <tr>
+                                          <td> You do not own any servers! Why not create one? </td>
+                                        </tr>
+                                      <% } else { %>
+                                        <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                                          <tr>
+                                            <td>
+                                              <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
+                                            </td>
+                                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
+                                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
+                                            <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
+                                            <td>
+                                                <button class="btn bg-transparent text-right " style="margin-left: 110px;" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </button>
+    
+                                                <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
+                                                    <a class="dropdown-item text-white" href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"><%= lang.delete %></a>
+                                                    <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"><%= lang.edit %></a>
+                                                    <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank"><%= lang.control %></a>
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
-
-                                        <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
-                                            <option value="<%= name %>"><%= value.name %></option>
+    
+                                            </td>
+                                          </tr>
                                         <% } %>
-
-                                        <hr>
-                                    <% } %>
-                                <% } %>
+                                      <% } %>
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                    </div>
+
+
+
+
+
+
                 </div>
             </div>
             <%- include('./components/footer') %>

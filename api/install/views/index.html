@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFC-Plex Setup</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url(/assets/images/bg-themes/1.png);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+      margin: auto;
+      margin-top: 5%;
+    }
+
+    .login-container h1 {
+      color: #333;
+    }
+
+    .login-container input,
+    .login-container button {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .software-item {
+      cursor: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-container card">
+      <h1 class="mb-4 text-white">TFC-Plex Setup</h1>
+      <form action="/saveSettings" method="post" id="settingsForm">
+
+        <!-- Step 1 -->
+        <div class="step" id="step1">
+          <div class="form-group">
+            <input type="text" class="software-item text-white" id="name" name="name" placeholder="Name" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="software-item text-white cours" id="letter" name="letter" placeholder="Initials" required>
+          </div>
+
+          <button type="button" class="software-item text-white" onclick="nextStep('step1', 'step2')">Next</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step hidden" id="step2">
+          <div class="form-group">
+            <input type="text" class="software-item text-white" id="motd" name="motd" placeholder="motd" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="software-item text-white cours" id="icon" name="icon" placeholder="icon url" required>
+          </div>
+
+          <button type="button" class="software-item text-white" onclick="nextStep('step2', 'step3')">Next</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step hidden" id="step3">
+          <div class="form-group">
+            <input type="text" class="software-item text-white" id="discord" name="discord" placeholder="discord invite link" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="software-item text-white cours" id="background" name="background" placeholder="background url" required>
+          </div>
+
+          <button type="button" class="software-item text-white" onclick="nextStep('step3', 'step4')">Next</button>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step hidden" id="step4">
+          <div class="form-group">
+            <input type="text" class="software-item text-white" id="pterodactyl_domain" name="pterodactyl_domain" placeholder="Pterodactyl Domain" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="software-item text-white cours" id="pterodactylkey" name="pterodactyl_key" placeholder="API Key" required>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="software-item text-white cours" id="accountKey" name="pterodactyl_account_key" placeholder="Admin Acount Key" required>
+          </div>
+
+          
+
+          <button type="button" class="software-item text-white" onclick="nextStep('step4', 'step5')">Next</button>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step card hidden" id="step5">
+            <div class="form-group">
+              <input type="text" class="software-item text-white" id="oauth2_id" name="oauth2[id]" placeholder="OAuth2 ID" required>
+            </div>
+          
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="oauth2_secret" name="oauth2[secret]" placeholder="OAuth2 Secret" required>
+            </div>
+          
+            <div class="form-group">
+              <input type="text" class="software-item text-white cours" id="oauth2_link" name="oauth2[link]" placeholder="OAuth2 Link" required>
+            </div>
+
+          
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function nextStep(currentStepId, nextStepId) {
+      const currentStep = document.getElementById(currentStepId);
+      const nextStep = document.getElementById(nextStepId);
+
+      if (currentStep && nextStep) {
+        currentStep.classList.add('hidden');
+        nextStep.classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

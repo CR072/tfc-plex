@@ -17,8 +17,8 @@
                       <div class="card" style="height: 100px;">
                           <div class="card-body d-flex justify-content-between align-items-center">
                               <div>
-                                  <h3 class="text-left">Your Servers</h3>
-                                  <p class="text-muted">You can edit, delete, create & update servers here.</p>
+                                <h3 class="text-left"><%= lang.your_servers %></h3>
+                                <p class="text-muted"><%= lang.edit_delete_create_update %></p>
                               </div>
                               <div class="text-right row ">
                                   <a class=" bg-primary p-2 mr-2 d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../servers/new">
@@ -51,100 +51,129 @@
 
 
               <% if (req.query.err) { %>
-              <% } if (req.query.err == "SUCCESS") { %>
-                  <div style="background-color: #007fcc" class="alert">
-                      Success! The server has been deployed
-                  </div>
-              <% } %>
-
-
-            <div class="row">
-
-             </div><br>
-            <div class="row">
-                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
-                    <p>No servers available.</p>
-                <% } else { %>
-                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                        <div class="col-md-6 grid-margin stretch-card "  style="margin-left: -5px; max-width: 425px; max-height: 305px">
-                            <div class="card mr-3 mb-3">
-                                <div class="card-body" >
-
-                                    <div class="dropdown float-right"> <!-- Hier wird "float-right" hinzugefügt -->
-                                        <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-dots-horizontal"></i>
-                                        </button>
-                                        <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
-                                            <a class="dropdown-item text-white" onclick="if (confirm('Please confirm you want to delete this server, the data cannot be retrieved after it has been deleted.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
-                                            <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
-                                            <a class="dropdown-item text-white" onclick="if (confirm('Please confirm you want to Renew this server for <%- settings.renewals.delay %> days it Cost <%= settings.renewals.cost %> Coins')) { window.location.href='/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Renew</a>
-                                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain.replace(/\/$/, '') %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank">Control</a>
-
-                                        </div>
-                                    </div>
-
-                                    <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
-
-                                    <h5 id="server<%= pterodactyl.relationships.servers.data[i].attributes.id %>" style="font-family: 'Roboto Mono', monospace;">Server <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></h5>
-
-
-
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                          // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
-                                          <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                                            fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
-                                              .then(response => response.json())
-                                              .then(data => {
-                                                // Extract only the hours from the response
-                                                const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
-                                      
-                                                // Update the DOM with the server ID and renewal time
-                                                const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
-                                                if (serverElement) {
-                                                  serverElement.innerHTML += `,  <br> <br>Expire in: ${hours} days`;
-                                                }
-                                              })
-                                              .catch(error => {
-                                                // Handle errors
-                                                console.error(error);
-                                              });
-                                          <% } %>
-                                        });
-                                      </script>
-
-
-                    <div class="row mt-4">
-                                    <div class="card mr-2 mb-3" style="background: #17181b">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
-                                            <p class="card-text">Core <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %> Core/s</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="card mr-3 mb-3" style="background: #17181b">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><i class="mdi mdi-layers"></i> RAM</h5>
-                                            <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GB/s</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="card mb-3" style="background: #17181b">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><i class="mdi mdi-harddisk"></i> Disk</h5>
-                                            <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GB/s</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
+                <% } if (req.query.err == "SUCCESS") { %>
+                <div style="background-color: #007fcc" class="alert">
+                  <%= lang.success_deployed %>
+                </div>
                 <% } %>
-          </div>
-          </div>
+                <div class="row">
+                </div>
+                <br>
+                <div class="row">
+                  <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                  <p><%= lang.no_servers_available %></p>
+                  <% } else { %>
+                  <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                  <div class="col-md-6 grid-margin stretch-card " style="margin-left: -5px; max-width: 525px; max-height: 265px">
+                  
 
+                    <div class="card mr-3 mb-3">
+                      <div style="width: 100%; height: 120px; position: absolute; z-index: -1;filter: blur(4px); border-radius: 0.80rem 0.80rem 0px 0px; background-size: cover; background-image: url(https://img.freepik.com/fotos-premium/der-mond-und-die-sterne-am-himmel_574545-2018.jpg); filter: blur(0px, 8px);"></div>
+
+                      <div class="card-body">
+                        
+                        <div class="dropdown float-right">
+                          <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                          </button>
+                          <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
+                            <a class="dropdown-item text-white" onclick="if (confirm('<%= lang.delete_server_confirm %>')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><%= lang.delete %></a>
+                            <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"><%= lang.edit %></a>
+                            <a class="dropdown-item text-white" onclick="if (confirm('<%= lang.renew_server_confirm %>')) { window.location.href='/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><%= lang.renew %></a>
+                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain.replace(/\/$/, '') %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank"><%= lang.control %></a>
+                           
+                          </div>
+                          <p> <span id="serverStatus<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>">Loading...</span></p>
+                        </div>
+                        <h4 class="card-title"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h4>
+                        <h5 id="server<%= pterodactyl.relationships.servers.data[i].attributes.id %>" style="font-family: 'Roboto Mono', monospace;"></h5>
+                        <div class="row mt-4">
+                          <div class="mr-2 mb-3" >
+                            <div class="card-body">
+                              <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
+                              <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %> Core/s</p>
+                            </div>
+                          </div>
+                          <div class="mr-3 mb-3" >
+                            <div class="card-body">
+                              <h5 class="card-title"><i class="mdi mdi-layers"></i> RAM</h5>
+                              <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GB/s</p>
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <div class="card-body">
+                              <h5 class="card-title"><i class="mdi mdi-harddisk"></i> Disk</h5>
+                              <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GB/s</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                  <% } %>
+                </div>
+              </div>
+             
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                  // Funktion zum Aktualisieren des Serverstatus
+                  async function updateServerStatus(serverId) {
+                    try {
+                      const response = await fetch(`/api/servers/resources/${serverId}`);
+                      const data = await response.json();
+              
+                      // Den Pterodactyl-Status in menschenlesbare Zustände umwandeln
+                      // Den Anzeigezustand bestimmen
+                      const displayState = data.state === 'running' ? "<p class='bg-success' style='padding: 2px 5px; border-radius: 5px;'>Online</p>" : "<p class='bg-danger;  border-radius: 5px;' style='padding: 2px 5px;'>Offline</p>";
+              
+                      // Den Serverstatus im DOM aktualisieren
+                      const serverStatusElement = document.getElementById(`serverStatus${serverId}`);
+                      if (serverStatusElement) {
+                        serverStatusElement.innerHTML = data.is_suspended ? 'Suspended' : displayState;
+                      }
+                    } catch (error) {
+                      console.error(error);
+                    }
+                  }
+              
+                  // Durchlaufe jeden Server und aktualisiere den Status einmalig
+                  <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                    const serverId<%= i %> = '<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>';
+                    updateServerStatus(serverId<%= i %>);
+                  <% } %>
+                });
+              </script>
+              
+
+
+
+
+
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
+                    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                        fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Extract only the hours from the response
+                                const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
+            
+                                // Update the DOM with the server ID and renewal time
+                                const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
+                                if (serverElement) {
+                                    const expirationText = isNaN(hours) ? "N/A" : `${hours} days`;
+                                    serverElement.innerHTML += `  Expire in: ${expirationText}`;
+                                }
+                            })
+                            .catch(error => {
+                                // Handle errors
+                                console.error(error);
+                            });
+                    <% } %>
+                });
+            </script>
           <%- include('./components/footer') %>
         </div>
       </div>

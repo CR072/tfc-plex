@@ -1,5 +1,6 @@
-const settings = require("../../settings.json");
 
+const settings = require("../../settings.json");
+const bodyParser = require("body-parser");
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
     if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 };
@@ -12,6 +13,62 @@ const ejs = require("ejs");
 const log = require('../../misc/log')
 
 module.exports.load = async function(app, db) {
+
+
+
+
+
+    function isAdmin(req) {
+        return req.session.pterodactyl && req.session.pterodactyl.root_admin === true;
+    }
+        
+
+
+
+    app.get("/node_stats_dsa", async (req, res) => {
+        let theme = indexjs.get(req);
+    
+        // Überprüfen Sie, ob der Benutzer angemeldet ist
+        if (!req.session.pterodactyl) return four0four(req, res, theme);
+    
+        // Rufen Sie die Informationen des Benutzerkontos vom Pterodactyl-Panel ab
+        let cacheaccount = await fetch(
+            settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
+            {
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+            }
+        );
+    
+        // Überprüfen Sie, ob das Benutzerkonto nicht gefunden wurde
+        if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
+    
+        // Parsen Sie die Informationen des Benutzerkontos
+        let cacheaccountinfo = JSON.parse(await cacheaccount.text());
+        req.session.pterodactyl = cacheaccountinfo.attributes;
+    
+        // Überprüfen Sie, ob der Benutzer ein Root-Administrator ist
+        if (cacheaccountinfo.attributes.root_admin !== true) return four0four(req, res, theme);
+    
+        // Rufen Sie die Nodes-Statistiken vom Pterodactyl-Panel ab
+        let nodesStats = await fetch(
+            settings.pterodactyl.domain + "/api/application/nodes",
+            {
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+            }
+        );
+    
+        // Parsen und senden Sie die Nodes-Statistiken als JSON zurück
+        let nodesStatsJson = await nodesStats.json();
+        res.json(nodesStatsJson);
+    });
+
+
+
+
+
+
     app.get("/setcoins", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -199,6 +256,69 @@ module.exports.load = async function(app, db) {
     });
 
 
+
+
+
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    
+    
+    app.post('/saveadminSettings', (req, res) => {
+        const existingSettings = JSON.parse(fs.readFileSync('settings.json', 'utf-8'));
+        if (isAdmin(req)) {
+            const newSettings = req.body;
+            const settingsWithDots = replaceUnderscoresWithDots(newSettings, existingSettings);
+            settingsWithDots.installing = false;
+            fs.writeFileSync('settings.json', JSON.stringify(settingsWithDots, null, 2), 'utf-8');
+            restartClient();
+    
+            res.redirect('/');
+        } else {
+            res.status(403).send('Forbidden');
+        }
+    });
+
+
+function replaceUnderscoresWithDots(obj, existingSettings) {
+    const result = { ...existingSettings };
+
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (key.startsWith('pterodactyl')) {
+                const fieldName = key.replace('pterodactyl_', '');
+                result.pterodactyl = result.pterodactyl || {};
+                result.pterodactyl[fieldName] = obj[key];
+            } else if (key === 'oauth2') {
+                const oauth2Settings = obj[key];
+                result.api = result.api || {};
+                result.api.client = result.api.client || {};
+                result.api.client.oauth2 = {
+                    ...result.api.client.oauth2,
+                    ...oauth2Settings,
+                };
+            }
+        }
+    }
+
+    return result;
+}
+
+function restartClient() {
+    console.log('Client wird neu gestartet...');
+    
+
+   process.exit();
+}
+
+
+
+
+
+
+
+
+
     app.get("/setplan", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -241,6 +361,13 @@ module.exports.load = async function(app, db) {
             return res.redirect(successredirect + "?err=none");
         }
     });
+
+
+
+
+
+    
+
 
     app.get("/create_coupon", async (req, res) => {
         let theme = indexjs.get(req);
