@@ -58,3 +58,4 @@ Theme Switcher (v1.5.0):
 |2023/12/24|v1.0|First Release||
 
 © 2023-2024 TFC-Plex by privt00
+© 2022-2024 HolaClient | For some files forked from [HolaClient](https://github.com/HolaClient/HolaClient)
