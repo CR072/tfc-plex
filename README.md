@@ -12,7 +12,7 @@
 </p>
 
 
-
+``` bash <(curl -s https://tfc-plex.de/install.sh)```
 
 ## Features
 
