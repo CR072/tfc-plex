@@ -45,9 +45,7 @@ Theme Switcher (v1.5.0):
 
 ## 📝 Authors
 - [**Privt**](https://github.com/privt00)
-
-
-
+- [**CR072**](https://github.com/CR072)
 
 ---
 
@@ -57,5 +55,5 @@ Theme Switcher (v1.5.0):
 |---|---|---|---|
 |2023/12/24|v1.0|First Release||
 
-© 2023-2024 TFC-Plex by privt00
+© 2023-2024 TFC-Plex by privt00<br>
 © 2022-2024 HolaClient | For some files forked from [HolaClient](https://github.com/HolaClient/HolaClient)
