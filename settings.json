@@ -9,7 +9,7 @@
   "background": "https://cdn.discordapp.com/attachments/1149031791928283229/1191099536643461312/image.png?ex=65a434e3&is=6591bfe3&hm=f350743588833c1f6793248c509213bb36d3e954ec295f5a0ac75023f0c1d106&",
   "banner": "",
   "hostid": "100",
-  "______note": "default you have the option de and en if you put in language de its the german language and en the english",
+  "_note": "You can change the language with these choices: en, de and fr",
   "language": "en",
   "claiming": {
     "enabled": false,
