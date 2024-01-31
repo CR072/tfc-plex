@@ -83,23 +83,23 @@
     "days": "jours",
 
 
-    "note_page_admin_plan": "This is a translate for admin plans page (Not Finished)",
+    "note_page_admin_plan": "Il s'agit d'une traduction pour la page des plans d'admin (non terminée).",
 
     "title_admin_plans": "Plans",
-    "descriptions_admin_plans": "Change the plan of users.",
-    "card_title_set_plan": "Set user's plan",
-    "label_id_plan": "Discord User ID",
+    "descriptions_admin_plans": "Modifier le plan d'un utilisateurs.",
+    "card_title_set_plan": "Modifier le plan d'un utilisateur",
+    "label_id_plan": "ID de l'utilisateur Discord",
     "label_package_plan": "Plan",
-    "bouton_submit_plan": "Submit",
+    "bouton_submit_plan": "Envoyer",
 
-    "note_page_admin_coupons": "This is a translate for admin coupons page (Finished)",
+    "note_page_admin_coupons": "Il s'agit d'une traduction pour la page des coupons d'admin (Fini)",
 
     "title_admin_coupons": "Coupons",
-    "description_admin_coupons": "Create and revoke coupons.",
-    "card_title_create": "Create a coupon",
-    "card_title_revoke": "Revoke a coupon",
+    "description_admin_coupons": "Créer et annuler des coupons.",
+    "card_title_create": "Créer un coupon",
+    "card_title_revoke": "Annuler un coupon",
     "label_code_coupon": "Code",
-    "label_coins_coupon": "Coins",
+    "label_coins_coupon": "pièces",
     "label_ram_coupon": "RAM",
     "label_disk_coupon": "Disk",
     "label_cpu_coupon": "CPU",
@@ -112,7 +112,7 @@
     "description_admin_coins": "Change the coins of users.",
     "card_title_set": "Set user's coins",
     "succesaction": "Success! Action completed",
-    "label_id_coins": "Discord ID:",
+    "label_id_coins": "ID de l'utilisateur Discord:",
     "label_coins_coins": "Coins:",
     "bouton_submit_coins": "Set",
 
