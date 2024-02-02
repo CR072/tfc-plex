@@ -28,17 +28,20 @@ console.log(chalk.grey("- | Loading settings"));
 const settings = require("./settings.json");
 const crypto = require('crypto');
 
-// Überprüfe und randomisiere den Wert von hostid.
+// DE : Überprüfe und randomisiere den Wert von hostid.
+// EN : Check and randomize the value of hostid.
 if (settings.hostid === "100") {
     console.log("Hostid ist gleich 100. Randomisiere den Wert.");
 
     // Generiere eine zufällige Zeichenkette mit 16 Zeichen
     const randomHostId = crypto.randomBytes(16).toString('hex');
 
-    // Aktualisiere den Wert von hostid
+    // DE : Aktualisiere den Wert von hostid
+    // EN : Generate a random string of 16 characters
     settings.hostid = randomHostId;
 
-    // Schreibe die aktualisierten Einstellungen zurück in die Datei
+    // DE: Schreibe die aktualisierten Einstellungen zurück in die Datei
+    // EN: Write the updated settings back to the file
     fs.writeFileSync('./settings.json', JSON.stringify(settings, null, 2), 'utf8');
 } else {
     null
