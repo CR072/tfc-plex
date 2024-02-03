@@ -51,10 +51,4 @@ Theme Switcher (v1.5.0):
 
 ---
 
-# Cangelog
-
-|Date|Version|Short Description|Long Description|
-|---|---|---|---|
-|2023/12/24|v1.0|First Release||
-
-© 2023-2024 TFC-Plex by privt00
+## © 2023-2024 TFC-Plex by privt00
