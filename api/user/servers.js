@@ -478,19 +478,19 @@ module.exports.load = async function (app, db) {
         );
 
         if (cacheaccount.statusText === "Not Found") {
-          return res.json({ "success": false, "message": "alerts.INVALIDUSER" });
+          return res.json({ "success": false, "message": "INVALIDUSER" });
         }
 
         const cacheaccountinfo = await cacheaccount.json();
         if (!cacheaccount) {
-          return res.json({ "success": false, "message": "alerts.PANELERROR" });
+          return res.json({ "success": false, "message": "PANELERROR" });
         }
         req.session.pterodactyl = cacheaccountinfo.attributes;
         if (req.query.name && req.query.description && req.query.ram && req.query.disk && req.query.cpu && req.query.backups && req.query.allocations && req.query.databases && req.query.egg && req.query.location) {
           try {
             decodeURIComponent(req.query.name)
           } catch (err) {
-            return res.json({ "success": false, "message": "alerts.INVALIDSERVERNAME" });
+            return res.json({ "success": false, "message": "INVALIDSERVERNAME" });
           }
           let packagename = await db.get("package-" + req.session.userinfo.hcid);
           let package = settings.api.client.packages.list[packagename ? packagename : settings.api.client.packages.default];
@@ -523,31 +523,31 @@ module.exports.load = async function (app, db) {
           };
 
           if (servers2 >= package.servers + extra.servers) {
-            return res.json({ "success": false, "message":" alerts.NOSLOTS" });
+            return res.json({ "success": false, "message":" NOSLOTS" });
           }
           let name = decodeURIComponent(req.query.name);
           if (name.length < 1) {
-            return res.json({ "success": false, "message":" alerts.LITTLESERVERNAME" });
+            return res.json({ "success": false, "message":" LITTLESERVERNAME" });
           }
           if (name.length > 191) {
-            return res.json({ "success": false, "message":" alerts.TOOMANYCHARACTERS" });
+            return res.json({ "success": false, "message":" TOOMANYCHARACTERS" });
           }
           let location = req.query.location;
 
           if (Object.entries(settings.api.client.locations).filter(vname => vname[0] == location).length !== 1) {
-            return res.json({ "success": false, "message": alerts.INVALIDLOCATION });
+            return res.json({ "success": false, "message": "INVALIDLOCATION" });
           }
 
           let requiredpackage = Object.entries(settings.api.client.locations).filter(vname => vname[0] == location)[0][1].package;
           if (requiredpackage) if (!requiredpackage.includes(packagename ? packagename : settings.api.client.packages.default)) {
-            return res.json({ "success": false, "message": alerts.PREMIUMLOCATION });
+            return res.json({ "success": false, "message": "PREMIUMLOCATION" });
           }
 
           let egg = req.query.egg;
 
           let egginfo = eggconfig[egg];
           if (!eggconfig[egg]) {
-            return res.json({ "success": false, "message": alerts.INVALIDEGG });
+            return res.json({ "success": false, "message": "INVALIDEGG" });
           }
           let ram = parseFloat(req.query.ram);
           let disk = parseFloat(req.query.disk);
@@ -599,7 +599,7 @@ module.exports.load = async function (app, db) {
             const coins = await db.get("coins-" + req.session.userinfo.hcid) ?? 0;
             const cost = settings.features.server.cost
             if (createdStatus && coins < cost) {
-              return res.json({ "success": false, "message": alerts.TOOLITTLECOINS });
+              return res.json({ "success": false, "message": "TOOLITTLECOINS" });
             }
             let serverinfo = await fetch(
               settings.pterodactyl.domain + "/api/application/servers",
@@ -651,15 +651,15 @@ module.exports.load = async function (app, db) {
               await db.set("coins-" + req.session.userinfo.hcid, coins - cost)
             }
             log('created server', `${req.session.userinfo.username} deployed a new server named \`${name}\`\`\`\``)
-            return res.json({ "success": true, "message": "alerts.CREATEDSERVER" });
+            return res.json({ "success": true, "message": "CREATEDSERVER" });
           } else {
-            return res.json({ "success": false, "message": "alerts.NOTANUMBER" });
+            return res.json({ "success": false, "message": "NOTANUMBER" });
           }
         } else {
-          return res.json({ "success": false, "message": "alerts.MISSINGVARIABLE" });
+          return res.json({ "success": false, "message": "MISSINGVARIABLE" });
         }
       } else {
-        return res.json({ "success": false, "message": "alerts.SERVERCREATIONDISABLED" });
+        return res.json({ "success": false, "message": "SERVERCREATIONDISABLED" });
       }
     } catch (error) {
       console.log(error)
