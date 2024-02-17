@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
 <html lang="en">
   <%- include('./components/head') %>
   <body>
@@ -17,72 +19,77 @@
                 </div>
               </div>
             </div>
-
-            <div class="row" id="plans-list">
-              <!-- Pläne werden hier eingefügt -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 mx-4 gap-8 w-full">
+            <% 
+            // Eine Map erstellen, um einzigartige Dienste zu speichern
+            const uniqueServices = new Map();
+            
+            // Durchlaufen der Kategorien, um einzigartige Dienste zu identifizieren
+            products.billing.categories.forEach(category => {
+                uniqueServices.set(category.service, category.icon);
+            });
+        
+            // Durchlaufen der einzigartigen Dienste und Generieren der Kategorien
+            uniqueServices.forEach((icon, service) => { %>
+                <div class="relative group">
+                    <% 
+                    // Überprüfen, ob die Kategorie als "featured" markiert ist
+                    const featuredCategories = products.billing.categories.filter(category => category.service === service && category.featured === true);
+                    featuredCategories.forEach(featuredCategory => { %>
+                        <div class="absolute -inset-[1px] rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur-xs p-4 bg-gradient-to-br from-white via-orange-500 to-rose-600">
+                        </div>
+                    <% }); %>
+                    <div class="relative bg-zinc-900 h-full w-full border rounded-lg <% if (featuredCategories.length > 0) { %>border-rose-700<% } %>">
+                        <div class="flex flex-col mx-4 p-4 items-center justify-center overflow-hidden">
+                            <div class="relative group">
+                                <% 
+                                // Überprüfen, ob der Dienst mindestens eine "featured" Kategorie hat
+                                if (featuredCategories.length > 0) { %>
+                                    <div class="absolute inset-0 rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur-lg animate-pulse p-4 bg-gradient-to-br from-white via-orange-500 to-rose-600">
+                                    </div>
+                                <% } %>
+                                <div class="relative p-2">
+                                    <img src="<%= icon %>" class="w-12">
+                                </div>
+                            </div>
+                            <h1 class="text-white text-center text-xl font-semibold"><%= service %></h1>
+                            <div class="mt-2 space-y-2 w-full flex flex-col">
+                                <% 
+                                // Durchlaufen aller Kategorien für diesen Dienst
+                                products.billing.categories.filter(category => category.service === service).forEach(category => { %>
+                                    <div class="w-full rounded-lg bg-zinc-800 border text-gray-200 border-<% if (featuredCategories.includes(category)) { %>rose-700<% } else { %>zinc-700<% } %> itesm-center flex justify-between p-2">
+                                        <span><span class="text-red-600 absolute flex -mt-5 -ml-4">
+                                        <% 
+                                        // Überprüfen, ob die Kategorie als "featured" markiert ist
+                                        if (featuredCategories.includes(category)) { %>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                                <path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clip-rule="evenodd" />
+                                            </svg>
+                                        <% } %>
+                                        </span>
+                                        <span class="plan-name cursor-pointer"><%= category.name %> <span class="text-gray-100 ml-1"><%= category.price %></span></span>
+                                        
+                                        <div class="plan-specs hidden space-y-1">
+                                            <p>RAM: <%= category.ram %> MB</p>
+                                            <p>CPU: <%= category.cpu %>%</p>
+                                            <p>Disk: <%= category.disk %> GB</p>
+                                            <a class="buy-button software-item text-white font-bold py-1 px-4 rounded" href="/create?name=<%= userinfo.username %>'s Server&description=<%= settings.name %>&egg=<%= category.egg %>&ram=<%= category.ram %>&disk=<%= category.disk %>&price=<%= category.price %>&cpu=<%= category.cpu %>&backups=<%= category.backups %>&allocations=<%= category.allocations %>&databases=1&location=<%= category.location %>" style="width: 200px !important;">Buy</a>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
             </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <script>
-      // JavaScript zum Laden und Anzeigen der Pläne
-      async function fetchPlans() {
-        try {
-          const response = await fetch('/buyplans');
-          const plans = await response.json();
 
-          const plansListElement = document.getElementById('plans-list');
-
-          for (const planName in plans) {
-            // Überspringe den "default"-Plan
-            if (planName.toLowerCase() === 'default') {
-              continue;
-            }
-
-            const planDetails = plans[planName];
-            const purchaseLink = `/buyplan?plan=${planName}`;
-
-            const cardHtml = `
-              <div class="col-md-4 ml-3">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">${planName}</h5>
-                    <p class="card-text">
-                      RAM: ${planDetails.ram} MB<br>
-                      Disk: ${planDetails.disk} MB<br>
-                      CPU: ${planDetails.cpu}%<br>
-                      Servers: ${planDetails.servers}<br>
-                      Price: <strong>${planDetails.cost} Coins</strong>
-                    </p>
-                    <a href="${purchaseLink}" onclick="buyPlan('${planName}')" class="software-item text-white">Buy Plan</a>
-                  </div>
-                </div>
-              </div>`;
-
-            plansListElement.innerHTML += cardHtml;
-          }
-        } catch (error) {
-          console.error('Error fetching plans:', error);
-        }
-      }
-
-      // JavaScript-Funktion zum Kauf des Plans
-      async function buyPlan(planName) {
-        try {
-          // Hier können Sie weitere Aktionen hinzufügen, wenn der Benutzer auf den Kauf-Link klickt
-          console.log(`User clicked on Buy Plan link for plan: ${planName}`);
-        } catch (error) {
-          console.error('Error handling buy plan:', error);
-        }
-      }
-
-      // Lade Pläne beim Laden der Seite
-      window.onload = fetchPlans;
-    </script>
         <script src="/assets/js/off-canvas.js"></script>
         <script src="/assets/js/hoverable-collapse.js"></script>
         <script src="/assets/js/misc.js"></script>
@@ -91,5 +98,15 @@
         <script src="/assets/js/file-upload.js"></script>
         <script src="/assets/js/typeahead.js"></script>
         <script src="/assets/js/select2.js"></script>
+
+        <script>
+            // JavaScript, um Klickereignisse zu verwalten und die Spezifikationen anzuzeigen
+            document.querySelectorAll('.plan-name').forEach(planName => {
+                planName.addEventListener('click', () => {
+                    const specs = planName.nextElementSibling;
+                    specs.classList.toggle('hidden');
+                });
+            });
+        </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 <nav style="background: #0b0b0fbf; z-index: 1" class="navbar p-0 fixed-top d-flex flex-row" xmlns="http://www.w3.org/1999/html">
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo-mini text-white" href="../dashboard"><%= settings.letter %> </a>
+        <img src="<%= settings.icon %>" class="navbar-brand brand-logo-mini text-white" href="../dashboard">
     </div>
     <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
         <ul class="navbar-nav navbar-nav-right">
@@ -61,8 +61,8 @@
             balance.textContent = Math.floor(<%= coins %> * 100) / 100
         </script>
 
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-format-line-spacing"></span>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center float-right text-right" type="button" data-toggle="offcanvas">
+            <i class="fa-solid fa-list-ul text-white text-right" style="margin-left: 160px;"></i>
         </button>
     </div>
 </nav>

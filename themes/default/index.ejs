@@ -1,6 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
 
+
+<!--
+ * APPENDIX FOR LEGAL PURPOSES *
+   Copyright (c) 2023-2024, privt00
+   Copyright (c) 2024, CR072 and the HolaClient project
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+ *--------------------------------------------------------------------------
+ *   _    _       _        _____ _ _            _   
+ * | |  | |     | |      / ____| (_)          | |  
+ * | |__| | ___ | | __ _| |    | |_  ___ _ __ | |_ 
+ * |  __  |/ _ \| |/ _` | |    | | |/ _ \ '_ \| __|
+ * | |  | | (_) | | (_| | |____| | |  __/ | | | |_ 
+ * |_|  |_|\___/|_|\__,_|\_____|_|_|\___|_| |_|\__|
+ *--------------------------------------------------------------------------
+ *
+ * @author CR072 <crazymath072@holaclient.tech>
+ * @license Apache-2.0
+ * 
+ * https://holaclient.tech
+ * 
+ * © 2022-2024 HolaClient
+-->
+
+
+
+
+
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,168 +59,530 @@
     <meta property="og:image" content="<%= settings.icon %>">
     <meta name="twitter:card" content="<%= settings.icon %>">
 
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
-    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet" />
+
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
 </head>
+<style>@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Urbanist&display=swap');
 
-<body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed " style="
-  background-color: rgb(15, 23, 44);
-  background-image: radial-gradient(at 98% 15%, rgb(64, 19, 131) 0, transparent 58%), radial-gradient(at 6% 25%, rgb(67, 27, 136) 0, transparent 32%), radial-gradient(at 92% 93%, rgb(33, 69, 128) 0, transparent 25%);
-">
-    <div class="h-full">
-        <!--Nav-->
-        <div class="w-full container mx-auto">
-            <div class="w-full flex items-center justify-between">
-                <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"><%= settings.name %></span>
-                </a>
+    body {
+        font-family: 'urbanist'
+    }
+    
+    .font-nunito {
+        font-family: 'nunito'
+    }
+    
+    div.close {
+        transition: 1000ms;
+        padding: 0;
+        cursor: pointer;
+        background: 0;
+        opacity: 0;
+        height: 0;
+    }
+    
+    div.open {
+        transition: 700ms;
+        transform-origin: 0%;
+        margin-bottom: 64px;
+        opacity: 1;
+        height: auto;
+        visibility: visible;
+    }
+    
+    .idktbh {
+        background-color: #141313;
+    }
+    
+    @keyframes tilt {
+        0%, 50%, 100% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(0.5deg);
+        }
+        75% {
+            transform: rotate(-0.5deg);
+        }
+    }
+    
+    .tilt {
+        animation: tilt 10s infinite linear;
+    }
+    
+    @keyframes blob {
+        0% {
+          transform: translate(0px, 0px) scale(2);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(2.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(1.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(2);
+        }
+      }
+      
+      .animation-blob {
+        animation: blob 7s infinite;
+      }
+      
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+      
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+    
+      .animation-delay-6000 {
+        animation-delay: 6s;
+      }
+      
+      .blinking-cursor {
+        user-select: none;
+        animation: blink 1s steps(2, start) infinite;
+      }
+      @keyframes blink {
+        to {
+          visibility: hidden;
+        }
+      }
+    
+    .animate-gradient {
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(270deg, #ff7356, #ff59e2 25.52%, #52ddf6 50%, #eadf4e 76.04%, #ff7356);
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-size: 200% auto;
+        animation: gradient 6s linear infinite;
+    }
+    
+    @keyframes gradient {
+        0% {
+            background-position: 100% 0;
+        }
+    
+        100% {
+            background-position: -100% 0;
+        }
+    }
+    
+    ::selection {
+        background: rgba(255, 255, 255, .2)
+    }
+    
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: inherit;
+        background-size: cover;
+        z-index: 0;
+    }
+    
+    progress {
+        vertical-align: baseline
+    }
+    
+    .progress {
+        border-radius: 9999px;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+        width: 100%
+    }
+    
+    .progress .is-indeterminate {
+        animation: progress-increase 3s cubic-bezier(.4, 0, .2, 1) infinite
+    }
+    
+    .progress .is-active:before {
+        --tw-content: "";
+        animation: progress-active 3s cubic-bezier(.55, .2, .3, .67) infinite;
+        background-color: #fff;
+        border-radius: .25rem;
+        content: var(--tw-content);
+        inset: 0;
+        position: absolute
+    }
+    
+    @keyframes progress-increase {
+        0% {
+            left: -5%;
+            width: 5%
+        }
+    
+        to {
+            left: 125%;
+            width: 100%
+        }
+    }
+    
+    @keyframes progress-active {
+        0% {
+            opacity: .6;
+            transform: translateX(-100%)
+        }
+    
+        to {
+            opacity: 0;
+            transform: translateX(0)
+        }
+    }
+    
+    </style>
+
+<body class="bg-zinc-950 min-h-screen selection:bg-primary/10 selection:text-green-400 selection:background-green-0 ">
+
+    <section>
+        <div aria-hidden="true" class="-z-40 inset-0">
+            <source src="https://framerusercontent.com/modules/assets/HiZN4NNtsGWv01iM5MjKu3L1sRs~sGGALAtTVcs4YLz6Amz6TQzvN78mAXITxi2rMSHi1kg.mp4" type="video/mp4">
+            <div class="w-full h-screen -mt-16 pt-56 bg-no-repeat bg-center bg-cover" style="background-image: url('https://images.unsplash.com/photo-1501420264597-23296a7e6a46?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                <div class="bg-gradient-to-t from-zinc-950 to-transparent w-full h-full mt-32">
+                    <div class="text-center z-50 relative">
+                        <h1 class="text-4xl text-center lg:text-6xl font-semibold text-slate-300">
+                            <span><%= settings.name %></span><br>
+                            <span class="animate-gradient">The Hosting of your Trust</span>
+                            <p class="text-[16px] mt-2 lg:text-lg text-gray-400"><%=settings.motd %></p>
+                        </h1>
+            
+                        <ul class="mt-4 flex gap-5 flex-wrap items-center justify-center">
+                            <li>
+                                <a href="/dashboard" class="relative inline-flex items-center justify-center mt-2 p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                                    <span class="relative px-5 py-[14px] transition-all ease-in duration-75 bg-white dark:bg-zinc-900 rounded-md group-hover:bg-opacity-0">
+                                        LET'S GET STARTED
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            
+        </div>
+    </section>
+
+   <main class="mx-16 mt-4 mb-8">
+    
+    <section class="mt-16">
+        <div class="flex w-full justify-between">
+            <div class="text-[55px] mb-4 text-white ml-4 pr-8 ">Plans:</div>
+
         </div>
 
-        <!--Main-->
-        <div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-            <!--Left Col-->
-            <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden" style="margin-top: -150px;">
-                <h1 class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-                    <%= lang.motd_p1 %>
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
-                        <%= settings.name %>
-                    </span>
-                    <%= lang.motd_p2 %>
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 mx-4 gap-8 w-full">
+            <% 
+            // Eine Map erstellen, um einzigartige Dienste zu speichern
+            const uniqueServices = new Map();
+            
+            // Durchlaufen der Kategorien, um einzigartige Dienste zu identifizieren
+            products.billing.categories.forEach(category => {
+                uniqueServices.set(category.service, category.icon);
+            });
+        
+            // Durchlaufen der einzigartigen Dienste und Generieren der Kategorien
+            uniqueServices.forEach((icon, service) => { %>
+                <div class="relative group">
+                    <% 
+                    // Überprüfen, ob die Kategorie als "featured" markiert ist
+                    const featuredCategories = products.billing.categories.filter(category => category.service === service && category.featured === true);
+                    featuredCategories.forEach(featuredCategory => { %>
+                        <div class="absolute -inset-[1px] rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur-xs p-4 bg-gradient-to-br from-white via-orange-500 to-rose-600">
+                        </div>
+                    <% }); %>
+                    <div class="relative bg-zinc-900 h-full w-full border rounded-lg <% if (featuredCategories.length > 0) { %>border-rose-700<% } %>">
+                        <div class="flex flex-col mx-4 p-4 items-center justify-center overflow-hidden">
+                            <div class="relative group">
+                                <% 
+                                // Überprüfen, ob der Dienst mindestens eine "featured" Kategorie hat
+                                if (featuredCategories.length > 0) { %>
+                                    <div class="absolute inset-0 rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 blur-lg animate-pulse p-4 bg-gradient-to-br from-white via-orange-500 to-rose-600">
+                                    </div>
+                                <% } %>
+                                <div class="relative p-2">
+                                    <img src="<%= icon %>" class="w-12">
+                                </div>
+                            </div>
+                            <h1 class="text-white text-center text-xl font-semibold"><%= service %></h1>
+                            <div class="mt-2 space-y-2 w-full flex flex-col">
+                                <% 
+                                // Durchlaufen aller Kategorien für diesen Dienst
+                                products.billing.categories.filter(category => category.service === service).forEach(category => { %>
+                                    <div class="w-full rounded-lg bg-zinc-800 border text-gray-200 border-<% if (featuredCategories.includes(category)) { %>rose-700<% } else { %>zinc-700<% } %> itesm-center flex justify-between p-2">
+                                        <span><span class="text-red-600 absolute flex -mt-5 -ml-4">
+                                        <% 
+                                        // Überprüfen, ob die Kategorie als "featured" markiert ist
+                                        if (featuredCategories.includes(category)) { %>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                                <path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clip-rule="evenodd" />
+                                            </svg>
+                                        <% } %>
+                                        </span>
+                                        <%= category.name %></span>
+                                        <span class="text-gray-100"><%= category.price %></span>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        
+        
+        
+
+
+     
+    </section>
+    Why choose us?
+</h1>
+<div class="grid grid-cols-1 mt-8 lg:grid-cols-4 gap-4">
+    <div class="group hover:shadow-xl hover:shadow-purple-500/20 relative bg-zinc-800/50 rounded-lg border border-zinc-700/50 p-2">
+
+        <div class="absolute opacity-100 group-hover:opacity-0 animation duration-1000 group-hover:duration-200 justify-center place-self-center items-center text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-6 h-12 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-2xl text-center ml-2 font-nunito">Safety</span>
+            </center>
+        </div>
+
+        <div class="relative opacity-0 group-hover:opacity-100 animation duration-200 group-hover:duration-1000 justify-center items-center p-2 text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-ls ml-2 font-nunito">Safety</span>
+            </center>
+            <p class="mt-4 text-sm">
+                PoggerHost fuels your Minecraft mastery with market-leading prices. Craft smarter, play stronger!
+            </p>
+        </div>
+    </div>
+    <div class="group hover:shadow-xl hover:shadow-purple-500/20 relative bg-zinc-800/50 rounded-lg border border-zinc-700/50 p-2">
+
+        <div class="absolute opacity-100 group-hover:opacity-0 animation duration-1000 group-hover:duration-200 justify-center place-self-center p-4 items-center text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-2 ml-2 h-12 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-2xl ml-4 font-nunito">No DDoS </span>
+            </center>
+        </div>
+
+        <div class="relative opacity-0 group-hover:opacity-100 animation duration-200 group-hover:duration-1000 justify-center items-center p-2 text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-ls ml-2 font-nunito">No DDoS </span>
+            </center>
+            <p class="mt-4 text-sm">
+                We sweat the tech, you slay the mobs. Seamless uptime, zero hassles! Build with confidence!
+            </p>
+        </div>
+    </div>
+    <div class="group hover:shadow-xl hover:shadow-purple-500/20 relative bg-zinc-800/50 rounded-lg border border-zinc-700/50 p-2">
+
+        <div class="absolute opacity-100 group-hover:opacity-0 animation duration-1000 group-hover:duration-200 justify-center place-self-center p-4 items-center text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-2 h-12 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-2xl ml-8 font-nunito">24/7 Support</span>
+            </center>
+        </div>
+
+        <div class="relative opacity-0 group-hover:opacity-100 animation duration-200 group-hover:duration-1000 justify-center items-center p-2 text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-ls ml-2 font-nunito">24/7 Support</span>
+            </center>
+            <p class="mt-4 text-sm">
+                Expert help, day or night! Your adventures never pause. Craft without fear, we're always here!
+            </p>
+        </div>
+    </div>
+    <div class="group hover:shadow-xl hover:shadow-purple-500/20 relative bg-zinc-800/50 rounded-lg border border-zinc-700/50 p-2">
+
+        <div class="absolute opacity-100 group-hover:opacity-0 animation duration-1000 group-hover:duration-200 justify-center place-self-center p-4 items-center text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-2 h-12 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-2xl font-nunito">free Hosting!</span>
+            </center>
+        </div>
+
+        <div class="relative opacity-0 group-hover:opacity-100 animation duration-200 group-hover:duration-1000 justify-center items-center p-2 text-xl text-center text-gray-200 hover:text-white cursor-pointer">
+            <center class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+                <span class="text-ls ml-2 font-nunito">free Hosting!</span>
+            </center>
+            <p class="mt-4 text-sm">
+                Your data, your fortress. Ironclad security, impenetrable servers. Play private, play free!
+            </p>
+        </div>
+    </div>
+</div>
+
+</section>
+<section class="mx-12 p-8 mt-8">
+<h1 class="text-white text-3xl lg:text-5xl font-semibold">
+    Statistics speaks!
+</h1>
+<div class="flex mt-8 gap-4">
+    <div class="grid grid-cols-1 gap-4 w-3/4">
+        <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-4 justify-center text-center">
+            <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
+                Join with <span id="users">---</span> other users
+            </h1>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-4 justify-center text-center">
+                <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
+                    <span id="nodes">---</span>+ <br>nodes
                 </h1>
-                <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
-                    <%= settings.motd %>
-                </p>
-
-                <div class="mb-4 flex justify-center md:justify-start">
-                    <a href="/dashboard" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                        <%= lang.go_to_client %>
-                    </a>
-                    <a href="/panel" class="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800">
-                        <%= lang.go_to_panel %>
-                    </a>
-                </div>
             </div>
-
-            <!--Right Col-->
-            <div class="w-full xl:w-3/5 p-12 overflow-hidden" style="margin-top: -150px;">
-                <!-- Add responsive class to hide the logo on small screens -->
-                <img class="mx-auto w-full md:w-4/5 transform -rotate-1 transition hover:scale-105 scale-75 duration-700 ease-in-out hover:rotate-6 hidden md:block" src="<%= settings.icon %>" />
+            <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-4 justify-center text-center">
+                <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
+                    99% <br>uptime
+                </h1>
             </div>
+        </div>
+    </div>
+    <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-2 w-1/4 justify-center text-center">
+        <div class="bg-gradient-to-br from-rose-500/70 to-transparent p-2 rounded-lg">
+            <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
+                <span id="servers">-_-</span>+ <br>servers
+            </h1>
+        </div>
+        <div class="rounded-lg">
+            <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
+                <span id="locations">-_-</span>+ <br>locations
+            </h1>
+        </div>
+    </div>
+</div>
+</section>
+</main>
 
-          <section id="team" class="w-full md:w-3/5 p-12 overflow-hidden text-center mx-auto">
-            <!-- Statistics Section -->
-            <div class="text-center mt-12">
-                <h2 class="text-5xl font-bold text-white mb-20"><%= settings.name %> <%= lang.statistics %> </h2>
-                <hr class="mb-20">
-        
-                <!-- Individual Statistic Cards -->
-                <div class="flex flex-wrap justify-center items-center">
-                    <!-- Statistic Card for Active Users -->
-                    <div class="w-full md:w-1/2 mb-4">
-                        <div class="">
-                            <div class="relative pb-4">
-                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-2">
-                                <span id="users">---</span>
-                            </h3>
-                            <p class="font-heading text-lg"> <%= lang.active_users %> </p>
-                        </div>
-                    </div>
-        
-                    <!-- Statistic Card for Servers -->
-                    <div class="w-full md:w-1/2 mb-4">
-                        <div class="">
-                            <div class="relative pb-4">
-                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-2">
-                                <span id="servers">---</span>
-                            </h3>
-                            <p class="font-heading text-lg"> <%= lang.servers %> </p>
-                        </div>
-                    </div>
-        
+<footer class="relative bg-no-repeat hidden lg:block bg-cover"
+style="background-image: url('https://img.freepik.com/free-vector/neon-light-background_53876-67443.jpg');">
+<div class="absolute inset-0 bg-gradient-to-b from-[#161616] to-transparent"></div>
+<div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 relative z-10">
+<div class="flex items-center justify-between w-full">
+    <div class="items-center lg:ml-8 w-1/3 text-white">
+        <a href="#" class="flex place items-center">
+            <img class="w-10" src="<%= settings.icon %>" alt="Logo">
+            <span class="text-white font-nunito text-2xl ml-1 font-bold"><%= settings.name %></span>
+        </a>
+        <span class="ml-1.5 text-xs">&copy;
+            <script>document.write(new Date().getFullYear());</script> | All Rights Reserved<br>
+        </span>
+    </div>
 
-        
-                    <!-- Statistic Card for Locations -->
-                    <div class="w-full md:w-1/2 mb-4">
-                        <div class="">
-                            <div class="relative pb-4">
-                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-2">
-                                <span id="locations">---</span>
-                            </h3>
-                            <p class="font-heading text-lg"> <%= lang.locations %> </p>
-                        </div>
-                    </div>
-        
-                    <!-- Statistic Card for Nodes -->
-                    <div class="w-full md:w-1/2 mb-4">
-                        <div class="">
-                            <div class="relative pb-4">
-                                <div class="duration-300 absolute left-1/2 transform -translate-x-1/2 w-2 h-20"></div>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-2">
-                                <span id="nodes">---</span>
-                            </h3>
-                            <p class="font-heading text-lg"> <%= lang.nodes %> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        
-        
-        
+    <div class="grid grid-cols-1 w-2/3 lg:grid-cols-3 gap-8">
+        <div>
+            <h2 class="mb-5 text-sm font-semibold text-gray-900 uppercase dark:text-white">Links</h2>
+            <ul class="text-gray-300 font-medium">
+                <li class="mb-1">
+                    <a href="<%= settings.discord %>" class="hover:underline">Discord</a>
+                </li>
+                <li>
+                    <a href="<%= settings.pterodactyl.domain %>" class="hover:underline">Panel</a>
+                </li>
+            </ul>
+        </div>
 
-          <!--Footer-->
-          <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
-              <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2022-2024</a>
-              <a class="text-blue-500 no-underline hover:no-underline" href="https://github.com/privt00/tfc-plex">TFC-Plex</a>
-          </div>
-      </div>
-  </div>
+        <div>
+            <h2 class="mb-5 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                <li class="mb-1">
+                    <a href="/tos" class="hover:underline">ToS</a>
+                </li>
+                <li>
+                    <a href="<%- settings.imprint_url %>" class="hover:underline">Imprint</a>
+                </li>
 
-    <script>
-        async function servers() {
-            const serverInfo = document.getElementById("servers");
-            const response = await fetch('/api/servers');
-            const json = await response.json();
-            const infoString = `${json.totalServers}`;
-            serverInfo.innerText = infoString;
-        }
-        servers();
-        async function users() {
-            const users = document.getElementById("users");
-            const response = await fetch('/api/users');
-            const json = await response.json();
-            const usersr = `${json.totalUsers}`;
-            users.innerText = usersr;
-        }
-        users();
-        async function locations() {
-            const locations = document.getElementById("locations");
-            const response = await fetch('/api/locations');
-            const json = await response.json();
-            const location = `${json.totalLocations}`;
-            locations.innerText = location;
-        }
-        locations();
-        async function nodes() {
-            const node = document.getElementById("nodes");
-            const response = await fetch('/api/nodes');
-            const json = await response.json();
-            const nodes = `${json.totalNodes}`;
-            node.innerText = nodes;
-        }
-        nodes();
-    </script>
+            </ul>
+        </div>
+
+
+
+    </div>
+</div>
+</div>
+
+</footer>
+<div class="fixed inset-x-6 bottom-6 z-40 mx-auto w-max">
+<a href="/plans" class="flex gap-3 rounded-2xl border border-yellow-900/30 bg-gradient-to-br p-3 shadow-2xl shadow-rose-500 backdrop-blur-xl from-[#161616] to-zinc-900">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-yellow-600 dark:text-yellow-500 astro-6MYTB7CN">
+    <path fill-rule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z" clip-rule="evenodd" class="astro-6MYTB7CN"></path>
+</svg>
+<span class="text-sm font-semibold tracking-wide text-yellow-900 dark:text-white"> Get STARTED</span>
+</a>
+</div>
+   </main>
+   <script>
+    async function servers() {
+        const serverInfo = document.getElementById("servers");
+        const response = await fetch('/api/servers');
+        const json = await response.json();
+        const infoString = `${json.totalServers}`;
+        serverInfo.innerText = infoString;
+    }
+    servers();
+    async function users() {
+        const users = document.getElementById("users");
+        const response = await fetch('/api/users');
+        const json = await response.json();
+        const usersr = `${json.totalUsers}`;
+        users.innerText = usersr;
+    }
+    users();
+    async function locations() {
+        const locations = document.getElementById("locations");
+        const response = await fetch('/api/locations');
+        const json = await response.json();
+        const location = `${json.totalLocations}`;
+        locations.innerText = location;
+    }
+    locations();
+    async function nodes() {
+        const node = document.getElementById("nodes");
+        const response = await fetch('/api/nodes');
+        const json = await response.json();
+        const nodes = `${json.totalNodes}`;
+        node.innerText = nodes;
+    }
+    nodes();
+</script>
 </body>
-
 </html>

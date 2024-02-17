@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/head') %>
+
+<body class="bg-theme">
+<div class="container-scroller">
+    <%- include('./components/control-sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <!-- Karte ganz oben -->
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card" style="height: 100px;">
+                        <div class="card-body">
+                            <h3>File Manager</h3>
+                            <p class="text-muted">Browsen Sie durch Ihre Dateien.</p>
+
+                            <div id="sftpDetailsModal" class="modal" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">SFTP Details</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <pre id="sftpDetailsContent"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datei-Manager-Inhalt -->
+                <div class="container card" style="">
+                    <!-- Verzeichnis-URL -->
+                    <div class="mb-3">
+                        <strong>Verzeichnis:</strong>
+                        <span id="directoryUrl"></span>
+                    </div>
+
+                    <!-- Navigationsbuttons -->
+                    <div class="navigation-buttons mt-3">
+                        <button class="btn btn-primary" onclick="navigateBack()"><code><-..</code></button>
+                        <button class="btn btn-primary" onclick="openCreateFileDialog()">Erstellen</button>
+                    </div>
+
+                    <!-- Dateitabelle -->
+                    <table id="fileTable" class="table mt-4">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Created At</th>
+                                <th>Modified At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS und Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Eigener JavaScript-Code -->
+        <script>
+            async function fetchFileList(directory = '') {
+                // Extrahiere die Server-ID aus der URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const serverId = urlParams.get('id');
+
+                try {
+                    const response = await fetch(`/fi?id=${serverId}&dir=${directory}`);
+                    const fileList = await response.json();
+
+                    // Überprüfe, ob fileList ein Array ist
+                    if (Array.isArray(fileList.data)) {
+                        // Display file list
+                        const tableBody = document.querySelector('#fileTable tbody');
+                        tableBody.innerHTML = ''; // Clear previous list
+
+                        fileList.data.forEach(file => {
+                            const row = tableBody.insertRow();
+
+                            // Name
+                            const cellName = row.insertCell(0);
+                            const link = document.createElement('a');
+                            link.href = '#'; // Set a placeholder link
+                            link.textContent = file.attributes.name;
+                            link.addEventListener('click', async function() {
+                                if (file.attributes.is_file) {
+                                    try {
+                                        const fileContentResponse = await fetch(`/fileContent?id=${serverId}&filePath=${directory}/${file.attributes.name}`);
+                                        const fileContent = await fileContentResponse.text();
+                                        
+                                        // Open popup editor
+                                        openPopupEditor(fileContent, serverId, `${directory}/${file.attributes.name}`);
+                                    } catch (error) {
+                                        console.error('Error fetching file content:', error);
+                                    }
+                                } else {
+                                    // Navigiere in das Verzeichnis, wenn es kein Datei ist
+                                    fetchFileList(`${directory}/${file.attributes.name}`);
+                                }
+                            });
+                            cellName.appendChild(link);
+
+                            // Type
+                            const cellType = row.insertCell(1);
+                            cellType.textContent = file.attributes.is_file ? 'File' : 'Directory';
+
+                            // Size
+                            const cellSize = row.insertCell(2);
+                            cellSize.textContent = file.attributes.size;
+
+                            // Created At
+                            const cellCreatedAt = row.insertCell(3);
+                            cellCreatedAt.textContent = file.attributes.created_at;
+
+                            // Modified At
+                            const cellModifiedAt = row.insertCell(4);
+                            cellModifiedAt.textContent = file.attributes.modified_at;
+
+                            // Actions
+                            const cellActions = row.insertCell(5);
+                            const deleteButton = document.createElement('button');
+                            deleteButton.textContent = 'Delete';
+                            deleteButton.addEventListener('click', function() {
+                                deleteFile(serverId, `${directory}/${file.attributes.name}`);
+                            });
+                            cellActions.appendChild(deleteButton);
+                        });
+
+                        // Aktualisiere Verzeichnis-URL
+                        const directoryUrlElement = document.getElementById('directoryUrl');
+                        directoryUrlElement.textContent = `tfc-plex@root${directory}`;
+                    } else {
+                        console.error('Error fetching file list: Response is not an array.', fileList);
+                    }
+                } catch (error) {
+                    console.error('Error fetching file list:', error);
+                }
+            }
+
+            function navigateBack() {
+                // Extrahiere die Server-ID aus der URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const serverId = urlParams.get('id');
+
+                // Extrahiere das aktuelle Verzeichnis aus der Verzeichnis-URL
+                const currentDirectory = urlParams.get('dr') || '';
+
+                // Extrahiere den vorherigen Verzeichnispfad
+                const previousDirectory = currentDirectory.split('/').slice(0, -1).join('/');
+
+                // Navigiere zum vorherigen Verzeichnis
+                fetchFileList(previousDirectory);
+            }
+
+            function navigateForward() {
+                // Extrahiere die Server-ID aus der URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const serverId = urlParams.get('id');
+
+                // Extrahiere das aktuelle Verzeichnis aus der Verzeichnis-URL
+                const currentDirectory = urlParams.get('dr') || '';
+
+                // Navigiere zum nächsten Verzeichnis
+                fetchFileList(`${currentDirectory}/`);
+            }
+
+            // Initialisiere die Anzeige des Verzeichnisses beim Laden der Seite
+            window.onload = function() {
+                fetchFileList(); // Ohne ein spezifisches Verzeichnis, zeigt automatisch das erste Verzeichnis an
+            };
+
+            // Funktion zum Öffnen des Popup-Editors
+            function openPopupEditor(content, serverId, filePath) {
+                // Erstellen Sie das Popup-Fenster
+                const popup = window.open('', '_blank', 'width=600,height=400');
+
+                // Erstellen Sie das Popup-Inhaltselemente
+                const textArea = document.createElement('textarea');
+                textArea.style.width = '100%';
+                textArea.style.height = '300px'; // Höhe des Textbereichs anpassen
+                textArea.value = content;
+
+                // Erstellen Sie den Speichern-Button
+                const saveButton = document.createElement('button');
+                saveButton.textContent = 'Save';
+                saveButton.addEventListener('click', async function() {
+                    try {
+                        // Senden Sie den bearbeiteten Inhalt an den Server
+                        const response = await fetch(`/saveFileContent?id=${serverId}&filePath=${filePath}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ content: textArea.value })
+                        });
+
+                        if (response.ok) {
+                            alert('File content saved successfully.');
+                            popup.close(); // Schließen Sie das Popup-Fenster nach dem Speichern
+                        } else {
+                            alert('Error saving file content.');
+                        }
+                    } catch (error) {
+                        console.error('Error saving file content:', error);
+                        alert('Error saving file content.');
+                    }
+                });
+
+                // Fügen Sie Textbereich und Speichern-Button zum Popup-Fenster hinzu
+                popup.document.body.appendChild(textArea);
+                popup.document.body.appendChild(saveButton);
+            }
+
+            // Funktion zum Öffnen des Dialogs zum Erstellen einer neuen Datei oder eines Ordners
+            function openCreateFileDialog() {
+                const fileName = prompt('Enter file or folder name:');
+                if (fileName) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const serverId = urlParams.get('id');
+                    const currentDirectory = urlParams.get('dr') || '';
+                    createFileOrFolder(serverId, currentDirectory, fileName);
+                }
+            }
+
+            // Funktion zum Erstellen einer neuen Datei oder eines Ordners
+            async function createFileOrFolder(serverId, currentDirectory, fileName) {
+                try {
+                    // Senden Sie die Anfrage zum Erstellen einer Datei oder eines Ordners an den Server
+                    const response = await fetch(`/control/create`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            serverId: serverId,
+                            directory: currentDirectory,
+                            name: fileName
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert('File or folder created successfully.');
+                        fetchFileList(currentDirectory); // Aktualisieren Sie die Dateiliste nach dem Erstellen
+                    } else {
+                        alert('Error creating file or folder.');
+                    }
+                } catch (error) {
+                    console.error('Error creating file or folder:', error);
+                    alert('Error creating file or folder.');
+                }
+            }
+
+            // Funktion zum Löschen einer Datei oder eines Ordners
+            async function deleteFile(serverId, filePath) {
+                if (confirm('Are you sure you want to delete this file or folder?')) {
+                    try {
+                        // Senden Sie die Anfrage zum Löschen einer Datei oder eines Ordners an den Server
+                        const response = await fetch(`/control/delete`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                serverId: serverId,
+                                filePath: filePath
+                            })
+                        });
+
+                        if (response.ok) {
+                            alert('File or folder deleted successfully.');
+                            fetchFileList(); // Aktualisieren Sie die Dateiliste nach dem Löschen
+                        } else {
+                            alert('Error deleting file or folder.');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting file or folder:', error);
+                        alert('Error deleting file or folder.');
+                    }
+                }
+            }
+        </script>
+    </div>
+</div>
+
+<%- include('./components/scripts') %>
+</body>
+</html>

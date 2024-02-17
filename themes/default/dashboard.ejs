@@ -1,3 +1,4 @@
+<%- include('loading.ejs') %>
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./components/head') %>
@@ -71,12 +72,11 @@
     margin-top: 150px;
   }
 
-  /* Media Query für Bildschirme mit einer Breite von 600 Pixeln oder weniger */
   @media (max-width: 600px) {
     .custom-div {
-      width: 100%; /* Vollständige Breite des Bildschirms */
-      margin-left: 0; /* Kein linker Rand */
-      margin-top: 150px; /* Beibehaltung des oberen Rands */
+      width: 100%;
+      margin-left: 0;
+      margin-top: 150px;
     }
   }
 
@@ -88,8 +88,8 @@
 
 
 
-<!-- The Modal -->
-<% if (req.query.news) { %>
+
+<% if (req.query.loggedin) { %>
     <div class="md" >
         <div class="custom-div" role="document" ">
             <div class="card modal-c"> 
@@ -158,7 +158,103 @@
                 </div>
 
                 <%- include('./components/alert') %>
-                <%- include('./components/status') %>
+                <div class="row">
+                    <%
+                    let ram = 0;
+                    let disk = 0;
+                    let cpu = 0;
+                    let servers = pterodactyl.relationships.servers.data.length;
+                    for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+                      ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+                      disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+                      cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+                    }
+                    %>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-9">
+                              <h6 class="card-title text-muted mb-0"><%= lang.cpu.label %></h6>
+                              <div class="d-flex align-items-center align-self-start">
+                                <h5 class="mb-0"><%= cpu/100 %> / <%= (packages.cpu/100 + extraresources.cpu/100) %> <i class="fa-solid fa-microchip  fa-x4 ml-3"></i></h5>
+                              </div>
+                              <div class="d-flex align-items-center align-self-start">
+                                <div class="progress w-100 mt-3 rounded">
+                                  <div class=" progress-bar bg-gradient-success" role="progressbar" style="width: <%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>%;" aria-valuenow="<%= (cpu / (packages.cpu + extraresources.cpu)) * 100 %>"
+                                       aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h5 class="mb-0 ml-2 mt-3"><%= (cpu / (packages.cpu + extraresources.cpu) * 100).toFixed(2) %>%</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-9">
+                              <h6 class="card-title text-muted mb-0"><%= lang.ram.label %></h6>
+                              <div class="d-flex align-items-center align-self-start">
+                                <h5 class="mb-0 ml-2"><%= (ram / 1024) %> / <%= (packages.ram / 1024 + extraresources.ram / 1024).toFixed(2) %> GB <i class="fa fa-memory fa-x4 ml-3"></i></h5>
+                              </div>
+                              <div class="d-flex align-items-center align-self-start">
+                                <div class="progress w-100 mt-3 rounded">
+                                  <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (ram / (packages.ram + extraresources.ram)) * 100 %>%;" aria-valuenow="<%= (ram / (packages.ram + extraresources.ram)) * 100 %>"
+                                       aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h5 class="mb-0 ml-2 mt-3"><%= ((ram / (packages.ram + extraresources.ram)) * 100).toFixed(2) %>%</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-9">
+                              <h6 class="card-title text-muted mb-0"><%= lang.disk.label %></h6>
+                              <div class="d-flex align-items-center align-self-start">
+                                <h5 class="mb-0"><%= disk/1024 %> / <%= (packages.disk/1024 + extraresources.disk/1024).toFixed(2) %> GB <i class="fa-solid fa-hard-drive fa-x4 ml-3"></i></h5>
+                              </div>
+                              <div class="d-flex align-items-center align-self-start">
+                                <div class="progress w-100 mt-3 rounded">
+                                  <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (disk / (packages.disk + extraresources.disk)) * 100 %>%;" aria-valuenow="<%= (disk / (packages.disk + extraresources.disk)) * 100 %>"
+                                       aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h5 class="mb-0 ml-2 mt-3"><%= ((disk / (packages.disk + extraresources.disk)) * 100).toFixed(2) %>%</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-9">
+                                <h6 class="card-title text-muted mb-0"><%= lang.slots.label %></h6>
+                                <div class="d-flex align-items-center align-self-start">
+                                  <h5 class="mb-0"><%= servers %> / <%= packages.servers + extraresources.servers %> <i class="fa-solid fa-server fa-x4 ml-3"></i></h5>
+                                </div>
+                                <div class="d-flex align-items-center align-self-start">
+                                  <div class="progress w-100 mt-3 rounded">
+                                    <div class="progress-bar bg-gradient-success" role="progressbar" style="width: <%= (servers / (packages.servers + extraresources.servers)) * 100 %>%;" aria-valuenow="<%= servers %>"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                  <h5 class="mb-0 ml-2 mt-3"><%= ((servers / (packages.servers + extraresources.servers)) * 100).toFixed(2) %>%</h5>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
 
                 <div class="row">
                     <div class="col-md-6 grid-margin stretch-card" style="height: 125px">
@@ -222,6 +318,7 @@
                                   <thead>
                                     <tr>
                                       <th><%= lang.server_name %></th>
+                                      <th>Expire</th>
                                       <th> <%= lang.cpu.label %> </th>
                                       <th> <%= lang.ram.label %> </th>
                                       <th> <%= lang.disk.label %> </th>
@@ -239,6 +336,8 @@
                                             <td>
                                               <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
                                             </td>
+                                            <td> <h5 id="server<%= pterodactyl.relationships.servers.data[i].attributes.id %>" style="font-family: 'Roboto Mono', monospace;"></h5></td>
+
                                             <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
                                             <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
                                             <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
@@ -268,7 +367,29 @@
 
 
 
-
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Loop through each server and send a request to /api/renewalstatus?id=SERVER_ID
+                                <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                                    fetch(`/api/renewalstatus?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // Extract only the hours from the response
+                        
+                                            // Update the DOM with the server ID and renewal time
+                                            const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
+                                            if (serverElement) {
+                                                const expirationText = data.text;
+                                                serverElement.innerHTML += `  Expire in: ${expirationText}`;
+                                            }
+                                        })
+                                        .catch(error => {
+                                            // Handle errors
+                                            console.error(error);
+                                        });
+                                <% } %>
+                            });
+                        </script>
 
                 </div>
             </div>

@@ -7,7 +7,7 @@ const NodeCache = require( "node-cache" );
 const Queue = require("../misc/Queue.js");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 const log = require('../misc/log')
-const verifyCaptchaResponse = require('../misc/verifyCaptchaResponse')
+
 
 module.exports.load = async function (app, db) {
   app.get("/api", async (req, res) => {

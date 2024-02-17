@@ -1,4 +1,195 @@
-const base64EncodedScript = "Y29uc3Qgc2V0dGluZ3MgPSByZXF1aXJlKCIuLi8uLi9zZXR0aW5ncyIpOwpjb25zdCBmZXRjaCA9IHJlcXVpcmUoIm5vZGUtZmV0Y2giKTsKY29uc3QgdmFsaWRhdG9yID0gcmVxdWlyZSgiZW1haWwtdmFsaWRhdG9yIik7CmNvbnN0IGluZGV4anMgPSByZXF1aXJlKCIuLi8uLi9pbmRleC5qcyIpOwpjb25zdCBzbXRwID0gcmVxdWlyZSgiLi4vLi4vbWlzYy9zbXRwLmpzIik7Cgptb2R1bGUuZXhwb3J0cy5sb2FkID0gYXN5bmMgZnVuY3Rpb24oYXBwLCBkYikgewogICAgYXBwLmdldCgiL2F1dGgvZW1haWwvbG9naW4iLCBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgICBpZiAoIXJlcS5xdWVyeS5lbWFpbCB8fCAhcmVxLnF1ZXJ5LnBhc3N3b3JkKSByZXR1cm4gcmVzLnNlbmQoIkludmFsaWQgSW5mb3JtYXRpb24iKTsKICAgICAgICBjb25zdCB1c2VyaW5mbyA9IGF3YWl0IGRiLmdldChgdXNlcmluZm8tJHtyZXEucXVlcnkuZW1haWx9YCk7CiAgICAgICAgY29uc3QgdXNlciA9IGF3YWl0IGRiLmdldChgdXNlcnMtJHtyZXEucXVlcnkuZW1haWx9YCk7CiAgICAgICAgY29uc3QgcGFzc3dvcmRzID0gYXdhaXQgZGIuZ2V0KGBwYXNzd29yZHMtJHtyZXEucXVlcnkuZW1haWx9YCk7CiAgICAgICAgaWYgKCF1c2VyKSByZXR1cm4gcmVzLnNlbmQoe2Vycm9yOiAiSW52YWxpZCBFbWFpbC4ifSk7CiAgICAgICAgaWYgKHBhc3N3b3JkcyAhPT0gcmVxLnF1ZXJ5LnBhc3N3b3JkKSByZXR1cm4gcmVzLnNlbmQoe2Vycm9yOiAiSW52YWxpZCBQYXNzd29yZC4ifSk7CgogICAgICAgIGxldCBjYWNoZWFjY291bnQgPSBhd2FpdCBmZXRjaCgKICAgICAgICAgICAgYCR7c2V0dGluZ3MucHRlcm9kYWN0eWwuZG9tYWlufS9hcGkvYXBwbGljYXRpb24vdXNlcnMvJHthd2FpdCBkYi5nZXQoYHVzZXJzLSR7cmVxLnF1ZXJ5LmVtYWlsfWApfT9pbmNsdWRlPXNlcnZlcnNgLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgbWV0aG9kOiAiZ2V0IiwKICAgICAgICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsICJBdXRob3JpemF0aW9uIjogYEJlYXJlciAke3NldHRpbmdzLnB0ZXJvZGFjdHlsLmtleX1gIH0KICAgICAgICAgICAgfQogICAgICAgICAgKTsKICAgICAgICBpZiAoYXdhaXQgY2FjaGVhY2NvdW50LnN0YXR1c1RleHQgPT0gIk5vdCBGb3VuZCIpIHJldHVybiByZXMuc2VuZCgiQW4gZXJyb3IgaGFzIG9jY3VyZWQgd2hpbGUgYXR0ZW1wdGluZyB0byBnZXQgeW91ciB1c2VyIGluZm9ybWF0aW9uLiIpOwogICAgICAgIGNhY2hlYWNjb3VudCA9IEpTT04ucGFyc2UoYXdhaXQgY2FjaGVhY2NvdW50LnRleHQoKSk7CgogICAgICAgIHJlcS5zZXNzaW9uLnB0ZXJvZGFjdHlsID0gY2FjaGVhY2NvdW50LmF0dHJpYnV0ZXM7CiAgICAgICAgcmVxLnNlc3Npb24udXNlcmluZm8gPSB1c2VyaW5mbzsKCiAgICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdCgiL2Rhc2hib2FyZCIpCiAgICB9KTsKCiAgICBhcHAuZ2V0KCIvYXV0aC9lbWFpbC9yZWdpc3RlciIsIGFzeW5jIChyZXEsIHJlcykgPT4gewogICAgICBsZXQgdGhlbWUgPSBpbmRleGpzLmdldChyZXEpOwoKICAgICAgaWYgKHNldHRpbmdzLmFwaS5jbGllbnQuYWxsb3cubmV3dXNlcnMgPT0gZmFsc2UpIHJldHVybiBmb3VyMGZvdXIocmVxLCByZXMsIHRoZW1lKTsKCiAgICAgIGlmICghcmVxLnF1ZXJ5LmVtYWlsIHx8ICFyZXEucXVlcnkucGFzc3dvcmQgfHwgIXJlcS5xdWVyeS51c2VybmFtZSkgcmV0dXJuIHJlcy5zZW5kKCJNaXNzaW5nIGluZm9ybWF0aW9uIikKICAgICAgaWYgKGF3YWl0IGRiLmdldChgdXNlci0ke3JlcS5xdWVyeS5lbWFpbH1gKSkgcmV0dXJuIHJlcy5zZW5kKCJBbHJlYWR5IHJlZ2lzdGVyZWQuIik7CiAgICAgIGlmICh2YWxpZGF0b3IudmFsaWRhdGUocmVxLnF1ZXJ5LmVtYWlsKSA9PSBmYWxzZSkgcmV0dXJuIHJlcy5zZW5kKCJJbnZhbGlkIEVtYWlsIik7CgogICAgICBsZXQgaXAgPSByZXEuaGVhZGVyc1sneC1mb3J3YXJkZWQtZm9yJ10gfHwgcmVxLmhlYWRlcnNbJ3gtcmVhbC1pcCddIHx8IHJlcS5oZWFkZXJzWyd4LWNsaWVudC1pcCddIHx8IHJlcS5oZWFkZXJzWyd4LWZvcndhcmRlZCddIHx8IHJlcS5zb2NrZXQucmVtb3RlQWRkcmVzczsKCiAgICAgICAgbGV0IGFsbGlwcyA9IGF3YWl0IGRiLmdldCgiaXBzIikgPyBhd2FpdCBkYi5nZXQoImlwcyIpIDogW107CiAgICAgICAgbGV0IG1haW5pcCA9IGF3YWl0IGRiLmdldChgaXAtJHtyZXEucXVlcnkuZW1haWx9YCk7CiAgICAgICAgaWYgKG1haW5pcCkgewogICAgICAgICAgaWYgKG1haW5pcCAhPT0gaXApIHsKICAgICAgICAgICAgYWxsaXBzID0gYWxsaXBzLmZpbHRlcihpcDIgPT4gaXAyICE9PSBtYWluaXApOwogICAgICAgICAgICBpZiAoYWxsaXBzLmluY2x1ZGVzKGlwKSkgewogICAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgiWW91IENhbm5vdCBDcmVhdGUgQWx0cyEiKTsKICAgICAgICAgICAgfQogICAgICAgICAgICBhbGxpcHMucHVzaChpcCk7CiAgICAgICAgICAgIGF3YWl0IGRiLnNldCgiaXBzIiwgYWxsaXBzKTsKICAgICAgICAgICAgYXdhaXQgZGIuc2V0KGBpcC0ke3JlcS5xdWVyeS5lbWFpbH1gLCBpcCk7CiAgICAgICAgICB9CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgIGlmIChhbGxpcHMuaW5jbHVkZXMoaXApKSB7CiAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgiWW91IENhbm5vdCBDcmVhdGUgQWx0cyEiKTsKICAgICAgICAgIH0KICAgICAgICAgIGFsbGlwcy5wdXNoKGlwKTsKICAgICAgICAgIGF3YWl0IGRiLnNldCgiaXBzIiwgYWxsaXBzKTsKICAgICAgICAgIGF3YWl0IGRiLnNldChgaXAtJHtyZXEucXVlcnkuZW1haWx9YCwgaXApOwogICAgICAgIH0KICAgICAgCiAgICAgICAgaWYgKHNldHRpbmdzLmFwaS5jbGllbnQub2F1dGgyLmlwWyJjb29raWUgYWx0IGNoZWNrIl0pIHsKICAgICAgICAgIGxldCBhY2NvdW50aWQgPSBnZXRDb29raWUocmVxLCAiYWNjb3VudGlkIik7CgogICAgICAgICAgaWYgKGFjY291bnRpZCkgewogICAgICAgICAgICBpZiAoYWNjb3VudGlkICE9PSByZXEucXVlcnkubWFpbCkgewogICAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgnWW91IENhbm5vdCBDcmVhdGUgQWx0cyEnKTsKICAgICAgICAgICAgfQogICAgICAgICAgfQoKICAgICAgICAgIHJlcy5jb29raWUoJ2FjY291bnRpZCcsIHJlcS5xdWVyeS5tYWlsKTsKICAgICAgICB9CgogICAgICAgIGxldCB1c2VybmFtZWhhc2ggPSByZXEucXVlcnkudXNlcm5hbWUgKyBtYWtlbnVtYmVyKDQpCiAgICAgICAgCiAgICAgICAgdXNlcm5hbWVuZXcgPSBTdHJpbmcodXNlcm5hbWVoYXNoKTsKCiAgICAgICAgY29uc3QgdXNlcmluZm8gPSB7CiAgICAgICAgICAgIHVzZXJuYW1lOiB1c2VybmFtZW5ldywgCiAgICAgICAgICAgIGlkOiByZXEucXVlcnkuZW1haWwsCiAgICAgICAgICAgIHBhc3N3b3JkOiByZXEucXVlcnkucGFzc3dvcmQsCiAgICAgICAgICAgIGRpc2NyaW1pbmF0b3I6IG51bGwsCiAgICAgICAgICAgIGRpc2NvcmQ6IGZhbHNlLAogICAgICAgICAgICB0eXBlOiAiZW1haWwiCiAgICAgICAgfQogICAgICAgIGNvbnN0IGFjY291bnRqc29uID0gYXdhaXQgZmV0Y2goCiAgICAgICAgICAgIGAke3NldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbn0vYXBpL2FwcGxpY2F0aW9uL3VzZXJzYCwgewogICAgICAgICAgICAgIG1ldGhvZDogInBvc3QiLAogICAgICAgICAgICAgIGhlYWRlcnM6IHsKICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsCiAgICAgICAgICAgICAgICAiQXV0aG9yaXphdGlvbiI6IGBCZWFyZXIgJHtzZXR0aW5ncy5wdGVyb2RhY3R5bC5rZXl9YAogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgYm9keTogSlNPTi5zdHJpbmdpZnkoewogICAgICAgICAgICAgICAgdXNlcm5hbWU6IHVzZXJuYW1lbmV3LAogICAgICAgICAgICAgICAgZW1haWw6IHJlcS5xdWVyeS5lbWFpbCwKICAgICAgICAgICAgICAgIGZpcnN0X25hbWU6IHVzZXJuYW1lbmV3LAogICAgICAgICAgICAgICAgbGFzdF9uYW1lOiAiKGNyZWRlbnRpYWxzKSIsCiAgICAgICAgICAgICAgICBwYXNzd29yZDogcmVxLnF1ZXJ5LnBhc3N3b3JkCiAgICAgICAgICAgICAgfSkKICAgICAgICAgICAgfQogICAgICAgICk7CiAgICAgICAgaWYgKGFjY291bnRqc29uLnN0YXR1cyA9PSAyMDEpIHsKICAgICAgICAgIGNvbnN0IGFjY291bnRpbmZvID0gSlNPTi5wYXJzZShhd2FpdCBhY2NvdW50anNvbi50ZXh0KCkpOwogICAgICAgICAgYXdhaXQgZGIuc2V0KGB1c2Vycy0ke3JlcS5xdWVyeS5lbWFpbH1gLCBhY2NvdW50aW5mby5hdHRyaWJ1dGVzLmlkKTsKCiAgICAgICAgICB0cnkgewogICAgICAgICAgICBhd2FpdCBzbXRwLnNlbmRXZWxjb21lRW1haWwocmVxLnF1ZXJ5LmVtYWlsKTsKICAgICAgICAgICAgY29uc29sZS5sb2coIldlbGNvbWUgZW1haWwgc2VudCBzdWNjZXNzZnVsbHkiKTsKICAgICAgICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgICAgICAgICAgIGNvbnNvbGUuZXJyb3IoIkVycm9yIHNlbmRpbmcgd2VsY29tZSBlbWFpbDoiLCBlcnJvcik7CiAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgiRXJyb3Igc2VuZGluZyB3ZWxjb21lIGVtYWlsIik7CiAgICAgICAgICB9CiAgICAgICAgCgogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICBsZXQgYWNjb3VudGxpc3Rqc29uID0gYXdhaXQgZmV0Y2goCiAgICAgICAgICAgIGAke3NldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbn0vYXBpL2FwcGxpY2F0aW9uL3VzZXJzP2luY2x1ZGU9c2VydmVycyZmaWx0ZXJbZW1haWxdPSR7ZW5jb2RlVVJJQ29tcG9uZW50KHJlcS5xdWVyeS5lbWFpbCl9YCwgewogICAgICAgICAgICAgIG1ldGhvZDogImdldCIsCiAgICAgICAgICAgICAgaGVhZGVyczogewogICAgICAgICAgICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJywKICAgICAgICAgICAgICAgICJBdXRob3JpemF0aW9uIjogYEJlYXJlciAke3NldHRpbmdzLnB0ZXJvZGFjdHlsLmtleX1gCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICApOwogICAgICAgICAgY29uc3QgYWNjb3VudGxpc3QgPSBhd2FpdCBhY2NvdW50bGlzdGpzb24uanNvbigpOwogICAgICAgICAgY29uc3QgdXNlciA9IGFjY291bnRsaXN0LmRhdGEuZmlsdGVyKGFjYyA9PiBhY2MuYXR0cmlidXRlcy5lbWFpbCA9PSByZXEucXVlcnkuZW1haWwpOwogICAgICAgICAgaWYgKHVzZXIubGVuZ3RoID09IDEpIHsKICAgICAgICAgICAgbGV0IHVzZXJpZCA9IHVzZXJbMF0uYXR0cmlidXRlcy5pZDsKICAgICAgICAgICAgYXdhaXQgZGIuc2V0KGB1c2Vycy0ke3VzZXJpbmZvLmlkfWAsIHVzZXJpZCk7CiAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICByZXR1cm4gcmVzLnNlbmQoIkFuIGVycm9yIGhhcyBvY2N1cmVkIHdoZW4gYXR0ZW1wdGluZyB0byBjcmVhdGUgeW91ciBhY2NvdW50LiIpOwogICAgICAgICAgfTsKICAgICAgICB9CiAgICAgICAgbGV0IGNhY2hlYWNjb3VudCA9IGF3YWl0IGZldGNoKAogICAgICAgICAgYCR7c2V0dGluZ3MucHRlcm9kYWN0eWwuZG9tYWlufS9hcGkvYXBwbGljYXRpb24vdXNlcnMvJHthd2FpdCBkYi5nZXQoYHVzZXJzLSR7cmVxLnF1ZXJ5LmVtYWlsfWApfT9pbmNsdWRlPXNlcnZlcnNgLAogICAgICAgICAgewogICAgICAgICAgICBtZXRob2Q6ICJnZXQiLAogICAgICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsICJBdXRob3JpemF0aW9uIjogYEJlYXJlciAke3NldHRpbmdzLnB0ZXJvZGFjdHlsLmtleX1gIH0KICAgICAgICAgIH0KICAgICAgICApOwogICAgICAgIGlmIChhd2FpdCBjYWNoZWFjY291bnQuc3RhdHVzVGV4dCA9PSAiTm90IEZvdW5kIikgcmV0dXJuIHJlcy5zZW5kKCJBbiBlcnJvciBoYXMgb2NjdXJlZCB3aGlsZSBhdHRlbXB0aW5nIHRvIGdldCB5b3VyIHVzZXIgaW5mb3JtYXRpb24uIik7CiAgICAgICAgbGV0IGNhY2hlYWNjb3VudGluZm8gPSBKU09OLnBhcnNlKGF3YWl0IGNhY2hlYWNjb3VudC50ZXh0KCkpOwogICAgICAgIGF3YWl0IGRiLnNldChgdXNlcmluZm8tJHtyZXEucXVlcnkuZW1haWx9YCwgdXNlcmluZm8pOwogICAgICAgIGF3YWl0IGRiLnNldChgdXNlcm5hbWUtJHt1c2VyaW5mby5pZH1gLCB1c2VybmFtZWhhc2gpOwogICAgICAgIGF3YWl0IGRiLnNldCgncGFzc3dvcmRzLScgKyB1c2VyaW5mby5pZCwgcmVxLnF1ZXJ5LnBhc3N3b3JkKQoKICAgICAgICBsZXQgdXNlcmRiID0gYXdhaXQgZGIuZ2V0KCJ1c2VybGlzdCIpOwogICAgICAgIHVzZXJkYiA9IHVzZXJkYiA/IHVzZXJkYiA6IFtdOwogICAgICAgIGlmICghdXNlcmRiLmluY2x1ZGVzKGAke3VzZXJpbmZvLmlkfWApKSB7CiAgICAgICAgICB1c2VyZGIucHVzaChgJHt1c2VyaW5mby5pZH1gKTsKICAgICAgICAgIGF3YWl0IGRiLnNldCgidXNlcmxpc3QiLCB1c2VyZGIpOwogICAgICAgIH0KCiAgICAgICAgcmVxLnNlc3Npb24ucHRlcm9kYWN0eWwgPSBjYWNoZWFjY291bnRpbmZvLmF0dHJpYnV0ZXM7CiAgICAgICAgcmVxLnNlc3Npb24udXNlcmluZm8gPSB1c2VyaW5mbzsKCiAgICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdCgiL2Rhc2hib2FyZCIpOwoKCgoKICAgICAgICAKICAgIH0pOwoKICAgIGZ1bmN0aW9uIG1ha2VudW1iZXIobGVuZ3RoKSB7CiAgICAgIGxldCByZXN1bHQgPSAnJzsKICAgICAgbGV0IGNoYXJhY3RlcnMgPSAnMDEyMzQ1Njc4OSc7CiAgICAgIGxldCBjaGFyYWN0ZXJzTGVuZ3RoID0gY2hhcmFjdGVycy5sZW5ndGg7CiAgICAgIGZvciAobGV0IGkgPSAwOyBpIDwgbGVuZ3RoOyBpKyspIHsKICAgICAgICByZXN1bHQgKz0gY2hhcmFjdGVycy5jaGFyQXQoTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogY2hhcmFjdGVyc0xlbmd0aCkpOwogICAgICB9CiAgICAgIHJldHVybiByZXN1bHQ7CiAgICB9CiAgCiAgICBhc3luYyBmdW5jdGlvbiBmb3VyMGZvdXIocmVxLCByZXMsIHRoZW1lKSB7CiAgICAgIGVqcy5yZW5kZXJGaWxlKAogICAgICAgICAgYC4vdGhlbWVzLyR7dGhlbWUubmFtZX0vJHt0aGVtZS5zZXR0aW5ncy5ub3Rmb3VuZH1gLCAKICAgICAgICAgIGF3YWl0IGV2YWwoaW5kZXhqcy5yZW5kZXJkYXRhZXZhbCksCiAgICAgICAgICBudWxsLAogICAgICBmdW5jdGlvbiAoZXJyLCBzdHIpIHsKICAgICAgICAgIGRlbGV0ZSByZXEuc2Vzc2lvbi5uZXdhY2NvdW50OwogICAgICAgICAgaWYgKGVycikgewogICAgICAgICAgICAgIGNvbnNvbGUubG9nKGBbV0VCU0lURV0gQW4gZXJyb3IgaGFzIG9jY3VyZWQgb24gcGF0aCAke3JlcS5fcGFyc2VkVXJsLnBhdGhuYW1lfTpgKTsKICAgICAgICAgICAgICBjb25zb2xlLmxvZyhlcnIpOwogICAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgiQW4gZXJyb3IgaGFzIG9jY3VyZWQgd2hpbGUgYXR0ZW1wdGluZyB0byBsb2FkIHRoaXMgcGFnZS4gUGxlYXNlIGNvbnRhY3QgYW4gYWRtaW5pc3RyYXRvciB0byBmaXggdGhpcy4iKTsKICAgICAgICAgIH07CiAgICAgICAgICByZXMuc3RhdHVzKDQwNCk7CiAgICAgICAgICByZXMuc2VuZChzdHIpOwogICAgICB9KTsKICAgICAgICAKICB9Cn0KCgoKZnVuY3Rpb24gZ2V0Q29va2llKHJlcSwgY25hbWUpIHsKICBsZXQgY29va2llcyA9IHJlcS5oZWFkZXJzLmNvb2tpZTsKICBpZiAoIWNvb2tpZXMpIHJldHVybiBudWxsOwogIGxldCBuYW1lID0gY25hbWUgKyAiPSI7CiAgbGV0IGNhID0gY29va2llcy5zcGxpdCgnOycpOwogIGZvciAobGV0IGkgPSAwOyBpIDwgY2EubGVuZ3RoOyBpKyspIHsKICAgIGxldCBjID0gY2FbaV07CiAgICB3aGlsZSAoYy5jaGFyQXQoMCkgPT0gJyAnKSB7CiAgICAgIGMgPSBjLnN1YnN0cmluZygxKTsKICAgIH0KICAgIGlmIChjLmluZGV4T2YobmFtZSkgPT0gMCkgewogICAgICByZXR1cm4gZGVjb2RlVVJJQ29tcG9uZW50KGMuc3Vic3RyaW5nKG5hbWUubGVuZ3RoLCBjLmxlbmd0aCkpOwogICAgfQogIH0gfQ==";
-const decodedScript = Buffer.from(base64EncodedScript, 'base64').toString('utf-8');
+const settings = require("../../settings");
+const fetch = require("node-fetch");
+const validator = require("email-validator");
+const indexjs = require("../../index.js");
 
-eval(decodedScript);
+module.exports.load = async function(app, db) {
+    app.get("/auth/email/login", async (req, res) => {
+        if (!req.query.email || !req.query.password) return res.send("Invalid Information");
+        const userinfo = await db.get(`userinfo-${req.query.email}`);
+        const user = await db.get(`users-${req.query.email}`);
+        const passwords = await db.get(`passwords-${req.query.email}`);
+        if (!user) return res.send({error: "Invalid Email."});
+        if (passwords !== req.query.password) return res.send({error: "Invalid Password."});
+
+        let cacheaccount = await fetch(
+            `${settings.pterodactyl.domain}/api/application/users/${await db.get(`users-${req.query.email}`)}?include=servers`,
+            {
+              method: "get",
+              headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+            }
+          );
+        if (await cacheaccount.statusText == "Not Found") return res.send("An error has occured while attempting to get your user information.");
+        cacheaccount = JSON.parse(await cacheaccount.text());
+
+        req.session.pterodactyl = cacheaccount.attributes;
+        req.session.userinfo = userinfo;
+
+        return res.redirect("/dashboard")
+    });
+
+    app.get("/auth/email/register", async (req, res) => {
+      let theme = indexjs.get(req);
+
+      if (settings.api.client.allow.newusers == false) return four0four(req, res, theme);
+
+      if (!req.query.email || !req.query.password || !req.query.username) return res.send("Missing information")
+      if (await db.get(`user-${req.query.email}`)) return res.send("Already registered.");
+      if (validator.validate(req.query.email) == false) return res.send("Invalid Email");
+
+      let ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.headers['x-client-ip'] || req.headers['x-forwarded'] || req.socket.remoteAddress;
+
+        let allips = await db.get("ips") ? await db.get("ips") : [];
+        let mainip = await db.get(`ip-${req.query.email}`);
+        if (mainip) {
+          if (mainip !== ip) {
+            allips = allips.filter(ip2 => ip2 !== mainip);
+            if (allips.includes(ip)) {
+              return res.send("You Cannot Create Alts!");
+            }
+            allips.push(ip);
+            await db.set("ips", allips);
+            await db.set(`ip-${req.query.email}`, ip);
+          }
+        } else {
+          if (allips.includes(ip)) {
+            return res.send("You Cannot Create Alts!");
+          }
+          allips.push(ip);
+          await db.set("ips", allips);
+          await db.set(`ip-${req.query.email}`, ip);
+        }
+      
+        if (settings.api.client.oauth2.ip["cookie alt check"]) {
+          let accountid = getCookie(req, "accountid");
+
+          if (accountid) {
+            if (accountid !== req.query.mail) {
+              return res.send('You Cannot Create Alts!');
+            }
+          }
+
+          res.cookie('accountid', req.query.mail);
+        }
+
+        let usernamehash = req.query.username + makenumber(4)
+        
+        usernamenew = String(usernamehash);
+
+        const userinfo = {
+            username: usernamenew, 
+            id: req.query.email,
+            password: req.query.password,
+            discriminator: null,
+            discord: false,
+            type: "email"
+        }
+        const accountjson = await fetch(
+            `${settings.pterodactyl.domain}/api/application/users`, {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${settings.pterodactyl.key}`
+              },
+              body: JSON.stringify({
+                username: usernamenew,
+                email: req.query.email,
+                first_name: usernamenew,
+                last_name: "(credentials)",
+                password: req.query.password
+              })
+            }
+        );
+        if (accountjson.status == 201) {
+          const accountinfo = JSON.parse(await accountjson.text());
+          await db.set(`users-${req.query.email}`, accountinfo.attributes.id);
+        } else {
+          let accountlistjson = await fetch(
+            `${settings.pterodactyl.domain}/api/application/users?include=servers&filter[email]=${encodeURIComponent(req.query.email)}`, {
+              method: "get",
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${settings.pterodactyl.key}`
+              }
+            }
+          );
+          const accountlist = await accountlistjson.json();
+          const user = accountlist.data.filter(acc => acc.attributes.email == req.query.email);
+          if (user.length == 1) {
+            let userid = user[0].attributes.id;
+            await db.set(`users-${userinfo.id}`, userid);
+          } else {
+            return res.send("An error has occured when attempting to create your account.");
+          };
+        }
+        let cacheaccount = await fetch(
+          `${settings.pterodactyl.domain}/api/application/users/${await db.get(`users-${req.query.email}`)}?include=servers`,
+          {
+            method: "get",
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+          }
+        );
+        if (await cacheaccount.statusText == "Not Found") return res.send("An error has occured while attempting to get your user information.");
+        let cacheaccountinfo = JSON.parse(await cacheaccount.text());
+        await db.set(`userinfo-${req.query.email}`, userinfo);
+        await db.set(`username-${userinfo.id}`, usernamehash);
+        await db.set('passwords-' + userinfo.id, req.query.password)
+
+        let userdb = await db.get("userlist");
+        userdb = userdb ? userdb : [];
+        if (!userdb.includes(`${userinfo.id}`)) {
+          userdb.push(`${userinfo.id}`);
+          await db.set("userlist", userdb);
+        }
+
+        req.session.pterodactyl = cacheaccountinfo.attributes;
+        req.session.userinfo = userinfo;
+
+        return res.redirect("/dashboard");
+    });
+
+    function makenumber(length) {
+      let result = '';
+      let characters = '0123456789';
+      let charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+  
+    async function four0four(req, res, theme) {
+      ejs.renderFile(
+          `./themes/${theme.name}/${theme.settings.notfound}`, 
+          await eval(indexjs.renderdataeval),
+          null,
+      function (err, str) {
+          delete req.session.newaccount;
+          if (err) {
+              console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
+              console.log(err);
+              return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          };
+          res.status(404);
+          res.send(str);
+      });
+        
+  }
+}
+
+
+
+function getCookie(req, cname) {
+  let cookies = req.headers.cookie;
+  if (!cookies) return null;
+  let name = cname + "=";
+  let ca = cookies.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return decodeURIComponent(c.substring(name.length, c.length));
+    }
+  } }

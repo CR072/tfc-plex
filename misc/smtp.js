@@ -1,24 +1,18 @@
 const nodemailer = require("nodemailer");
+const settings = require('../../settings.json');
 
-const transporter = nodemailer.createTransport({
-  host: "your-smtp-host",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "your-smtp-username",
-    pass: "your-smtp-password",
-  },
-});
-
-async function sendEmail(to, subject, text) {
-  const mailOptions = {
-    from: "your-email@example.com",
-    to: to,
-    subject: subject,
-    text: text,
-  };
-
-  return transporter.sendMail(mailOptions);
+module.exports = {
+  mailer: () => {
+    return mailer
+  }
 }
 
-module.exports = { sendEmail };
+const mailer = nodemailer.createTransport({
+  host: settings.smtp.host,
+  port: settings.smtp.port,
+  secure: true,
+  auth: {
+    user: settings.smtp.username,
+    pass: settings.smtp.password
+  },
+});

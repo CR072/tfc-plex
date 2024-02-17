@@ -31,7 +31,11 @@ const handleRequest = async (req, res, endpoint, resultKey, handler) => {
   }
 };
 
+
+
+
 module.exports.load = async (app, db) => {
+
   const routes = [
     { path: "/api/users", endpoint: "users", resultKey: "totalUsers" },
     { path: "/api/nodes", endpoint: "nodes", resultKey: "totalNodes" },

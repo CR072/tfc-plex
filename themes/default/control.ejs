@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./components/head') %>
+
+  <style>
+    /* Add custom styles if needed */
+    #console {
+      max-height: 400px;
+      height: 400px;
+      overflow-y: scroll;
+      scroll-padding-bottom: 100vh;
+    }
+
+    #commandInput {
+      width: 100%;
+    }
+
+    .status-card {
+      width: 400px;
+      max-width: 400px;
+      max-height: 110px;
+      margin-top: 9px;
+    }
+
+    /* Define CSS classes for different log levels */
+    .info { color: green; }
+    .error { color: red; }
+    .warning { color: orange; }
+    .customBlue { color: blue; }
+  </style>
+</head>
+<body class="bg-theme">
+  <div class="container-scroller">
+    <%- include('./components/control-sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+      <%- include('./components/topnav') %>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card" style="height: auto;">
+                <div class="card-body">
+                  <h3 id="serverName">Server Name</h3>
+                  <p class="text-muted" id="serverID">Server ID: </p>
+                  <div>
+                    <a href="javascript:void(0);" onclick="performAction('start')" class="btn btn-primary bg-success" style="border-radius: 8px;">Start</a>
+                    <a href="javascript:void(0);" onclick="performAction('restart')" class="btn btn-primary bg-warning" style="border-radius: 8px;">Restart</a>
+                    <a href="javascript:void(0);" onclick="performAction('stop')" class="btn btn-primary bg-danger" style="border-radius: 8px;">Stop</a>
+                    <a href="javascript:void(0);" onclick="performAction('kill')" class="btn btn-primary bg-danger" style="border-radius: 8px;">Kill</a>
+                  </div>
+                  <%
+let domain = settings.pterodactyl.domain;
+let serverID = req.query.id; 
+if (!domain.endsWith('/')) {
+    domain += '/';
+}
+let serverURL = domain + 'server/' + serverID; 
+
+%>
+                </div>
+                <a href="<%= serverURL %>" class="btn btn-primary bg-transparent" style="border-radius: 8px;">View on Panel</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-8">
+              <div class="card mt-2">
+                <div class="card-header">
+                  <h5 class="card-title">Console Output</h5>
+                </div>
+
+                <div class="card-body">
+                  <div id="console">
+                    <!-- Console content goes here -->
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <input type="text" id="commandInput" placeholder="Enter your command...">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card status-card">
+                <div class="card-body">
+                  <h5 class="card-title">Status</h5>
+                  <p class="card-text" id="serverStatus">Online/Offline</p>
+                </div>
+              </div>
+              
+              <div class="card status-card mt-1">
+                <div class="card-body">
+                  <h5 class="card-title">IP</h5>
+                  <p class="card-text" id="serverIP">IP</p>
+                </div>
+              </div>
+
+              <div class="card status-card mt-1">
+                <div class="card-body">
+                  <h5 class="card-title">CPU</h5>
+                  <p class="card-text" id="serverCPU">0/Max Cpu</p>
+                </div>
+              </div>
+              <div class="card status-card mt-1">
+                <div class="card-body">
+                  <h5 class="card-title">RAM</h5>
+                  <p class="card-text" id="serverRAM">0/Max Ram</p>
+                </div>
+              </div>
+              <div class="card status-card mt-1">
+                <div class="card-body">
+                  <h5 class="card-title">Disk</h5>
+                  <p class="card-text" id="serverDisk">0/Max Disk</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function performAction(action) {
+      const serverId = getParameterByName('id');
+      const actionUrl = `../control?id=${serverId}&action=${action}`;
+  
+      // Hier können Sie je nach Bedarf weitere Aktionen hinzufügen
+      fetch(actionUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          // Hier können Sie den Rückgabewert der Aktion verarbeiten
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error performing action:', error);
+        });
+    }
+  
+    // JavaScript code to extract the 'id' from the URL
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+  </script>
+
+  <script>
+    const consoleElement = document.getElementById('console');
+    const commandInput = document.getElementById('commandInput');
+
+
+
+    function executeCommand() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const serverId = urlParams.get('id');
+
+    if (!serverId) {
+      displayErrorMessage('Server ID is missing in the URL.');
+      return;
+    }
+
+    const command = commandInput.value;
+
+    try {
+      const encodedCommand = encodeURIComponent(command);
+      const popupWindow = window.open(`/wsc?id=${serverId}&command=${encodedCommand}`, '_blank', 'width=10,height=10');
+
+      setTimeout(() => {
+        if (popupWindow && !popupWindow.closed) {
+          popupWindow.close();
+        }
+      }, 500);
+
+      // Clear the input field
+      commandInput.value = '';
+    } catch (error) {
+      displayErrorMessage('Error executing command.');
+      console.error('Error:', error);
+    }
+  }
+
+  function displayErrorMessage(message) {
+    consoleElement.innerHTML = message;
+  }
+
+  function removeColorEscapeSequences(text) {
+    // Remove ANSI color escape sequences
+    return text.replace(/\u001b\[[0-9;]*m/g, '');
+  }
+
+
+
+
+    function updateConsole() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const serverId = urlParams.get('id');
+
+      if (!serverId) {
+        displayErrorMessage('Server ID is missing in the URL.');
+        return;
+      }
+
+      function scrollToBottom() {
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+      }
+
+      fetch(`/ctrl?id=${serverId}`)
+        .then(response => response.text())
+        .then(data => {
+          const output = JSON.parse(data).map(entry => {
+            // Replace "pterodactyl" with "TFC-Plex" before processing color codes
+            const replacedOutput = entry.output
+              .replace(/pterodactyl/g, 'TFC-Plex')
+              .replace(/Pterodactyl/g, 'TFC-Plex');
+
+            const cleanedOutput = removeColorEscapeSequences(replacedOutput);
+            
+            return `<div>${cleanedOutput}</div>`;
+          }).join('\n');
+          
+          consoleElement.innerHTML = output;
+        })
+        .catch(error => {
+          displayErrorMessage('tfc-plex@root');
+          console.error('Error:', error);
+        });
+      scrollToBottom();
+    }
+
+
+    function displayErrorMessage(message) {
+      consoleElement.innerHTML = message;
+    }
+
+    function removeColorEscapeSequences(text) {
+      return text.replace(/\u001b\[[0-9;]*m/g, '');
+    }
+
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const serverId = urlParams.get('id');
+
+      if (serverId) {
+        const lastAccessKey = `lastAccess_${serverId}`;
+        const lastAccessTime = localStorage.getItem(lastAccessKey);
+        const currentTime = new Date().getTime();
+        const twentyMinutes = 20 * 60 * 1;
+
+        if (!lastAccessTime || currentTime - lastAccessTime > twentyMinutes) {
+          const popupWindow = window.open(`/wss?id=${serverId}`, '_blank', 'width=10,height=10');
+
+          localStorage.setItem(lastAccessKey, currentTime.toString());
+
+          setTimeout(() => {
+            if (popupWindow && !popupWindow.closed) {
+              popupWindow.close();
+            }
+          }, 500);
+
+          updateConsole();
+        } else {
+          console.log('Server recently accessed. Skipping WebSocket window.');
+        }
+      } else {
+        displayErrorMessage('Server ID is missing in the URL.');
+      }
+    });
+
+    setInterval(updateConsole, 2000);
+
+    commandInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        executeCommand();
+      }
+    });
+  </script>
+
+  <script>
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function updateServerInfo() {
+      const serverId = getParameterByName('id');
+
+      if (!serverId) {
+        return;
+      }
+
+      fetch(`/sri?id=${serverId}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('serverName').innerText = data.server.attributes.name;
+          document.getElementById('serverID').innerText = 'Server ID: ' + data.server.attributes.identifier;
+          document.getElementById('serverIP').innerText = 'IP: ' + getPrimaryAllocationIP(data);
+          document.getElementById('serverCPU').innerText = 'CPU: ' + data.resources.attributes.resources.cpu_absolute + '/' + data.server.attributes.limits.cpu + '%';
+
+          document.getElementById('serverRAM').innerText = formatResourceUsage(data.server.attributes.limits.memory, data.resources.attributes.resources.memory_bytes, 'RAM');
+          document.getElementById('serverDisk').innerText = formatResourceUsage(data.server.attributes.limits.disk, data.resources.attributes.resources.disk_bytes, 'Disk');
+          document.getElementById('serverStatus').innerText = 'Status: ' + data.resources.attributes.current_state;
+
+          document.getElementById('serverDescription').innerText = 'Description: ' + data.server.attributes.description;
+          document.getElementById('dockerImage').innerText = 'Docker Image: ' + data.server.attributes.docker_image;
+        })
+        .catch(error => {
+          console.error('Error fetching server information:', error);
+        });
+    }
+
+    function formatResourceUsage(limitMB, usageBytes, resourceName) {
+      const usageMB = usageBytes / (1024 * 1024);
+      const limitGB = limitMB >= 1024 ? (limitMB / 1024).toFixed(2) + ' GB' : limitMB + ' MB';
+      const usageFormatted = usageMB >= 1024 ? (usageMB / 1024).toFixed(2) + ' GB' : usageMB.toFixed(2) + ' MB';
+      return `${resourceName}: ${usageFormatted}/${limitGB} `;
+    }
+
+    function getPrimaryAllocationIP(data) {
+      try {
+        const allocations = data.server.attributes.relationships?.allocations?.data;
+
+        if (!allocations || allocations.length === 0) {
+          console.error('No or empty allocations data found in the response:', data);
+          return 'N/A';
+        }
+
+        const primaryAllocation = allocations.find(allocation => allocation.attributes.is_default === true);
+
+        if (!primaryAllocation) {
+          console.error('No default allocation found in the response:', data);
+          return 'N/A';
+        }
+
+        const ip = primaryAllocation.attributes.ip;
+        const port = primaryAllocation.attributes.port;
+
+        if (!ip || !port) {
+          console.error('No IP or port found in the default allocation:', data);
+          return 'N/A';
+        }
+
+        return `${ip}:${port}`;
+      } catch (error) {
+        console.error('Error processing allocations data:', error);
+        return 'N/A';
+      }
+    }
+
+    window.addEventListener('load', updateServerInfo);
+    setInterval(updateServerInfo, 2000);
+  </script>
+
+  <script>
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    document.getElementById('serverTitle1').innerText = "Server " + getParameterByName('id');
+  </script>
+  <script>
+    fetch(actionUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.text();
+  })
+  .then(data => {
+    // Hier können Sie den Rückgabewert der Aktion verarbeiten
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Fehler beim Durchführen der Aktion:', error.message);
+    // Hier können Sie geeignete Maßnahmen ergreifen, z. B. eine Fehlermeldung anzeigen
+  });
+
+  </script>
+</body>
+</html>

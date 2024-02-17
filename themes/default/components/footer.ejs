@@ -1,9 +1,15 @@
 <footer style="background-color: rgba(21,21,21,0.85); border-radius: 15px; border: 1px solid rgba(134,134,134,0.22);" class="footer sticky-bottom">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-
         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">&copy; <script>document.write(new Date().getFullYear());</script> <a class="text-white  text-decoration-none" href="<%= settings.discord %>"><%= settings.name %></a> | Powered by <a style="color: white" href="https://github.com/privt00/tfc-plex">TFC-Plex</a><code style="color: #007fcc;">V<%= settings.version %></code></span>
         <span class="text-muted d-block text-right text-sm-left d-sm-inline-block"><code style="color: #007fcc;">  <a href="../tos">
         <i class="fa-regular fa-book-section text-danger"> Tos</i>
              </a></code>
     </div>
 </footer>
+<style>
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
