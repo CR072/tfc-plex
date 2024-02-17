@@ -1,3 +1,375 @@
-const base64EncodedScript = "CgoKInVzZSBzdHJpY3QiOwoKY29uc3Qgc2V0dGluZ3MgPSByZXF1aXJlKCIuLi8uLi9zZXR0aW5ncy5qc29uIik7CmNvbnN0IGJsb2cgPSByZXF1aXJlKCIuLi8uLi9hcGkvaGFuZGxlcnMvbG9nZ2VyIikubG9hZDsKaWYgKHNldHRpbmdzLmFwaS5jbGllbnQub2F1dGgyLmxpbmsuc2xpY2UoLTEpID09ICIvIikKICBzZXR0aW5ncy5hcGkuY2xpZW50Lm9hdXRoMi5saW5rID0gc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIubGluay5zbGljZSgwLCAtMSk7CgppZiAoc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuY2FsbGJhY2twYXRoLnNsaWNlKDAsIDEpICE9PSAiLyIpCiAgc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuY2FsbGJhY2twYXRoID0gIi8iICsgc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuY2FsbGJhY2twYXRoOwoKaWYgKHNldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbi5zbGljZSgtMSkgPT0gIi8iKQogIHNldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbiA9IHNldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbi5zbGljZSgwLCAtMSk7Cgpjb25zdCBmZXRjaCA9IHJlcXVpcmUoJ25vZGUtZmV0Y2gnKTsKCmNvbnN0IGluZGV4anMgPSByZXF1aXJlKCIuLi8uLi9pbmRleC5qcyIpOwoKCmNvbnN0IGZzID0gcmVxdWlyZSgiZnMiKTsKCm1vZHVsZS5leHBvcnRzLmxvYWQgPSBhc3luYyBmdW5jdGlvbihhcHAsIGRiKSB7CiAgYXBwLmdldCgiL2F1dGgvZGlzY29yZCIsIGFzeW5jIChyZXEsIHJlcykgPT4gewogICAgaWYgKHJlcS5xdWVyeS5yZWRpcmVjdCkgcmVxLnNlc3Npb24ucmVkaXJlY3QgPSAiLyIgKyByZXEucXVlcnkucmVkaXJlY3Q7CiAgICBsZXQgbmV3c2V0dGluZ3MgPSBKU09OLnBhcnNlKGZzLnJlYWRGaWxlU3luYygiLi9zZXR0aW5ncy5qc29uIikpOwogICAgcmVzLnJlZGlyZWN0KGBodHRwczovL2Rpc2NvcmQuY29tL2FwaS9vYXV0aDIvYXV0aG9yaXplP2NsaWVudF9pZD0ke3NldHRpbmdzLmFwaS5jbGllbnQub2F1dGgyLmlkfSZyZWRpcmVjdF91cmk9JHtlbmNvZGVVUklDb21wb25lbnQoc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIubGluayArIHNldHRpbmdzLmFwaS5jbGllbnQub2F1dGgyLmNhbGxiYWNrcGF0aCl9JnJlc3BvbnNlX3R5cGU9Y29kZSZzY29wZT1pZGVudGlmeSUyMGVtYWlsJHtzZXR0aW5ncy5hcGkuY2xpZW50Lm9hdXRoMi5wcm9tcHQgPT0gZmFsc2UgPyAiJnByb21wdD1ub25lIiA6IChyZXEucXVlcnkucHJvbXB0ID8gKHJlcS5xdWVyeS5wcm9tcHQgPT0gIm5vbmUiID8gIiZwcm9tcHQ9bm9uZSIgOiAiIikgOiAiIil9YCk7CiAgfSk7CgogIGFwcC5nZXQoIi9sb2dvdXQiLCAocmVxLCByZXMpID0+IHsKICAgIGxldCB0aGVtZSA9IGluZGV4anMuZ2V0KHJlcSk7CiAgICByZXEuc2Vzc2lvbi5kZXN0cm95KCgpID0+IHsKICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdCh0aGVtZS5zZXR0aW5ncy5yZWRpcmVjdC5sb2dvdXQgfHwgIi9sb2dpbiIpOwogICAgfSk7CiAgfSk7CgogIGFwcC5nZXQoc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuY2FsbGJhY2twYXRoLCBhc3luYyAocmVxLCByZXMpID0+IHsKICAgIGxldCB0aGVtZSA9IGluZGV4anMuZ2V0KHJlcSk7CiAgICBsZXQgY3VzdG9tcmVkaXJlY3QgPSByZXEuc2Vzc2lvbi5yZWRpcmVjdDsKICAgIGRlbGV0ZSByZXEuc2Vzc2lvbi5yZWRpcmVjdDsKICAgIGxldCBmYWlsZWRjYWxsYmFjayA9IHRoZW1lLnNldHRpbmdzLnJlZGlyZWN0LmZhaWxlZGNhbGxiYWNrIHx8ICIvIjsKICAgIGlmICghcmVxLnF1ZXJ5LmNvZGUpIHJldHVybiByZXMucmVkaXJlY3QoZmFpbGVkY2FsbGJhY2sgKyAiP2Vycj1NSVNTSU5HQ09ERSIpOwogICAgbGV0IGpzb24gPSBhd2FpdCBmZXRjaCgKICAgICAgJ2h0dHBzOi8vZGlzY29yZC5jb20vYXBpL29hdXRoMi90b2tlbicsCiAgICAgIHsKICAgICAgICBtZXRob2Q6ICJwb3N0IiwKICAgICAgICBib2R5OiAiY2xpZW50X2lkPSIgKyBzZXR0aW5ncy5hcGkuY2xpZW50Lm9hdXRoMi5pZCArICImY2xpZW50X3NlY3JldD0iICsgc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuc2VjcmV0ICsgIiZncmFudF90eXBlPWF1dGhvcml6YXRpb25fY29kZSZjb2RlPSIgKyBlbmNvZGVVUklDb21wb25lbnQocmVxLnF1ZXJ5LmNvZGUpICsgIiZyZWRpcmVjdF91cmk9IiArIGVuY29kZVVSSUNvbXBvbmVudChzZXR0aW5ncy5hcGkuY2xpZW50Lm9hdXRoMi5saW5rICsgc2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuY2FsbGJhY2twYXRoKSwKICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkJyB9CiAgICAgIH0KICAgICk7CiAgICBpZiAoanNvbi5vayA9PSB0cnVlKSB7CiAgICAgIGxldCBjb2RlaW5mbyA9IEpTT04ucGFyc2UoYXdhaXQganNvbi50ZXh0KCkpOwogICAgICBsZXQgc2NvcGVzID0gY29kZWluZm8uc2NvcGU7CiAgICAgIGxldCBtaXNzaW5nc2NvcGVzID0gW107CiAgICAgIGxldCBuZXdzZXR0aW5ncyA9IEpTT04ucGFyc2UoZnMucmVhZEZpbGVTeW5jKCIuL3NldHRpbmdzLmpzb24iKSk7CgogICAgICBpZiAoc2NvcGVzLnJlcGxhY2UoL2lkZW50aWZ5L2csICIiKSA9PSBzY29wZXMpIG1pc3NpbmdzY29wZXMucHVzaCgiaWRlbnRpZnkiKTsKICAgICAgaWYgKHNjb3Blcy5yZXBsYWNlKC9lbWFpbC9nLCAiIikgPT0gc2NvcGVzKSBtaXNzaW5nc2NvcGVzLnB1c2goImVtYWlsIik7CiAgICAgIGlmIChtaXNzaW5nc2NvcGVzLmxlbmd0aCAhPT0gMCkgcmV0dXJuIHJlcy5yZWRpcmVjdChmYWlsZWRjYWxsYmFjayArICI/ZXJyPU1JU1NJTkdTQ09QRVMmc2NvcGVzPSIgKyBtaXNzaW5nc2NvcGVzLmpvaW4oIiUyMCIpKTsKICAgICAgbGV0IHVzZXJqc29uID0gYXdhaXQgZmV0Y2goCiAgICAgICAgJ2h0dHBzOi8vZGlzY29yZC5jb20vYXBpL3VzZXJzL0BtZScsCiAgICAgICAgewogICAgICAgICAgbWV0aG9kOiAiZ2V0IiwKICAgICAgICAgIGhlYWRlcnM6IHsKICAgICAgICAgICAgIkF1dGhvcml6YXRpb24iOiBgQmVhcmVyICR7Y29kZWluZm8uYWNjZXNzX3Rva2VufWAKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICk7CiAgICAgIGxldCB1c2VyaW5mbyA9IEpTT04ucGFyc2UoYXdhaXQgdXNlcmpzb24udGV4dCgpKTsKCiAgICAgIGxldCBndWlsZHNqc29uID0gYXdhaXQgZmV0Y2goCiAgICAgICAgJ2h0dHBzOi8vZGlzY29yZC5jb20vYXBpL3VzZXJzL0BtZS9ndWlsZHMnLAogICAgICAgIHsKICAgICAgICAgIG1ldGhvZDogImdldCIsCiAgICAgICAgICBoZWFkZXJzOiB7CiAgICAgICAgICAgICJBdXRob3JpemF0aW9uIjogYEJlYXJlciAke2NvZGVpbmZvLmFjY2Vzc190b2tlbn1gCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICApOwogICAgICBsZXQgZ3VpbGRzaW5mbyA9IEpTT04ucGFyc2UoYXdhaXQgZ3VpbGRzanNvbi50ZXh0KCkpOwogICAgICBpZiAodXNlcmluZm8udmVyaWZpZWQgPT0gdHJ1ZSkgewogICAgICAgIAogICAgICAgIGxldCBpcCA9IHJlcS5oZWFkZXJzWyd4LWZvcndhcmRlZC1mb3InXSB8fCByZXEuaGVhZGVyc1sneC1yZWFsLWlwJ10gfHwgcmVxLmhlYWRlcnNbJ3gtY2xpZW50LWlwJ10gfHwgcmVxLmhlYWRlcnNbJ3gtZm9yd2FyZGVkJ10gfHwgcmVxLnNvY2tldC5yZW1vdGVBZGRyZXNzOwogICAgICAgIAogICAgICAKICAgICAgICBpZiAobmV3c2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuaXBbImR1cGxpY2F0ZSBjaGVjayJdID09IHRydWUpIHsKICAgICAgICAgIGxldCBhbGxpcHMgPSBhd2FpdCBkYi5nZXQoImlwcyIpIHx8IFtdOwogICAgICAgICAgbGV0IG1haW5pcCA9IGF3YWl0IGRiLmdldCgiaXAtIiArIHVzZXJpbmZvLmlkKTsKICAgICAgICAgIGlmIChtYWluaXApIHsKICAgICAgICAgICAgaWYgKG1haW5pcCAhPT0gaXApIHsKICAgICAgICAgICAgICBhbGxpcHMgPSBhbGxpcHMuZmlsdGVyKGlwMiA9PiBpcDIgIT09IG1haW5pcCk7CiAgICAgICAgICAgICAgaWYgKGFsbGlwcy5pbmNsdWRlcyhpcCkpIHsKICAgICAgICAgICAgICAgIHJldHVybiByZXMuc2VuZCgnWW91IENhbm5vdCBDcmVhdGUgQWx0cyEnKQogICAgICAgICAgICAgIH0KICAgICAgICAgICAgICBhbGxpcHMucHVzaChpcCk7CiAgICAgICAgICAgICAgYXdhaXQgZGIuc2V0KCJpcHMiLCBhbGxpcHMpOwogICAgICAgICAgICAgIGF3YWl0IGRiLnNldCgiaXAtIiArIHVzZXJpbmZvLmlkLCBpcCk7CiAgICAgICAgICAgIH0KICAgICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgIGlmIChhbGxpcHMuaW5jbHVkZXMoaXApKSB7CiAgICAgICAgICAgICAgcmV0dXJuIHJlcy5zZW5kKCdZb3UgQ2Fubm90IENyZWF0ZSBBbHRzIScpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgYWxsaXBzLnB1c2goaXApOwogICAgICAgICAgICBhd2FpdCBkYi5zZXQoImlwcyIsIGFsbGlwcyk7CiAgICAgICAgICAgIGF3YWl0IGRiLnNldCgiaXAtIiArIHVzZXJpbmZvLmlkLCBpcCk7CiAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBpZiAobmV3c2V0dGluZ3MuYXBpLmNsaWVudC5vYXV0aDIuaXBbImNvb2tpZSBhbHQgY2hlY2siXSkgewogICAgICAgICAgbGV0IGFjY291bnRpZCA9IGdldENvb2tpZShyZXEsICJhY2NvdW50aWQiKTsKCiAgICAgICAgICBpZiAoYWNjb3VudGlkKSB7CiAgICAgICAgICAgIGlmIChhY2NvdW50aWQgIT09IHVzZXJpbmZvLmlkKSB7CiAgICAgICAgICAgICAgcmV0dXJuIHJlcy5zZW5kKCdZb3UgQ2Fubm90IENyZWF0ZSBBbHRzIScpOwogICAgICAgICAgICB9CiAgICAgICAgICB9CgogICAgICAgICAgcmVzLmNvb2tpZSgnYWNjb3VudGlkJywgdXNlcmluZm8uaWQpOwogICAgICAgIH0KCgogICAgICAgIGlmICghYXdhaXQgZGIuZ2V0KCJ1c2Vycy0iICsgdXNlcmluZm8uaWQpKSB7CiAgICAgICAgICBpZiAobmV3c2V0dGluZ3MuYXBpLmNsaWVudC5hbGxvdy5uZXd1c2VycyA9PSB0cnVlKSB7CiAgICAgICAgICAgIGxldCBnZW5wYXNzd29yZCA9IG51bGw7CiAgICAgICAgICAgIGlmIChuZXdzZXR0aW5ncy5hcGkuY2xpZW50LnBhc3N3b3JkZ2VuZXJhdG9yLnNpZ251cCA9PSB0cnVlKSBnZW5wYXNzd29yZCA9IG1ha2VpZChuZXdzZXR0aW5ncy5hcGkuY2xpZW50LnBhc3N3b3JkZ2VuZXJhdG9yWyJsZW5ndGgiXSk7CiAgICAgICAgICAgIGxldCBhY2NvdW50anNvbiA9IGF3YWl0IGZldGNoKAogICAgICAgICAgICAgIHNldHRpbmdzLnB0ZXJvZGFjdHlsLmRvbWFpbiArICIvYXBpL2FwcGxpY2F0aW9uL3VzZXJzIiwKICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBtZXRob2Q6ICJwb3N0IiwKICAgICAgICAgICAgICAgIGhlYWRlcnM6IHsKICAgICAgICAgICAgICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJywKICAgICAgICAgICAgICAgICAgIkF1dGhvcml6YXRpb24iOiBgQmVhcmVyICR7c2V0dGluZ3MucHRlcm9kYWN0eWwua2V5fWAKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICBib2R5OiBKU09OLnN0cmluZ2lmeSh7CiAgICAgICAgICAgICAgICAgIHVzZXJuYW1lOiB1c2VyaW5mby5pZCwKICAgICAgICAgICAgICAgICAgZW1haWw6IHVzZXJpbmZvLmVtYWlsLAogICAgICAgICAgICAgICAgICBmaXJzdF9uYW1lOiB1c2VyaW5mby51c2VybmFtZSwKICAgICAgICAgICAgICAgICAgbGFzdF9uYW1lOiAiIyIgKyB1c2VyaW5mby5kaXNjcmltaW5hdG9yLAogICAgICAgICAgICAgICAgICBwYXNzd29yZDogZ2VucGFzc3dvcmQKICAgICAgICAgICAgICAgIH0pCiAgICAgICAgICAgICAgfQogICAgICAgICAgICApOwogICAgICAgICAgICBpZiAoYXdhaXQgYWNjb3VudGpzb24uc3RhdHVzID09IDIwMSkgewogICAgICAgICAgICAgIGxldCBhY2NvdW50aW5mbyA9IEpTT04ucGFyc2UoYXdhaXQgYWNjb3VudGpzb24udGV4dCgpKTsKICAgICAgICAgICAgICBsZXQgdXNlcmlkcyA9IGF3YWl0IGRiLmdldCgidXNlcnMiKSB8fCBbXTsKICAgICAgICAgICAgICB1c2VyaWRzLnB1c2goYWNjb3VudGluZm8uYXR0cmlidXRlcy5pZCk7CiAgICAgICAgICAgICAgYXdhaXQgZGIuc2V0KCJ1c2VycyIsIHVzZXJpZHMpOwogICAgICAgICAgICAgIGxldCBpZCA9IG1ha2VpZCg4KQogICAgICAgICAgICAgIGNvbnN0IHJlZmVyaWQgPSB7CiAgICAgICAgICAgICAgICB1c2VyaWQ6IHVzZXJpbmZvLmlkLAogICAgICAgICAgICAgICAgaW51c2U6IHRydWUKICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgYXdhaXQgZGIuc2V0KCJyZWZlcnVzZXJpZC0iICsgaWQsIHJlZmVyaWQpCiAgICAgICAgICAgICAgYXdhaXQgZGIuc2V0KCJyZWZlcmlkdXNlci0iICsgdXNlcmluZm8uaWQsIGlkKQogICAgICAgICAgICAgIGF3YWl0IGRiLnNldCgidXNlcnMtIiArIHVzZXJpbmZvLmlkLCBhY2NvdW50aW5mby5hdHRyaWJ1dGVzLmlkKTsKICAgICAgICAgICAgICBjb25zdCB1c2VyZGV0YWlscyA9IHsKICAgICAgICAgICAgICAgICAgdXNlcm5hbWU6IHVzZXJpbmZvLnVzZXJuYW1lLCAKICAgICAgICAgICAgICAgICAgaWQ6IHVzZXJpbmZvLmlkLAogICAgICAgICAgICAgICAgICBwYXNzd29yZDogZ2VucGFzc3dvcmQsCiAgICAgICAgICAgICAgICAgIGRpc2NyaW1pbmF0b3I6IHVzZXJpbmZvLmRpc2NyaW1pbmF0b3IsCiAgICAgICAgICAgICAgICAgIGRpc2NvcmQ6IHRydWUsCiAgICAgICAgICAgICAgICAgIHR5cGU6ICJkaXNjb3JkIgogICAgICAgICAgICAgIH0KICAgICAgICAgICAgICBhd2FpdCBkYi5zZXQoInVzZXJpbmZvLSIgKyB1c2VyaW5mby5pZCwgdXNlcmRldGFpbHMpCiAgICAgICAgICAgICAgcmVxLnNlc3Npb24ubmV3YWNjb3VudCA9IHRydWU7CiAgICAgICAgICAgICAgcmVxLnNlc3Npb24ucGFzc3dvcmQgPSBnZW5wYXNzd29yZDsKICAgICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICBsZXQgYWNjb3VudGxpc3Rqc29uID0gYXdhaXQgZmV0Y2goCiAgICAgICAgICAgICAgICBzZXR0aW5ncy5wdGVyb2RhY3R5bC5kb21haW4gKyAiL2FwaS9hcHBsaWNhdGlvbi91c2Vycz9pbmNsdWRlPXNlcnZlcnMmZmlsdGVyW2VtYWlsXT0iICsgZW5jb2RlVVJJQ29tcG9uZW50KHVzZXJpbmZvLmVtYWlsKSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgbWV0aG9kOiAiZ2V0IiwKICAgICAgICAgICAgICAgICAgaGVhZGVyczogewogICAgICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsCiAgICAgICAgICAgICAgICAgICAgIkF1dGhvcml6YXRpb24iOiBgQmVhcmVyICR7c2V0dGluZ3MucHRlcm9kYWN0eWwua2V5fWAKICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICk7CiAgICAgICAgICAgICAgbGV0IGFjY291bnRsaXN0ID0gYXdhaXQgYWNjb3VudGxpc3Rqc29uLmpzb24oKTsKICAgICAgICAgICAgICBsZXQgdXNlciA9IGFjY291bnRsaXN0LmRhdGEuZmlsdGVyKGFjYyA9PiBhY2MuYXR0cmlidXRlcy5lbWFpbC50b0xvd2VyQ2FzZSgpID09IHVzZXJpbmZvLmVtYWlsLnRvTG93ZXJDYXNlKCkpOwogICAgICAgICAgICAgIGlmICh1c2VyLmxlbmd0aCA9PSAxKSB7CiAgICAgICAgICAgICAgICBsZXQgdXNlcmlkID0gdXNlclswXS5hdHRyaWJ1dGVzLmlkOwogICAgICAgICAgICAgICAgbGV0IHVzZXJpZHMgPSBhd2FpdCBkYi5nZXQoInVzZXJzIikgfHwgW107CiAgICAgICAgICAgICAgICBpZiAodXNlcmlkcy5maWx0ZXIoaWQgPT4gaWQgPT0gdXNlcmlkKS5sZW5ndGggPT0gMCkgewogICAgICAgICAgICAgICAgICB1c2VyaWRzLnB1c2godXNlcmlkKTsKICAgICAgICAgICAgICAgICAgYXdhaXQgZGIuc2V0KCJ1c2VycyIsIHVzZXJpZHMpOwogICAgICAgICAgICAgICAgICBhd2FpdCBkYi5zZXQoInVzZXJzLSIgKyB1c2VyaW5mby5pZCwgdXNlcmlkKTsKICAgICAgICAgICAgICAgICAgcmVxLnNlc3Npb24ucHRlcm9kYWN0eWwgPSB1c2VyWzBdLmF0dHJpYnV0ZXM7CiAgICAgICAgICAgICAgICAgIGJsb2coIlVzZXIgY3JlYXRlZCIsIGAke3VzZXJpbmZvLnVzZXJuYW1lfSMke3VzZXJpbmZvLmRpc2NyaW1pbmF0b3J9IGNyZWF0ZWQgYSBuZXcgYWNjb3VudCB3aXRoIHRoZSBJRCBcYCR7dXNlcmluZm8uaWR9XGAgYW5kIHRoZSBlbWFpbCBcYCR7dXNlcmluZm8uZW1haWx9XGBgKTsKCiAgICAgICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgICByZXR1cm4gcmVzLnJlZGlyZWN0KGZhaWxlZGNhbGxiYWNrICsgIj9lcnI9QU5PVEhFUkFDQ09VTlQiKTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdChmYWlsZWRjYWxsYmFjayArICI/ZXJyPVVOS05PV04iKTsKICAgICAgICAgICAgICB9OwogICAgICAgICAgICB9OwogICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdChmYWlsZWRjYWxsYmFjayArICI/ZXJyPURJU0FCTEVEIikKICAgICAgICAgIH0KICAgICAgICB9OwoKICAgICAgICBsZXQgY2FjaGVhY2NvdW50ID0gYXdhaXQgZmV0Y2goCiAgICAgICAgICBzZXR0aW5ncy5wdGVyb2RhY3R5bC5kb21haW4gKyAiL2FwaS9hcHBsaWNhdGlvbi91c2Vycy8iICsgKGF3YWl0IGRiLmdldCgidXNlcnMtIiArIHVzZXJpbmZvLmlkKSkgKyAiP2luY2x1ZGU9c2VydmVycyIsCiAgICAgICAgICB7CiAgICAgICAgICAgIG1ldGhvZDogImdldCIsCiAgICAgICAgICAgIGhlYWRlcnM6IHsgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJywgIkF1dGhvcml6YXRpb24iOiBgQmVhcmVyICR7c2V0dGluZ3MucHRlcm9kYWN0eWwua2V5fWAgfQogICAgICAgICAgfQogICAgICAgICk7CiAgICAgICAgaWYgKGF3YWl0IGNhY2hlYWNjb3VudC5zdGF0dXNUZXh0ID09ICJOb3QgRm91bmQiKSByZXR1cm4gcmVzLnJlZGlyZWN0KGZhaWxlZGNhbGxiYWNrICsgIj9lcnI9Q0FOTk9UR0VUSU5GTyIpOwogICAgICAgIGxldCBjYWNoZWFjY291bnRpbmZvID0gSlNPTi5wYXJzZShhd2FpdCBjYWNoZWFjY291bnQudGV4dCgpKTsKICAgICAgICB1c2VyaW5mby5wcm9maWxlcGljID0gYGh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F2YXRhcnMvJHt1c2VyaW5mby5pZH0vJHt1c2VyaW5mby5hdmF0YXJ9LmpwZz9zaXplPTEwMjRgCiAgICAgICAgdXNlcmluZm8udHlwZSA9ICJkaXNjb3JkIgoKICAgICAgICByZXEuc2Vzc2lvbi5wdGVyb2RhY3R5bCA9IGNhY2hlYWNjb3VudGluZm8uYXR0cmlidXRlczsKCiAgICAgICAgcmVxLnNlc3Npb24udXNlcmluZm8gPSB1c2VyaW5mbzsKCiAgICAgICAgcmV0dXJuIHJlcy5yZWRpcmVjdCh0aGVtZS5zZXR0aW5ncy5yZWRpcmVjdC5jYWxsYmFjayB8fCAiLyIpOwogICAgICB9OwogICAgICByZXMucmVkaXJlY3QoZmFpbGVkY2FsbGJhY2sgKyAiP2Vycj1VTlZFUklGSUVEIik7CiAgICB9IGVsc2UgewogICAgICByZXMucmVkaXJlY3QoZmFpbGVkY2FsbGJhY2sgKyAiP2Vycj1JTlZBTElEQ09ERSIpOwogICAgfTsKICB9KTsKfTsKCmZ1bmN0aW9uIG1ha2VpZChsZW5ndGgpIHsKICBsZXQgcmVzdWx0ID0gJyc7CiAgbGV0IGNoYXJhY3RlcnMgPSAnQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3ODknOwogIGxldCBjaGFyYWN0ZXJzTGVuZ3RoID0gY2hhcmFjdGVycy5sZW5ndGg7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCBsZW5ndGg7IGkrKykgewogICAgIHJlc3VsdCArPSBjaGFyYWN0ZXJzLmNoYXJBdChNYXRoLmZsb29yKE1hdGgucmFuZG9tKCkgKiBjaGFyYWN0ZXJzTGVuZ3RoKSk7CiAgfQogIHJldHVybiByZXN1bHQ7Cn0KCgpmdW5jdGlvbiBnZXRDb29raWUocmVxLCBjbmFtZSkgewogIGxldCBjb29raWVzID0gcmVxLmhlYWRlcnMuY29va2llOwogIGlmICghY29va2llcykgcmV0dXJuIG51bGw7CiAgbGV0IG5hbWUgPSBjbmFtZSArICI9IjsKICBsZXQgY2EgPSBjb29raWVzLnNwbGl0KCc7Jyk7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCBjYS5sZW5ndGg7IGkrKykgewogICAgbGV0IGMgPSBjYVtpXTsKICAgIHdoaWxlIChjLmNoYXJBdCgwKSA9PSAnICcpIHsKICAgICAgYyA9IGMuc3Vic3RyaW5nKDEpOwogICAgfQogICAgaWYgKGMuaW5kZXhPZihuYW1lKSA9PSAwKSB7CiAgICAgIHJldHVybiBkZWNvZGVVUklDb21wb25lbnQoYy5zdWJzdHJpbmcobmFtZS5sZW5ndGgsIGMubGVuZ3RoKSk7CiAgICB9CiAgfQogIHJldHVybiAiIjsKfQ==";
-const decodedScript = Buffer.from(base64EncodedScript, 'base64').toString('utf-8');
-eval(decodedScript);
+"use strict";
+
+const settings = require("../../settings.json");
+
+if (settings.api.client.oauth2.link.slice(-1) == "/")
+  settings.api.client.oauth2.link = settings.api.client.oauth2.link.slice(0, -1);
+
+if (settings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
+  settings.api.client.oauth2.callbackpath = "/" + settings.api.client.oauth2.callbackpath;
+
+if (settings.pterodactyl.domain.slice(-1) == "/")
+  settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+
+const fetch = require('node-fetch');
+
+const indexjs = require("../../index.js");
+const log = require('../../misc/log')
+
+const fs = require("fs");
+const { renderFile } = require('ejs')
+const vpnCheck = require("../../misc/vpnCheck");
+
+module.exports.load = async function (app, db) {
+  app.get("/auth/discord", async (req, res) => {
+    if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
+    let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
+    res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${settings.api.client.oauth2.id}&redirect_uri=${encodeURIComponent(settings.api.client.oauth2.link + settings.api.client.oauth2.callbackpath)}&response_type=code&scope=identify%20email${newsettings.api.client.bot.joinguild.enabled == true ? "%20guilds.join" : ""}${newsettings.api.client.j4r.enabled == true ? "%20guilds" : ""}${settings.api.client.oauth2.prompt == false ? "&prompt=none" : (req.query.prompt ? (req.query.prompt == "none" ? "&prompt=none" : "") : "")}`);
+  });
+
+  app.get("/logout", (req, res) => {
+    let theme = indexjs.get(req);
+    req.session.destroy(() => {
+      return res.redirect(theme.settings.redirect.logout ? theme.settings.redirect.logout : "/login");
+    });
+  });
+
+  app.get(settings.api.client.oauth2.callbackpath, async (req, res) => {
+    if (!req.query.code) return res.redirect(`/login`)
+    res.send(`
+    <head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+    <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
+    <title>wait...</title>
+    </head>
+    <body style="background-color: #0b0b0f; font-family: 'Whitney-Semibold', sans-serif;">
+    <center>
+      <br><br><br>
+      <h1 style="color: white">You´re getting loged in sitdown and Relax</h1>
+      <p style="color: #BBBBBB">were getting all ready for you for the best hosting expririenc</p>
+    </center>
+    <script type="text/javascript" defer>
+      history.pushState('/login', 'Logging in...', '/login')
+      window.location.replace('/submitlogin?code=${encodeURIComponent(req.query.code.replace(/'/g, ''))}')
+    </script>
+<script>
+var options = {
+	classname: 'loadingbar',
+    id: 'loadingbar'
+};
+var nanobar = new Nanobar( options );
+nanobar.go( 30 );
+nanobar.go( 76 );
+nanobar.go(100);
+</script>
+<style>
+.loadingbar .bar {
+        background: #007fcc;
+        border-radius: 4px;
+        height: 2px;
+        box-shadow: 0 0 10px #007fcc;
+}
+</style>
+    </body>
+    `)
+  })
+
+  app.get(`/submitlogin`, async (req, res) => {
+    let customredirect = req.session.redirect;
+    delete req.session.redirect;
+    if (!req.query.code) return res.send("Missing code.")
+
+    const newsettings = require('../../settings.json');
+
+    let ip = (newsettings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
+    ip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
+    if (newsettings.antivpn.status && ip !== '127.0.0.1' && !newsettings.antivpn.whitelistedIPs.includes(ip)) {
+      const vpn = await vpnCheck(newsettings.antivpn.APIKey, db, ip, res)
+      if (vpn) return
+    }
+
+    let json = await fetch(
+      'https://discord.com/api/oauth2/token',
+      {
+        method: "post",
+        body: "client_id=" + settings.api.client.oauth2.id + "&client_secret=" + settings.api.client.oauth2.secret + "&grant_type=authorization_code&code=" + encodeURIComponent(req.query.code) + "&redirect_uri=" + encodeURIComponent(settings.api.client.oauth2.link + settings.api.client.oauth2.callbackpath),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    if (json.ok == true) {
+      let codeinfo = JSON.parse(await json.text());
+      let scopes = codeinfo.scope;
+      let missingscopes = [];
+
+      if (scopes.replace(/identify/g, "") == scopes) missingscopes.push("identify");
+      if (scopes.replace(/email/g, "") == scopes) missingscopes.push("email");
+      if (newsettings.api.client.bot.joinguild.enabled == true) if (scopes.replace(/guilds.join/g, "") == scopes) missingscopes.push("guilds.join");
+      if (newsettings.api.client.j4r.enabled) if (scopes.replace(/guilds/g, "") == scopes) missingscopes.push("guilds");
+      if (missingscopes.length !== 0) return res.send("Missing scopes: " + missingscopes.join(", "));
+      let userjson = await fetch(
+        'https://discord.com/api/users/@me',
+        {
+          method: "get",
+          headers: {
+            "Authorization": `Bearer ${codeinfo.access_token}`
+          }
+        }
+      );
+      let userinfo = JSON.parse(await userjson.text());
+
+      if (settings.whitelist.status) {
+        if (!settings.whitelist.users.includes(userinfo.id)) return res.send('Service is under maintenance.')
+      }
+
+
+
+      const additionalUserInfo = await fetch(`https://discord.com/api/users/${userinfo.id}`, {
+        headers: {
+          "Authorization": `Bot ${settings.api.client.bot.token}`
+        }
+      });
+
+      if (additionalUserInfo.ok) {
+        const additionalUserData = await additionalUserInfo.json();
+
+        // Banner color
+        const bannerColor = additionalUserData.banner_color;
+
+        // About Me
+        const aboutMe = additionalUserData.bio;
+      }
+
+
+
+
+
+
+      let guildsjson = await fetch(
+        'https://discord.com/api/users/@me/guilds',
+        {
+          method: "get",
+          headers: {
+            "Authorization": `Bearer ${codeinfo.access_token}`
+          }
+        }
+      );
+      let guildsinfo = await guildsjson.json();
+      if (userinfo.verified == true) {
+
+        if (newsettings.api.client.oauth2.ip.block.includes(ip)) return res.send("You could not sign in, because your IP has been blocked from signing in.")
+
+        if ((newsettings.api.client.oauth2.ip["duplicate check"] == true) && ip !== '127.0.0.1') {
+          const ipuser = await db.get(`ipuser-${ip}`)
+          if (ipuser && ipuser !== userinfo.id) {
+            renderFile(
+              `./themes/${newsettings.defaulttheme}/alerts/alt.ejs`,
+              {
+                settings: newsettings,
+                db,
+                extra: { home: { name: 'VPN Detected' } }
+              },
+              null,
+              (err, str) => {
+                if (err) return res.send('Another account on your IP has been detected, there can only be one account per IP. Think this is a mistake? <a href="https://discord.com/invite/pfn99FeY3r" target="_blank">Join our discord.</a>')
+                res.status(200);
+                res.send(str);
+              }
+            )
+            return
+          } else if (!ipuser) {
+            await db.set(`ipuser-${ip}`, userinfo.id)
+          }
+        }
+
+        if (newsettings.api.client.j4r.enabled) {
+          if (guildsinfo.message == '401: Unauthorized') return res.send("Please allow us to know what servers you are in to let the J4R system work properly. <a href='/login'>Login again</a>")
+          let userj4r = await db.get(`j4rs-${userinfo.id}`) ?? []
+          await guildsinfo
+
+          let coins = await db.get(`coins-${userinfo.id}`) ?? 0
+
+          // Checking if the user has completed any new j4rs
+          for (const guild of newsettings.api.client.j4r.ads) {
+            if ((guildsinfo.find(g => g.id === guild.id)) && (!userj4r.find(g => g.id === guild.id))) {
+              userj4r.push({
+                id: guild.id,
+                coins: guild.coins
+              })
+              coins += guild.coins
+            }
+          }
+
+          // Checking if the user has left any j4r servers
+          for (const j4r of userj4r) {
+            if (!guildsinfo.find(g => g.id === j4r.id)) {
+              userj4r = userj4r.filter(g => g.id !== j4r.id)
+              coins -= j4r.coins
+            }
+          }
+
+          await db.set(`j4rs-${userinfo.id}`, userj4r)
+          await db.set(`coins-${userinfo.id}`, coins)
+        }
+
+        if (newsettings.api.client.bot.joinguild.enabled == true) {
+          if (typeof newsettings.api.client.bot.joinguild.guildid == "string") {
+            await fetch(
+              `https://discord.com/api/guilds/${newsettings.api.client.bot.joinguild.guildid}/members/${userinfo.id}`,
+              {
+                method: "put",
+                headers: {
+                  'Content-Type': 'application/json',
+                  "Authorization": `Bot ${newsettings.api.client.bot.token}`
+                },
+                body: JSON.stringify({
+                  access_token: codeinfo.access_token
+                })
+              }
+            );
+          } else if (typeof newsettings.api.client.bot.joinguild.guildid == "object") {
+            if (Array.isArray(newsettings.api.client.bot.joinguild.guildid)) {
+              for (let guild of newsettings.api.client.bot.joinguild.guildid) {
+                await fetch(
+                  `https://discord.com/api/guilds/${guild}/members/${userinfo.id}`,
+                  {
+                    method: "put",
+                    headers: {
+                      'Content-Type': 'application/json',
+                      "Authorization": `Bot ${newsettings.api.client.bot.token}`
+                    },
+                    body: JSON.stringify({
+                      access_token: codeinfo.access_token
+                    })
+                  }
+                );
+              }
+            } else {
+              return res.send("api.client.bot.joinguild.guildid is not an array nor a string.");
+            }
+          } else {
+            return res.send("api.client.bot.joinguild.guildid is not an array nor a string.");
+          }
+        }
+
+        // Applying role packages
+        if (newsettings.api.client.packages.rolePackages.roles) {
+          const member = await fetch(`https://discord.com/api/v9/guilds/${newsettings.api.client.packages.rolePackages.roleServer}/members/${userinfo.id}`, {
+            headers: {
+              "Authorization": `Bot ${newsettings.api.client.bot.token}`
+            }
+          })
+          const memberinfo = await member.json()
+          if (memberinfo.user) {
+            const currentpackage = await db.get(`package-${userinfo.id}`)
+            if (Object.values(newsettings.api.client.packages.rolePackages.roles).includes(currentpackage)) {
+              for (const rolePackage of Object.keys(newsettings.api.client.packages.rolePackages.roles)) {
+                if (newsettings.api.client.packages.rolePackages.roles[rolePackage] === currentpackage) {
+                  if (!memberinfo.roles.includes(rolePackage)) {
+                    await db.set(`package-${userinfo.id}`, newsettings.api.client.packages.default)
+                  }
+                }
+              }
+            }
+            for (const role of memberinfo.roles) {
+              if (newsettings.api.client.packages.rolePackages.roles[role]) {
+                await db.set(`package-${userinfo.id}`, newsettings.api.client.packages.rolePackages.roles[role])
+              }
+            }
+          }
+        }
+
+        if (!await db.get("users-" + userinfo.id)) {
+          if (newsettings.api.client.allow.newusers == true) {
+            let genpassword = null;
+            if (newsettings.api.client.passwordgenerator.signup == true) genpassword = makeid(newsettings.api.client.passwordgenerator["length"]);
+            let accountjson = await fetch(
+              settings.pterodactyl.domain + "/api/application/users",
+              {
+                method: "post",
+                headers: {
+                  'Content-Type': 'application/json',
+                  "Authorization": `Bearer ${settings.pterodactyl.key}`
+                },
+                body: JSON.stringify({
+                  username: userinfo.id,
+                  email: userinfo.email,
+                  first_name: userinfo.username,
+                  last_name: "#" + userinfo.discriminator,
+                  password: genpassword
+                })
+              }
+            );
+            if (await accountjson.status == 201) {
+              let accountinfo = JSON.parse(await accountjson.text());
+              let userids = await db.get("users") ? await db.get("users") : [];
+              userids.push(accountinfo.attributes.id);
+              await db.set("users", userids);
+              await db.set("users-" + userinfo.id, accountinfo.attributes.id);
+              req.session.newaccount = true;
+              req.session.password = genpassword;
+            } else {
+              let accountlistjson = await fetch(
+                settings.pterodactyl.domain + "/api/application/users?include=servers&filter[email]=" + encodeURIComponent(userinfo.email),
+                {
+                  method: "get",
+                  headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${settings.pterodactyl.key}`
+                  }
+                }
+              );
+              let accountlist = await accountlistjson.json();
+              let user = accountlist.data.filter(acc => acc.attributes.email == userinfo.email);
+              if (user.length == 1) {
+                let userid = user[0].attributes.id;
+                let userids = await db.get("users") ? await db.get("users") : [];
+                if (userids.filter(id => id == userid).length == 0) {
+                  userids.push(userid);
+                  await db.set("users", userids);
+                  await db.set("users-" + userinfo.id, userid);
+                  req.session.pterodactyl = user[0].attributes;
+                } else {
+                  return res.send("We have detected an account with your Discord email on it but the user id has already been claimed on another Discord account.");
+                }
+              } else {
+                return res.send("An error has occured when attempting to create your account.");
+              };
+            };
+            log('signup', `${userinfo.username}#${userinfo.discriminator} logged in to the dashboard for the first time!`)
+          } else {
+            return res.send("New users cannot signup currently.")
+          }
+        };
+
+        let cacheaccount = await fetch(
+          settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + userinfo.id)) + "?include=servers",
+          {
+            method: "get",
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+          }
+        );
+        if (await cacheaccount.statusText == "Not Found") return res.send("An error has occured while attempting to get your user information.");
+        let cacheaccountinfo = JSON.parse(await cacheaccount.text());
+        req.session.pterodactyl = cacheaccountinfo.attributes;
+
+        req.session.userinfo = userinfo;
+        let theme = indexjs.get(req);
+        if (customredirect) return res.redirect(customredirect);
+        return res.redirect(theme.settings.redirect.callback ? theme.settings.redirect.callback : "/");
+      };
+      res.send("Not verified a Discord account. Please verify the email on your Discord account.");
+    } else {
+      res.redirect(`/login`);
+    };
+  });
+};
+
+function makeid(length) {
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

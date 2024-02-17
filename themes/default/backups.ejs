@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/head') %>
+
+<body class="bg-theme">
+<div class="container-scroller">
+    <%- include('./components/control-sidebar') %>
+    <div class="container-fluid page-body-wrapper">
+        <%- include('./components/topnav') %>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+
+
+
+
+                    <!-- Karte ganz oben -->
+                    <div class="col-md-12 grid-margin stretch-card">
+
+
+
+
+
+
+
+
+
+                        
+                        <div class="card" style="height: 100px;">
+                            <div class="card-body">
+                                <h3>Backup Manager</h3>
+                                <p class="text-muted">Verwalten Sie Ihre Backups.</p>
+
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBackupModal">Backup erstellen</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datei-Manager-Inhalt -->
+                    <div class="container card" style="">
+                        <!-- Verzeichnis-URL -->
+                        <div class="mb-3">
+                            <strong>Verzeichnis:</strong>
+                            <span id="directoryUrl"></span>
+                        </div>
+
+                        <!-- Navigationsbuttons -->
+                        <div class="navigation-buttons mt-3">
+                            <button class="btn btn-primary" onclick="navigateBack()"><code><-..</code></button>
+                        </div>
+
+                        <!-- Kontextmenü für Backups -->
+                        <div id="backupContextMenu" class="dropdown">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#" onclick="deleteBackup()">Backup löschen</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="restoreBackup()">Backup wiederherstellen</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Dateitabelle -->
+                        <table id="fileTable" class="table mt-4">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th>Created At</th>
+                                    <th>Modified At</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backup erstellen Modal -->
+            <div class="modal fade" id="createBackupModal" tabindex="-1" aria-labelledby="createBackupModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createBackupModalLabel">Backup erstellen</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="backupName" class="form-label">Backup Name</label>
+                                <input type="text" class="form-control" id="backupName" placeholder="Enter backup name">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="createBackup()">Create Backup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bootstrap JS und Popper.js -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Eigener JavaScript-Code -->
+            <script>
+                async function fetchFileList(directory = '') {
+                    // Extrahiere die Server-ID aus der URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const serverId = urlParams.get('id');
+        
+                    try {
+                        const response = await fetch(`/fi?id=${serverId}&dir=${directory}`);
+                        const fileList = await response.json();
+        
+                        // Überprüfe, ob fileList ein Array ist
+                        if (Array.isArray(fileList.data)) {
+                            // Display file list
+                            const tableBody = document.querySelector('#fileTable tbody');
+                            tableBody.innerHTML = ''; // Clear previous list
+        
+                            fileList.data.forEach(file => {
+                                const row = tableBody.insertRow();
+                                
+                                // Name
+                                const cellName = row.insertCell(0);
+                                const link = document.createElement('a');
+                                link.href = "#"; // Setzt einen Platzhalterlink
+                                link.textContent = file.attributes.name;
+                                link.addEventListener('click', function() {
+                                    if (!file.attributes.is_file) {
+                                        // Navigiere in das Verzeichnis, wenn es kein Datei ist
+                                        fetchFileList(`${directory}/${file.attributes.name}`);
+                                    }
+                                });
+                                cellName.appendChild(link);
+        
+                                // Type
+                                const cellType = row.insertCell(1);
+                                cellType.textContent = file.attributes.is_file ? 'File' : 'Directory';
+        
+                                // Size
+                                const cellSize = row.insertCell(2);
+                                cellSize.textContent = file.attributes.size;
+        
+                                // Created At
+                                const cellCreatedAt = row.insertCell(3);
+                                cellCreatedAt.textContent = file.attributes.created_at;
+        
+                                // Modified At
+                                const cellModifiedAt = row.insertCell(4);
+                                cellModifiedAt.textContent = file.attributes.modified_at;
+
+                                // Kontextmenü für Backups
+                                if (!file.attributes.is_file) {
+                                    row.addEventListener('contextmenu', function(event) {
+                                        event.preventDefault();
+                                        const backupContextMenu = document.getElementById('backupContextMenu');
+                                        backupContextMenu.style.top = `${event.clientY}px`;
+                                        backupContextMenu.style.left = `${event.clientX}px`;
+                                        backupContextMenu.classList.add('show');
+                                    });
+                                }
+                            });
+        
+                            // Aktualisiere Verzeichnis-URL
+                            const directoryUrlElement = document.getElementById('directoryUrl');
+                            directoryUrlElement.textContent = `tfc-plex@root${directory}`;
+                        } else {
+                            console.error('Error fetching file list: Response is not an array.', fileList);
+                        }
+                    } catch (error) {
+                        console.error('Error fetching file list:', error);
+                    }
+                }
+        
+                function navigateBack() {
+                    // Extrahiere die Server-ID aus der URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const serverId = urlParams.get('id');
+        
+                    // Extrahiere das aktuelle Verzeichnis aus der Verzeichnis-URL
+                    const currentDirectory = urlParams.get('dr') || '';
+        
+                    // Extrahiere den vorherigen Verzeichnispfad
+                    const previousDirectory = currentDirectory.split('/').slice(0, -1).join('/');
+        
+                    // Navigiere zum vorherigen Verzeichnis
+                    fetchFileList(previousDirectory);
+                }
+        
+                function navigateForward() {
+                    // Extrahiere die Server-ID aus der URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const serverId = urlParams.get('id');
+        
+                    // Extrahiere das aktuelle Verzeichnis aus der Verzeichnis-URL
+                    const currentDirectory = urlParams.get('dr') || '';
+        
+                    // Navigiere zum nächsten Verzeichnis
+                    fetchFileList(`${currentDirectory}/`);
+                }
+
+                async function createBackup() {
+                    const backupName = document.getElementById('backupName').value;
+                    // Implementieren Sie die Logik, um das Backup zu erstellen und den Namen zu übergeben
+                    alert(`Erstellen Sie ein Backup mit dem Namen: ${backupName}`);
+                }
+
+                async function deleteBackup() {
+                    // Implementieren Sie die Logik, um das Backup zu löschen
+                    alert("Backup löschen");
+                }
+
+                async function restoreBackup() {
+                    // Implementieren Sie die Logik, um das Backup wiederherzustellen
+                    alert("Backup wiederherstellen");
+                }
+            </script>
+        </div>
+    </div>
+
+    <%- include('./components/scripts') %>
+</body>
+
+</html>

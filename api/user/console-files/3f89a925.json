@@ -1,0 +1,134 @@
+[
+  {
+    "timestamp": "2024-02-16T21:06:49.560Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Checking server disk space usage, this could take a few seconds...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:49.562Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Updating process configuration files...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:49.563Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Ensuring file permissions are set correctly, this could take a few seconds...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:49.567Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Pulling Docker container image, this could take a few minutes to complete...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.062Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Finished pulling Docker container image\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.526Z",
+    "output": "\u001b[1m\u001b[33mcontainer@pterodactyl~ \u001b[0mjava -version"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.596Z",
+    "output": "openjdk version \"1.8.0_312\""
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.597Z",
+    "output": "OpenJDK Runtime Environment (Temurin)(build 1.8.0_312-b07)"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.598Z",
+    "output": "OpenJDK 64-Bit Server VM (Temurin)(build 25.312-b07, mixed mode)"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.603Z",
+    "output": "\u001b[1m\u001b[33mcontainer@pterodactyl~ \u001b[0mjava --add-modules=jdk.incubator.vector -Xms128M -Xmx1024M -Dterminal.jline=false -Dterminal.ansi=true -jar server.jar"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.609Z",
+    "output": "Unrecognized option: --add-modules=jdk.incubator.vector"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.611Z",
+    "output": "Error: Could not create the Java Virtual Machine."
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.612Z",
+    "output": "Error: A fatal exception has occurred. Program will exit."
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.966Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m ---------- Detected server process in a crashed state! ----------\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.970Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Exit code: 1\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:50.973Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Out of memory: false\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.012Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Checking server disk space usage, this could take a few seconds...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.013Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Updating process configuration files...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.015Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Ensuring file permissions are set correctly, this could take a few seconds...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.019Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Pulling Docker container image, this could take a few minutes to complete...\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.480Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Finished pulling Docker container image\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.859Z",
+    "output": "\u001b[1m\u001b[33mcontainer@pterodactyl~ \u001b[0mjava -version"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.916Z",
+    "output": "openjdk version \"1.8.0_312\""
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.918Z",
+    "output": "OpenJDK Runtime Environment (Temurin)(build 1.8.0_312-b07)"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.919Z",
+    "output": "OpenJDK 64-Bit Server VM (Temurin)(build 25.312-b07, mixed mode)"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.924Z",
+    "output": "\u001b[1m\u001b[33mcontainer@pterodactyl~ \u001b[0mjava --add-modules=jdk.incubator.vector -Xms128M -Xmx1024M -Dterminal.jline=false -Dterminal.ansi=true -jar server.jar"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.928Z",
+    "output": "Unrecognized option: --add-modules=jdk.incubator.vector"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.930Z",
+    "output": "Error: Could not create the Java Virtual Machine."
+  },
+  {
+    "timestamp": "2024-02-16T21:06:51.932Z",
+    "output": "Error: A fatal exception has occurred. Program will exit."
+  },
+  {
+    "timestamp": "2024-02-16T21:06:52.289Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m ---------- Detected server process in a crashed state! ----------\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:52.292Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Exit code: 1\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:52.294Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Out of memory: false\u001b[0m"
+  },
+  {
+    "timestamp": "2024-02-16T21:06:52.296Z",
+    "output": "\u001b[33m\u001b[1m[Pterodactyl Daemon]:\u001b[39m Aborting automatic restart, last crash occurred less than 60 seconds ago.\u001b[0m"
+  }
+]

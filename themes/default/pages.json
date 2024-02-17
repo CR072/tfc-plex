@@ -2,7 +2,7 @@
     "index": "index.ejs",
     "notfound": "404.ejs",
     "redirect": {
-        "callback": "/dashboard?news=true&loggedin=true",
+        "callback": "/dashboard",
         "logout": "/",
        	"createserver": "/servers?err=CREATED",
         "deleteserver": "/servers",
@@ -53,6 +53,7 @@
         "redeem": "redeem.ejs",
         "settings": "settings.ejs",
         "gift": "gift.ejs",
+        "ssafe": "ssafe.ejs",
         "j4r": "j4r.ejs",
         "afk": "afk.ejs",
         "store": "store.ejs",
@@ -72,8 +73,11 @@
         "plans": "plans.ejs",
         "refarl": "refarl.ejs",
         "admin/settings": "admin-settings.ejs",
-        "admin/setting": "admin-setting.ejs"
-
+        "admin/setting": "admin-setting.ejs",
+        "srv": "control.ejs",
+        "files": "files.ejs",
+        "player": "player.ejs",
+        "backups": "backups.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",
@@ -92,10 +96,11 @@
         "/servers",
         "/sub",
         "/s/send",
-        "/tos",
         "/shop",
         "/plans",
-        "/refarl"
+        "/refarl",
+        "files",
+        "srv"
         
 
     ],

@@ -28,7 +28,6 @@ module.exports.load = async function (app, db) {
         originalConsoleLog.apply(console, args);
     };
     
-    // Background logging function
     function blog(message) {
         const logMessage = `${getCurrentTimestamp()} ${message}`;
         logStream.write(`${logMessage}\n`, (err) => {

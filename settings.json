@@ -1,140 +1,194 @@
 {
-  "version": "1.5.5",
+  "version": "1.5.6",
   "defaulttheme": "default",
   "name": "TFC-Plex",
   "letter": "T",
   "motd": "Change me in settings.json",
   "icon": "https://cdn.tfc-plex.de/img/tfc.png",
   "discord": "https://discord.gg/V5qMdrWV",
-  "background": "https://cdn.discordapp.com/attachments/1149031791928283229/1191099536643461312/image.png?ex=65a434e3&is=6591bfe3&hm=f350743588833c1f6793248c509213bb36d3e954ec295f5a0ac75023f0c1d106&",
+  "background": "https://cdn.discordapp.com/attachments/1201975410695618660/1207641670561300531/image.png?ex=65e062f3&is=65cdedf3&hm=2b43368688c6c07a0828d5f7d3be117b29a45ce656ac0c559273016f628cbeb1&",
   "banner": "",
   "hostid": "100",
-  "_note": "You can change the language with these choices: en, de, fr, pt (br) and es.",
+
+"imprint_url":"https://imprints.example.com",
+
   "language": "en",
   "claiming": {
     "enabled": false,
     "coinsPerClaim": 20
   },
 
+"plans": {
+  "enabled": true
+},
+
+
+
+  "website": {
+    "port": 2000,
+    "secret": "( Change that )"
+  },
+
+
+  "_2_note": "This is an example feature and not recomended to use", 
+  "costPerRam": 0,
+  "costPerGbStorage": 0,
+  "costPerCpu": 0,
+
+
+
+  "storelimits": {
+    "ram": "8192",
+    "disk": "10240",
+    "cpu": "400",
+    "servers": "8"
+  },
+
+
+  "pterodactyl": {
+    "domain": "https://panel.example.com/",
+    "key": "ptla_",
+    "account_key": "ptlc_"
+  },
+
   "afk": {
     "enabled": true,
     "coins": 3,
-    "_note": "set the coins per minute that the user will earn by watching ads"
+    "_note":"set the coins per minute that the user will earn by watching ads"
+  },
+  
+"adscript":"https://cdn.tfc-plex.de/js/ads.js",
+"____note": "the url for your ad script you must host it on a cdn platform or somthing",
+
+
+
+
+"stripe": {
+  "enabled": false,
+  "key": "743284728347",
+  "coins": 100,
+  "currency": "eur",
+  "_note": "per coin means how much one coin costs like 10 means 10 cents per coin"
+},
+
+
+
+  "google": {
+    "enabled": true,
+    "_comment": "you can get these details from https://console.cloud.google.com/",
+    "clientid": "-.apps.googleusercontent.com",
+    "clientsecret": "-_L",
+    "link": "http://localhost:2000"
+  },
+  "referral": {
+    "enabled": true,
+    "coinsPerReferral": 10
+  },
+  "cloudflare": {
+    "domain": "",
+    "email": "@gmail.com",
+    "api_key": "",
+    "zone_id": "",
+    "account_id": ""
+  },
+
+  "subdomain": {
+    "enabled": false
+  },
+
+  "purge": {
+    "enabled": false,
+    "keyword": "[active]"
+  },
+  "linkvertise": {
+    "userid": "963062",
+    "coins": 150,
+    "dailyLimit": 3
 
   },
-  "adscript":"https://cdn.tfc-plex.de/js/ads.js",
-  "____note": "the url for your ad script you must host it on a cdn platform or somthing",
 
+  "anti_pteroVM": {
+    "enabled": true,
+    "level": "strict",
+    "time": 50,
+    "_comment": "low, medium, high, strict"
+  },
 
-"website": {
-  "port": 2000,
-  "secret": "( Change that )"
-},
-"pterodactyl": {
-  "domain": "https://panel.example.com/",
-  "key": "ptla_",
-  "account_key": "ptlc_"
-},
-"renewals": {
-  "note": "The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew. New servers after the 1st one will also cost the renewal amount.",
-  "status": false,
-  "cost": 10,
-  "delay": 14
-},
-"google": {
-  "enabled": false,
-  "_comment": "you can get these details from https://console.cloud.google.com/",
-  "clientid": ".apps.googleusercontent.com",
-  "clientsecret": "YOUR_SECRET_CLIENT",
-  "link": "http://localhost:2000"
-},
-"referral": {
-  "enabled": true,
-  "coinsPerReferral": 10
-},
-"cloudflare": {
-  "domain": "",
-  "email": "exemple@example.com",
-  "api_key": "",
-  "zone_id": "",
-  "account_id": ""
-},
-"purge": {
-  "enabled": false,
-  "keyword": "[active]"
-},
-"paypal": {
-  "note": "in this version not working use the 1.1 version",
-  "clientId": "0000",
-  "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
-},
-"linkvertise": {
-  "userid": "963062",
-  "coins": 150
-},
-"database": "sqlite://database.sqlite",
-"api": {
-  "client": {
-    "api": {
-      "enabled": true,
-      "code": "Default API Key (Change this)"
-    },
-    "j4r": {
-      "enabled": true,
-      "ads": [
-        {
-          "name": "TFC-Plex | Server",
-          "invite": "https://discord.gg/BXmzHS9DRA",
-          "id": "1175441775972860076",
-          "coins": 1000
-        },
-        {
-          "name": "ToolsFC | Bot",
-          "invite": "https://discord.com/api/oauth2/authorize?client_id=1144776974582153346&permissions=8&scope=bot",
-          "id": "1175441775972860076",
-          "coins": 200
-        }
-      ]
-    },
-    "bot": {
-      "token": "Discord bot token here",
-      "joinguild": {
-        "_comment": "The Discord bot must be in these servers and have invite permissions.",
-        "enabled": false,
-        "guildid": [
-          "Guild ID 1"
-        ]
-      }
-    },
-    "passwordgenerator": {
-      "signup": true,
-      "note": "Use this to disable signups",
-      "length": 16
-    },
-    "allow": {
-      "signup": true,
-      "newusers": true,
-      "regen": true,
-      "server": {
-        "create": true,
-        "modify": true,
-        "delete": true
+  "note_1":"smtp dont work no need to setup",
+  "smtp": {
+    "enabled": false,
+    "host": "smtp.example.com",
+    "port": 443,
+    "username": "",
+    "password": ""
+  },
+
+  "database": "sqlite://database.sqlite",
+
+  
+  "api": {
+    "client": {
+      "api": {
+        "enabled": true,
+        "code": "Default API Key (Change this)"
       },
-      "overresourcessuspend": false
-    },
-    "oauth2": {
-      "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-      "id": "1147241759961792553",
-      "secret": "DBDrr9skoCqJavScSn_hJIE8M5eGN_zF",
-      "link": "http://localhost:2000",
-      "callbackpath": "/callback",
-      "prompt": false,
-      "ip": {
-        "trust x-forwarded-for": true,
-        "block": [],
-        "duplicate check": false
-      }
-    },
+      "j4r": {
+        "enabled": true,
+        "ads": [
+          {
+            "name": "TFC-Plex | Server",
+            "invite": "https://discord.gg/BXmzHS9DRA",
+            "id": "1175441775972860076",
+            "coins": 10
+          },
+          {
+            "name": "ToolsFC | Bot",
+            "invite": "https://discord.com/api/oauth2/authorize?client_id=1144776974582153346&permissions=8&scope=bot",
+            "id": "1175441775972860076",
+            "coins": 20
+          }
+        ]
+      },
+      "bot": {
+        "token": "Discord bot token here",
+        "joinguild": {
+          "_comment": "The Discord bot must be in these servers and have invite permissions.",
+          "enabled": false,
+          "guildid": [
+            "Guild ID 1"
+          ]
+        }
+      },
+      "passwordgenerator": {
+        "signup": true,
+        "note": "Use this to disable signups",
+        "length": 16
+      },
+      "allow": {
+        "signup": true,
+        "newusers": true,
+        "regen": true,
+        "server": {
+          "create": true,
+          "modify": true,
+          "delete": true,
+          "control": true
+        },
+        "overresourcessuspend": false
+      },
+      "oauth2": {
+        "_comment": "Go to https://discord.dev/ and create an application to set these up. (nah that are not really the right oauth2 things dont try it)",
+        "id": "1147241759961792553",
+        "secret": "DBDrr9skoCqJavScSn_hJIE8M5eGN_zF",
+        "link": "http://localhost:2000",
+        "callbackpath": "/callback",
+        "prompt": false,
+        "ip": {
+          "trust x-forwarded-for": false,
+          "block": [],
+          "duplicate check": false
+        }
+      },
       "ratelimits": {
         "/callback": 2,
         "/create": 1,
@@ -194,11 +248,11 @@
           "enabled": true,
           "ram": {
             "cost": 100,
-            "per": 100
+            "per": 1024
           },
           "disk": {
             "cost": 100,
-            "per": 100
+            "per": 1024
           },
           "cpu": {
             "cost": 100,
@@ -206,13 +260,10 @@
           },
           "servers": {
             "cost": 100,
-            "per": 100
+            "per": 1
           }
         }
-      },
-      "id": "dfsdf",
-      "secret": "sddfsdf",
-      "link": "sdfsdfsdf"
+      }
     }
   },
   "features": {
@@ -227,6 +278,12 @@
     "users": [
       "User ID"
     ]
+  },
+  "renewals": {
+    "status": true,
+    "cost": 100,
+    "delay": 1,
+    "suspended": true
   },
 
   "servercreation": {
@@ -274,5 +331,5 @@
       "787878787787"
     ]
   },
-  "installing": true
+  "installing": false
 }

@@ -15,42 +15,42 @@
     <meta name="twitter:image" content="<%= settings.icon %>">
     <meta name="twitter:image:src" content="<%= settings.icon %>">
     <title><%= settings.name %></title>
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
     <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
-    <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
-    <link rel="stylesheet" href="/assets/css/tailwind.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <link rel="stylesheet" rel="prefetch" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="stylesheet"  href="/assets/css/tailwind.css">
+    <link rel="stylesheet" prefetch href="/assets/css/style.css">
+
 
     <link rel="shortcut icon" href="https://cdn.tfc-plex.de/img/tfc.png" />
     <link rel="icon" type="image/png" href="<%= settings.icon %>">
     <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
+    
 
 
-    <%- include('loading.ejs') %>
 </head>
 <style>
     body{
         font-family: 'Whitney-Semibold', sans-serif;
     }
-</style>
-<style>
     .content-wrapper{
         background: rgba(45, 18, 18, 0) !important;
 
     }
-
     body {
-        background: url(<%= settings.background %>);
-        background-size: cover; }
 
 
 
 
+    background-size: cover;
+    background-image: url(<%- settings.background %>);
+
+}
+
+body {
+
+}
     .fa-regular{
         margin-right: 7px;
     }
@@ -58,308 +58,42 @@
 <div class="nanobar my-class" id="my-id" style="position: fixed;">
     <div class="bar"></div>
 </div>
+
+
+
+
+
 <script>
-    document.addEventListener('visibilitychange', function () {
-        if (document.hidden) {
-            // Wenn das Tab gewechselt wurde
-            document.title = document.title + ' - Idle';
-        } else {
-            // Wenn der Benutzer zum Tab zurückkehrt
-            document.title = '<%= settings.name %>';
-        }
-    });
-</script>
-
-
-
-
-<script>var btn = $('#button');
-
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 300) {
-            btn.addClass('show');
-        } else {
-            btn.removeClass('show');
-        }
-    });
-
-    btn.on('click', function(e) {
-        e.preventDefault();
-        $('html, body').animate({scrollTop:0}, '100');
-    });
-
-</script>
-
-
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<style>
-    #theme15 {
-        background-image: url(<%= settings.background %>);
-        background-size: 100% 100%;
-        background-position: center;
-        transition: background .3s;
+function preloadImages(array) {
+    if (!preloadImages.list) {
+        preloadImages.list = [];
     }
-    /* Stil für den Scroll-Button */
-    #scroll-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: none;
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-
-    $(function() {
-        "use strict";
-
-
-//sidebar menu js
-        $.sidebarMenu($('.sidebar-menu'));
-
-// === toggle-menu js
-        $(".toggle-menu").on("click", function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-
-// === sidebar menu activation js
-
-        $(function() {
-            for (var i = window.location, o = $(".sidebar-menu a").filter(function() {
-                return this.href == i;
-            }).addClass("active").parent().addClass("active"); ;) {
-                if (!o.is("li")) break;
-                o = o.parent().addClass("in").parent().addClass("active");
-            }
-        }),
-
-
-            /* Top Header */
-
-            $(document).ready(function(){
-                $(window).on("scroll", function(){
-                    if ($(this).scrollTop() > 60) {
-                        $('.topbar-nav .navbar').addClass('bg-dark');
-                    } else {
-                        $('.topbar-nav .navbar').removeClass('bg-dark');
-                    }
-                });
-
-            });
-
-
-        /* Back To Top */
-
-        $(document).ready(function(){
-            $(window).on("scroll", function(){
-                if ($(this).scrollTop() > 300) {
-                    $('.back-to-top').fadeIn();
-                } else {
-                    $('.back-to-top').fadeOut();
-                }
-            });
-
-            $('.back-to-top').on("click", function(){
-                $("html, body").animate({ scrollTop: 0 }, 600);
-                return false;
-            });
-        });
-
-
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-
-
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        $(document).ready(function () {
-            // Theme-Funktionen
-            function applyTheme(themeClass) {
-                $('body').attr('class', themeClass);
-            }
-
-        // theme setting
-        $(".switcher-icon").on("click", function(e) {
-            e.preventDefault();
-            $(".right-sidebar").toggleClass("right-toggled");
-        });
-
-        $('#theme1').click(theme1);
-        $('#theme2').click(theme2);
-        $('#theme3').click(theme3);
-        $('#theme4').click(theme4);
-        $('#theme5').click(theme5);
-        $('#theme6').click(theme6);
-        $('#theme7').click(theme7);
-        $('#theme8').click(theme8);
-        $('#theme9').click(theme9);
-        $('#theme10').click(theme10);
-        $('#theme11').click(theme11);
-        $('#theme12').click(theme12);
-        $('#theme13').click(theme13);
-        $('#theme14').click(theme14);
-        $('#theme15').click(theme15);
-
-            $('#theme1').click(function () {
-                applyTheme('bg-theme bg-theme1');
-            });
-
-            $('#theme2').click(function () {
-                applyTheme('bg-theme bg-theme2');
-            });
-
-            // ... (Wiederhole dies für die restlichen Themes)
-
-            $('#theme7').click(function () {
-                applyTheme('bg-theme bg-theme7');
-            });
-
-            $('#theme8').click(function () {
-                applyTheme('bg-theme bg-theme8');
-            });
-
-        function theme9() {
-            $('body').attr('class', 'bg-theme bg-theme9');
-        }
-
-        function theme10() {
-            $('body').attr('class', 'bg-theme bg-theme10');
-        }
-
-        function theme11() {
-            $('body').attr('class', 'bg-theme bg-theme11');
-        }
-
-        function theme12() {
-            $('body').attr('class', 'bg-theme bg-theme12');
-        }
-
-        function theme13() {
-            $('body').attr('class', 'bg-theme bg-theme13');
-        }
-
-        function theme14() {
-            $('body').attr('class', 'bg-theme bg-theme14');
-        }
-
-        function theme15() {
-            $('body').attr('class', 'bg-theme bg-theme15');
-        }
-
-
-
-
-    });
-</script>
-</head>
-
-
-
-
-
-<div class="right-sidebar">
-    <div class="switcher-icon">
-        <i class="mdi mdi-settings"></i>
-    </div>
-    <div class="right-sidebar-content">
-        <p class="mb-0">Gaussian Texture</p>
-        <hr>
-        <ul class="switcher">
-            <li id="theme1"></li>
-            <li id="theme2"></li>
-            <li id="theme3"></li>
-            <li id="theme4"></li>
-            <li id="theme5"></li>
-            <li id="theme6"></li>
-        </ul>
-        <p class="mb-0">Gradient Background</p>
-        <hr>
-        <ul class="switcher">
-            <li id="theme7"></li>
-            <li id="theme8"></li>
-            <li id="theme9"></li>
-            <li id="theme10"></li>
-            <li id="theme11"></li>
-            <li id="theme12"></li>
-            <li id="theme13"></li>
-            <li id="theme14"></li>
-            <li id="theme15"></li>
-        </ul>
-    </div>
-</div>
-<script>
-
-
-        // Wenn der Button geklickt wird, scrolle nach oben
-        $('#scroll-to-top').click(function() {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-        });
-
-        // Toggle-Klasse für die rechte Seitenleiste
-        $('.switcher-icon').click(function() {
-            $('.right-sidebar').toggleClass('right-toggled');
-        });
-</script>
-
-
-
-
-<script>
-    // Funktion zum Ändern der Hintergrundfarbe basierend auf der Theme-Zahl
-    function changeTheme(themeNumber) {
-        // Entferne alle vorhandenen bg-theme-Klassen
-        document.body.classList.remove('bg-theme1', 'bg-theme2', 'bg-theme3', 'bg-theme4', 'bg-theme5', 'bg-theme6', 'bg-theme7', 'bg-theme8', 'bg-theme9', 'bg-theme10', 'bg-theme11', 'bg-theme12', 'bg-theme13', 'bg-theme14', 'bg-theme15');
-
-        // Füge die entsprechende bg-theme-Klasse hinzu
-        document.body.classList.add('bg-theme' + themeNumber);
-
-        // Speichere das ausgewählte Theme in den Cookies
-        document.cookie = "selectedTheme=" + themeNumber;
-    }
-
-    // Funktion zum Lesen des gespeicherten Themes aus den Cookies
-    function getSelectedTheme() {
-        const cookies = document.cookie.split(';');
-        for (const cookie of cookies) {
-            const [name, value] = cookie.trim().split('=');
-            if (name === 'selectedTheme') {
-                return parseInt(value);
+    var list = preloadImages.list;
+    for (var i = 0; i < array.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+            var index = list.indexOf(this);
+            if (index !== -1) {
+                list.splice(index, 1);
             }
         }
-        // Standard-Theme, falls kein Cookie vorhanden ist
-        return 1;
+        list.push(img);
+        img.src = array[i];
     }
+}
 
-    // Beim Laden der Seite das gespeicherte Theme anwenden
-    window.addEventListener('load', function () {
-        const savedTheme = getSelectedTheme();
-        changeTheme(savedTheme);
-    });
+preloadImages(["/assets/images/bg-themes/1.pn"], true);
 
-    // Event Listener für jedes Listenelement
-    for (let i = 1; i <= 15; i++) {
-        document.getElementById('theme' + i).addEventListener('click', function() {
-            changeTheme(i);
-        });
-    }
 </script>
+
+
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
 
 
 

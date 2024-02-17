@@ -12,7 +12,7 @@
       "content": "message"
     },
     {
-      "toUserId": "Benutzer2",
+      "toUserId": "user2",
       "fromUser": "Admin",
       "content": "message"
     }

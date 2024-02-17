@@ -2,28 +2,28 @@ const settings = require("../../settings.json");
 const { CronJob } = require('cron')
 const getAllServers = require('../../misc/getAllServers')
 const fetch = require('node-fetch')
+const chalk = require('chalk')
 
 module.exports.load = async function (app, db) {
 
+    app.get(`/api/renewalstatus`, async (req, res) => {
+        if (!settings.renewals.status) return res.json({ error: true })
+        if (!req.query.id) return res.json({ error: true })
+        if (!req.session.pterodactyl) res.json({ error: true })
+        if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.json({ error: true });
 
-        app.get(`/api/renewalstatus`, async (req, res) => {
-            if (!settings.renewals.status) return res.json({ error: true })
-            if (!req.query.id) return res.json({ error: true })
-            if (!req.session.pterodactyl) res.json({ error: true })
-            if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.json({ error: true });
-    
-            const lastRenew = await db.get(`lastrenewal-${req.query.id}`)
-            if (!lastRenew) return res.json({ text: 'Disabled' })
-    
-            if (lastRenew > Date.now()) return res.json({ text: 'Renewed', success: true })
-            else {
-                if ((Date.now() - lastRenew) > (settings.renewals.delay * 86400000)) {
-                    return res.json({ text: 'Last chance to renew!', renewable: true })
-                }
-                const time = msToDaysAndHours((settings.renewals.delay * 86400000) - (Date.now() - lastRenew))
-                return res.json({ text: time, renewable: true })
+        const lastRenew = await db.get(`lastrenewal-${req.query.id}`)
+        if (!lastRenew) return res.json({ text: 'Disabled' })
+
+        if (lastRenew > Date.now()) return res.json({ text: 'Renewed', success: true })
+        else {
+            if ((Date.now() - lastRenew) > (settings.renewals.delay * 86400000)) {
+                return res.json({ text: 'Last chance to renew!', renewable: true })
             }
-        })
+            const time = msToDaysAndHours((settings.renewals.delay * 86400000) - (Date.now() - lastRenew))
+            return res.json({ text: time, renewable: true })
+        }
+    })
 
     app.get(`/renew`, async (req, res) => {
         if (!settings.renewals.status) return res.send(`Renewals are currently disabled.`)
@@ -41,7 +41,7 @@ module.exports.load = async function (app, db) {
 
         if (settings.renewals.cost > coins) return res.redirect(`/dashboard` + "?err=CANNOTAFFORDRENEWAL")
 
-        await db.set("coins-" + req.session.userinfo.id, coins - settings.renewals.cost)
+        await db.set("coins-" + req.session.userinfo.email, coins - settings.renewals.cost)
 
         const newTime = lastRenew + (settings.renewals.delay * 86400000)
         await db.set(`lastrenewal-${req.query.id}`, newTime)
@@ -83,7 +83,35 @@ module.exports.load = async function (app, db) {
         .start()
 
 };
+return new Promise(async (resolve) => {
 
+    const allServers = []
+
+    async function getServersOnPage(page) {
+        return (await fetch(
+            settings.pterodactyl.domain + "/api/application/servers/?page=" + page,
+            {
+                headers: {
+                    "Authorization": `Bearer ${settings.pterodactyl.key}`
+                }
+            }
+        )).json();
+    };
+
+    let currentPage = 1
+    while (true) {
+        const page = await getServersOnPage(currentPage)
+        allServers.push(...page.data)
+        if (page.meta.pagination.total_pages > currentPage) {
+            currentPage++
+        } else {
+            break
+        }
+    }
+
+    resolve(allServers)
+
+})
 function msToDaysAndHours(ms) {
     const msInDay = 86400000
     const msInHour = 3600000

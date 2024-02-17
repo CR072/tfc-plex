@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Saver</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #111827, #1f2937);
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .clock {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 6rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .datetime {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* Tailwind CSS Overrides */
+        .clock {
+            @apply text-green-500; /* Verwende Tailwind CSS Klassen */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Helle Textschatten */
+        }
+
+        .datetime {
+            @apply text-green-300; /* Verwende Tailwind CSS Klassen */
+        }
+
+        /* Textmarkierung */
+        ::selection {
+            background-color: rgba(255, 255, 255, 0); /* Transparente Hintergrundfarbe */
+            color: greenyellow;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hauptinhalt -->
+    <div class="wrapper">
+        <div class="clock" id="clock"></div>
+        <div class="datetime" id="datetime"></div>
+    </div>
+    <!-- Support-Box -->
+    <div id="support-box" class="support-box">
+        <div class="chat-container" id="chat-container">
+            <div class="chat-log" id="chat-log"></div>
+            <input type="text" id="user-input" class="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()" class="send-btn">Send</button>
+        </div>
+    </div>
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+            document.getElementById('clock').textContent = timeString;
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var dateString = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+            document.getElementById('datetime').textContent = dateString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call to display time immediately
+        function sendMessage() {
+    var userInput = document.getElementById('user-input').value;
+    if (userInput.trim() !== '') {
+        appendMessage('user', userInput);
+        // Hier können Sie die Nachricht an den Node.js-Server senden, um die Antwort zu erhalten
+        // Beispiel: fetch('/chatbot', { method: 'POST', body: JSON.stringify({ message: userInput }) })
+        //   .then(response => response.json())
+        //   .then(data => appendMessage('bot', data.response));
+        document.getElementById('user-input').value = ''; // Leeren Sie das Eingabefeld nach dem Senden der Nachricht
+    }
+}
+
+// Funktion zum Hinzufügen einer Nachricht zum Chat-Protokoll
+function appendMessage(sender, message) {
+    var chatLog = document.getElementById('chat-log');
+    var messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    messageElement.textContent = message;
+    chatLog.appendChild(messageElement);
+    // Scrollen Sie automatisch nach unten, um die neueste Nachricht anzuzeigen
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

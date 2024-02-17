@@ -1,4 +1,5 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <div id="UwU">
     <div style="background: #0b0b0fbf;" class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
       <img src="<%= settings.icon %>" style="margin-left: 20px" width="64px" alt=" ">
         <a style="color: white" class="sidebar-brand brand-logo" href="/dashboard">
@@ -28,12 +29,15 @@
           <li class="nav-item nav-category">
             <span class="nav-link text-white"><h4>Economy</h4></span>
           </li>
-<!--
+
+
+
+          <% if (settings.stripe.enabled==true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../shop">
-          <span class="menu-title"><i class="fa-regular fa-wallet"></i>Shop</span>
+          <span class="menu-title"><i class="fa-regular fa-wallet"></i> Shop</span>
         </a>
--->
+        <% } %>
 
 
 
@@ -41,13 +45,13 @@
 
 
 
-
-  <!--<li class="nav-item menu-items" id="plansLink">
+        <% if (settings.plans.enabled==true) { %>
+<li class="nav-item menu-items" id="plansLink">
     <a class="nav-link" href="../plans">
       <span class="menu-title"><i class="fa-regular fa-microchip"></i> Plans</span>
     </a>
-  </li>-->
-
+  </li>
+  <% } %>
   <li class="nav-item menu-items" id="storeLink">
     <a class="nav-link" href="../store">
       <span class="menu-title"><i class="fa-regular fa-microchip"></i> <%= lang.store %></span>
@@ -66,12 +70,8 @@
 
 
 
-      <!--
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="../afk">
-          <span class="menu-title">AFK Page</span>
-        </a>
-      </li>-->
+
+
 
 
 
@@ -85,6 +85,13 @@
                         <a class="nav-link" href="../lv">
                             <span class="menu-title"><i class="fa-regular fa-coins"></i> Linkvertise</span>
                         </a>
+                    </li>
+                    <li class="nav-item menu-items" id="afk">
+                       <a class="nav-link" onclick="if (confirm('are You +18 ? the content displayd on the next site is maybe not minors convort')) { window.location.href='../afk' }">
+                        <span class="menu-title"><i class="fa-regular fa-coins"></i> AFK Page</span>
+                       </a>
+
+                      </a>
                     </li>
 
                     <li class="nav-item menu-items">
@@ -137,6 +144,21 @@
                     <span class="menu-title"><i class="fa-regular fa-gear"></i> Control Panel</span>
                 </a>
             </li>
+
+            <li class="nav-item menu-items">
+              <a class="nav-link" href="https://tfc-plex.de/premium.html">
+                  <span class="menu-title"><i class="fa-regular fa-sparkles text-warning"></i> TFC Premium?</span>
+              </a>
+          </li>
+
         <% } %>
       </ul>
+    </div>
     </nav>
+    <style>
+      #UwU {
+        position: fixed;
+        top: 0;
+      }
+    </style>
+    

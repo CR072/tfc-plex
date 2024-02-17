@@ -1,3 +1,4 @@
+<%- include('loading.ejs') %>
 <!DOCTYPE html>
 <html lang="en">
   <%- include('./components/head') %>
@@ -24,7 +25,7 @@
                                   <a class=" bg-primary p-2 mr-2 d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../servers/new">
                                       <i class="fa-solid fa-plus"></i>
                                   </a>
-
+                                  <% if (settings.subdomain.enabled==true) { %>
                               <a class=" bg-primary p-2 mr-2 d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../sub">
                                   <?xml version="1.0" encoding="UTF-8"?>
                                   <svg width="16px" height="16px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -38,6 +39,7 @@
                                       </g>
                                   </svg>
                               </a>
+                              <% } %>
                               <a class=" bg-success p-2  d-flex justify-content-center text-decoration-none" style=" border-radius: 55px; font-size: 16px; color: white;" href="../updateinfo">
                                   <i class="fa-solid fa-arrows-rotate-reverse"></i>
                               </a>
@@ -46,7 +48,6 @@
                       </div>
                   </div>
               </div>
-
 
 
 
@@ -74,13 +75,15 @@
                         
                         <div class="dropdown float-right">
                           <button class="btn bg-transparent text-right" type="button" id="serverActionsDropdown<%= i %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-dots-horizontal"></i>
+                            <i class="fa-solid fa-ellipsis fa-2x"></i>
                           </button>
                           <div class="dropdown-menu bg-dark text-white" aria-labelledby="serverActionsDropdown<%= i %>">
                             <a class="dropdown-item text-white" onclick="if (confirm('<%= lang.delete_server_confirm %>')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><%= lang.delete %></a>
                             <a class="dropdown-item text-white" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"><%= lang.edit %></a>
-                            <a class="dropdown-item text-white" onclick="if (confirm('<%= lang.renew_server_confirm %>')) { window.location.href='/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><%= lang.renew %></a>
-                            <a class="dropdown-item text-white" href="<%= settings.pterodactyl.domain.replace(/\/$/, '') %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank"><%= lang.control %></a>
+                            <% if (settings.renewals.status==true) { %>
+                            <a class="dropdown-item text-white" onclick="if (confirm('Do you really want to renew this server for <%= settings.renewals.delay %> days? This will cost <%= settings.renewals.cost %> coins.')) { window.location.href='/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><%= lang.renew %></a>
+                            <% } %>
+                            <a class="dropdown-item text-white" href="/srv?id=<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>">Control</a>
                            
                           </div>
                           <p> <span id="serverStatus<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>">Loading...</span></p>
@@ -90,19 +93,19 @@
                         <div class="row mt-4">
                           <div class="mr-2 mb-3" >
                             <div class="card-body">
-                              <h5 class="card-title"><i class="mdi mdi-memory"></i> CPU</h5>
+                              <h5 class="card-title"><i class="fa fa-microchip"></i> CPU</h5>
                               <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %> Core/s</p>
                             </div>
                           </div>
                           <div class="mr-3 mb-3" >
                             <div class="card-body">
-                              <h5 class="card-title"><i class="mdi mdi-layers"></i> RAM</h5>
+                              <h5 class="card-title"><i class="fa fa-memory"></i> RAM</h5>
                               <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GB/s</p>
                             </div>
                           </div>
                           <div class="mb-3">
                             <div class="card-body">
-                              <h5 class="card-title"><i class="mdi mdi-harddisk"></i> Disk</h5>
+                              <h5 class="card-title"><i class="fa fa-hdd"></i> Disk</h5>
                               <p class="card-text"><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GB/s</p>
                             </div>
                           </div>
@@ -158,12 +161,11 @@
                             .then(response => response.json())
                             .then(data => {
                                 // Extract only the hours from the response
-                                const hours = Math.floor(parseFloat(data.text.split(' ')[0]));
             
                                 // Update the DOM with the server ID and renewal time
                                 const serverElement = document.getElementById(`server<%= pterodactyl.relationships.servers.data[i].attributes.id %>`);
                                 if (serverElement) {
-                                    const expirationText = isNaN(hours) ? "N/A" : `${hours} days`;
+                                    const expirationText = data.text;
                                     serverElement.innerHTML += `  Expire in: ${expirationText}`;
                                 }
                             })

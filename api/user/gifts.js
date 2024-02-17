@@ -1,9 +1,14 @@
 const indexjs = require("../../index.js");
 const fs = require("fs");
 const moment = require("moment");
+const csrf = require("csurf"); // Modul für CSRF-Schutz
+
 const lastClaimed = {};
 
 module.exports.load = async function (app, db) {
+    // Initialisiere CSRF-Schutz
+    const csrfProtection = csrf({ cookie: true });
+
     app.get("/christmas/gifts", async (req, res) => {
         if (!req.session.pterodactyl) return res.redirect("/login");
 
@@ -11,7 +16,9 @@ module.exports.load = async function (app, db) {
         let gifts = await db.get("gifts-" + req.session.userinfo.id) || 0;
         res.render(`../themes/${theme.name}/christmas.ejs`, { gifts: gifts });
     });
-    app.get("/claim-gift", async (req, res) => {
+
+    // Füge csrfProtection als Middleware hinzu
+    app.get("/claim-gift", csrfProtection, async (req, res) => {
         if (!req.session.pterodactyl) {
             return res.redirect("/login");
         }

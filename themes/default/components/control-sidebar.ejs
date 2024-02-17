@@ -1,0 +1,53 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div style="background: #0b0b0fbf;" class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+      <img src="<%= settings.icon %>" style="margin-left: 20px" width="64px" alt=" ">
+      <a style="color: white" class="sidebar-brand brand-logo" href="/dashboard">
+        <%= settings.name %>
+      </a>
+    </div>
+    <ul class="nav">
+      <li class="nav-item nav-category">
+        <span class="nav-link text-white"><h4>Control</h4></span>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="../srv?id=">
+          <span class="menu-title"><i class="fa-regular fa-rectangle-terminal"></i> Console</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="../files?id=">
+          <span class="menu-title"><i class="fa-regular fa-folder-open"></i> Files</span>
+        </a>  
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="../servers">
+            <span class="menu-title"><i class="fa-regular fa-grid-2"></i> Your Servers</span>
+        </a>
+    </li>
+    </ul>
+  </nav>
+  
+  <script>
+    // JavaScript code to extract the 'id' from the URL and update links
+    window.addEventListener('load', function () {
+      const currentPageId = getParameterByName('id');
+      const consoleLink = document.querySelector('.nav-item.menu-items a[href="../srv?id="]');
+      const filesLink = document.querySelector('.nav-item.menu-items a[href="../files?id="]');
+  
+      if (consoleLink && filesLink) {
+        consoleLink.href = `../srv?id=${currentPageId}`;
+        filesLink.href = `../files?id=${currentPageId}`;
+      }
+    });
+  
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+  </script>
+  

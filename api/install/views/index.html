@@ -73,6 +73,7 @@
           </div>
 
           <button type="button" class="software-item text-white" onclick="nextStep('step2', 'step3')">Next</button>
+          <button type="button" class="software-item text-white" onclick="prevStep('step2', 'step1')">Back</button>
         </div>
 
         <!-- Step 3 -->
@@ -86,64 +87,170 @@
           </div>
 
           <button type="button" class="software-item text-white" onclick="nextStep('step3', 'step4')">Next</button>
+          <button type="button" class="software-item text-white" onclick="prevStep('step3', 'step2')">Back</button>
         </div>
 
         <!-- Step 4 -->
         <div class="step hidden" id="step4">
-          <div class="form-group">
-            <input type="text" class="software-item text-white" id="pterodactyl_domain" name="pterodactyl_domain" placeholder="Pterodactyl Domain" required>
+          <div class="mb-3">
+              <label for="pterodactyl_domain" class="form-label">Pterodactyl Domain</label>
+              <input type="url" class="form-control" id="pterodactyl_domain" name="pterodactyl_domain" required>
           </div>
 
-          <div class="form-group">
-            <input type="text" class="software-item text-white cours" id="pterodactylkey" name="pterodactyl_key" placeholder="API Key" required>
+          <div class="mb-3">
+              <label for="pterodactylkey" class="form-label">API Key</label>
+              <input type="text" class="form-control" id="pterodactylkey" name="pterodactyl_key" required>
           </div>
 
-          <div class="form-group">
-            <input type="text" class="software-item text-white cours" id="accountKey" name="pterodactyl_account_key" placeholder="Admin Acount Key" required>
+          <div class="mb-3">
+              <label for="accountKey" class="form-label">Admin Account Key</label>
+              <input type="text" class="form-control" id="accountKey" name="pterodactyl_account_key" required>
           </div>
 
-          
+          <button type="button" class="btn btn-primary" onclick="validateStep4()">Next ➜</button>
+          <button type="button" class="btn btn-secondary" onclick="prevStep('step4', 'step3')">Back</button>
 
-          <button type="button" class="software-item text-white" onclick="nextStep('step4', 'step5')">Next</button>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="step card hidden" id="step5">
-            <div class="form-group">
-              <input type="text" class="software-item text-white" id="oauth2_id" name="oauth2[id]" placeholder="OAuth2 ID" required>
-            </div>
-          
-            <div class="form-group">
-              <input type="text" class="software-item text-white cours" id="oauth2_secret" name="oauth2[secret]" placeholder="OAuth2 Secret" required>
-            </div>
-          
-            <div class="form-group">
-              <input type="text" class="software-item text-white cours" id="oauth2_link" name="oauth2[link]" placeholder="OAuth2 Link" required>
-            </div>
-
-          
-            <button type="submit" class="btn btn-success">Save</button>
+          <!-- Bootstrap Modal for Error Messages -->
+          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content bg-dark text-light">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="errorModalLabel">Please Check this!</h5>
+                      </div>
+                      <div class="modal-body" id="errorModalBody">
+                          <!-- Error message will be displayed here -->
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
           </div>
 
       </form>
     </div>
   </div>
 
-
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
   <script>
     function nextStep(currentStepId, nextStepId) {
-      const currentStep = document.getElementById(currentStepId);
-      const nextStep = document.getElementById(nextStepId);
+        const currentStep = document.getElementById(currentStepId);
+        const nextStep = document.getElementById(nextStepId);
 
-      if (currentStep && nextStep) {
-        currentStep.classList.add('hidden');
-        nextStep.classList.remove('hidden');
-      }
+        if (currentStep && nextStep) {
+            currentStep.classList.add('hidden');
+            nextStep.classList.remove('hidden');
+        }
     }
-  </script>
+
+    function prevStep(currentStepId, prevStepId) {
+        const currentStep = document.getElementById(currentStepId);
+        const prevStep = document.getElementById(prevStepId);
+
+        if (currentStep && prevStep) {
+            currentStep.classList.add('hidden');
+            prevStep.classList.remove('hidden');
+        }
+    }
+</script>
+
+<script>
+    function validateStep4() {
+        const pterodactylDomainInput = document.getElementById('pterodactyl_domain');
+        const pterodactylKeyInput = document.getElementById('pterodactylkey');
+        const accountKeyInput = document.getElementById('accountKey');
+
+        // Validate Pterodactyl Domain starts with http:// or https://
+        const domainValue = pterodactylDomainInput.value.trim();
+        if (!domainValue.startsWith('http://') && !domainValue.startsWith('https://')) {
+            showErrorModal('Pterodactyl Domain must start with "http://" or "https://"');
+            return;
+        }
+
+        // Validate API Key starts with ptla_
+        const keyRegex = /^ptla_.+/;
+        if (!keyRegex.test(pterodactylKeyInput.value.trim())) {
+            showErrorModal('API Key must start with "ptla_"');
+            return;
+        }
+
+        // Validate Admin Account Key starts with ptlc_
+        const accountKeyRegex = /^ptlc_.+/;
+        if (!accountKeyRegex.test(accountKeyInput.value.trim())) {
+            showErrorModal('Admin Account Key must start with "ptlc_"');
+            return;
+        }
+
+        // If all validations pass, proceed to the next step
+        nextStep('step4', 'step5');
+    }
+
+    function showErrorModal(message) {
+        const errorModalBody = document.getElementById('errorModalBody');
+        errorModalBody.textContent = message;
+        new bootstrap.Modal(document.getElementById('errorModal')).show();
+    }
+</script>
+    <script>
+    function nextStep(currentStepId, nextStepId) {
+        const currentStep = document.getElementById(currentStepId);
+        const nextStep = document.getElementById(nextStepId);
+
+        if (currentStep && nextStep) {
+            currentStep.classList.add('hidden');
+            nextStep.classList.remove('hidden');
+            changeBackground(nextStepId);
+        }
+    }
+
+    function prevStep(currentStepId, prevStepId) {
+        const currentStep = document.getElementById(currentStepId);
+        const prevStep = document.getElementById(prevStepId);
+
+        if (currentStep && prevStep) {
+            currentStep.classList.add('hidden');
+            prevStep.classList.remove('hidden');
+            changeBackground(prevStepId);
+        }
+    }
+
+    function changeBackground(stepId) {
+        $('body').removeClass();
+        $('body').addClass(`bg-${stepId.toLowerCase()}`);
+    }
+</script>
+    <script>
+    function nextStep(currentStepId, nextStepId) {
+        const currentStep = document.getElementById(currentStepId);
+        const nextStep = document.getElementById(nextStepId);
+
+        if (currentStep && nextStep) {
+            currentStep.classList.add('hidden');
+            nextStep.classList.remove('hidden');
+            changeIllustration(nextStepId);
+        }
+    }
+
+    function prevStep(currentStepId, prevStepId) {
+        const currentStep = document.getElementById(currentStepId);
+        const prevStep = document.getElementById(prevStepId);
+
+        if (currentStep && prevStep) {
+            currentStep.classList.add('hidden');
+            prevStep.classList.remove('hidden');
+            changeIllustration(prevStepId);
+        }
+    }
+
+    function changeIllustration(stepId) {
+        const illustration = document.getElementById('illustration');
+        illustration.src = `/api/install/views/${stepId.toLowerCase()}i.png`;
+    }
+</script>
 </body>
 </html>

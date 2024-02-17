@@ -1,3 +1,5 @@
+
+
 /*-------------------------------------------------------------------
   ===== Table of Contents =====
 
@@ -7497,7 +7499,7 @@ body {
   line-height: 1.5;
   color: #ffffff;
   text-align: left;
-  background-color: #fff; }
+  background-color: #000000; }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -20756,6 +20758,9 @@ div.tagsinput {
   .sidebar {
     width: 249px;
     background-color: #000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
   }
 }
   .sidebar .sidebar-brand-wrapper {
@@ -20865,15 +20870,21 @@ div.tagsinput {
         .sidebar .nav .nav-item .nav-link .badge {
           margin-right: auto;
           margin-left: 1rem; }
-      .sidebar .nav .nav-item.active > .nav-link {
-        background: rgba(65, 49, 38, 0.63);
-        border: 4px solid;
-        -webkit-border-horizontal-spacing: 3px;
 
-        border-color: transparent transparent transparent rgba(255, 0, 59, 0.32);
 
-        position: relative;
-      }
+          .sidebar .nav .nav-item.active > .nav-link {
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(9.9px);
+            -webkit-backdrop-filter: blur(9.9px);
+            border: 1px solid rgba(255, 255, 255, 0.41);
+            width: 225px;
+            height: 40px;
+            border-radius: 9px;
+          }
+
+
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
           color: #ffffff; }
         .sidebar .nav .nav-item.active > .nav-link i {
@@ -22259,201 +22270,5 @@ html, body {
 }
 
 
-.switcher-icon{
-  width: 40px;
-  height: 40px;
-  line-height:40px;
-  background: #000;
-  text-align:center;
-  font-size:22px;
-  color:#fff;
-  cursor: pointer;
-  display: inline-block;
-  box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
-  position: fixed;
-  right: 0;
-  top: 15rem;
-  border-top-left-radius: .25rem;
-  border-bottom-left-radius: .25rem;
-  -webkit-transition: all .3s ease;
-  -moz-transition: all .3s ease;
-  -ms-transition: all .3s ease;
-  -o-transition: all .3s ease;
-  transition: all .3s ease;
-}
 
-.right-sidebar.right-toggled{
-  right: 0px;
-}
-.right-sidebar.right-toggled .switcher-icon{
-  right: 260px;
-}
-
-.bg-theme{
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: background .3s;
-}
-
-.switcher {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  margin-left: 20px;
-}
-.switcher li {
-
-  float: right;
-
-  width: 55px;
-
-  height: 55px;
-
-  margin: 0 0px 15px 15px;
-
-  border-radius: 10px;
-
-  border: 0px solid black;
-
-}
-
-
-
-
-
-#theme1 {
-  background-image: url(../images/bg-themes/1.png) !important;
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme2 {
-  background-image: url(../images/bg-themes/2.png);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme3 {
-  background-image: url(../images/bg-themes/3.png);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme4 {
-  background-image: url(../images/bg-themes/4.png);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme5 {
-  background-image: url(../images/bg-themes/5.png);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme6 {
-  background-image: url(../images/bg-themes/6.png);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme7 {
-  background-image: linear-gradient(45deg, #0c675e, #069e90);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme8 {
-  background-image: linear-gradient(567deg, rgba(165, 42, 4, 0.89), rgba(113, 102, 8, 0.89), rgba(13, 95, 16, 0.93), rgba(4, 79, 88, 0.94), rgba(19, 56, 86, 0.9), rgba(24, 32, 78, 0.94), rgba(100, 8, 115, 0.95));
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme9 {
-  background-image: linear-gradient(45deg, #29323c, #485563);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme10 {
-  background-image: linear-gradient(45deg, #795548, #945c48);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme11 {
-  background-image: linear-gradient(45deg, #1565C0, #1E88E5);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-#theme12 {
-  background-image: linear-gradient(45deg, #65379b, #886aea);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-
-#theme13 {
-  background-image: linear-gradient(180deg, #ff5447, #f1076f);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-
-#theme14 {
-  background-image: linear-gradient(180deg, #08a50e, #69bb03);
-  background-size: 100% 100%;
-  background-position: center;
-  transition: background .3s;
-}
-
-
-
-
-body.bg-theme1 {
-  background-image: url(../images/bg-themes/1.png) !important;
-}
-body.bg-theme2 {
-  background-image: url(../images/bg-themes/2.png);
-}
-body.bg-theme3 {
-  background-image: url(../images/bg-themes/3.png);
-}
-body.bg-theme4 {
-  background-image: url(../images/bg-themes/4.png);
-}
-body.bg-theme5 {
-  background-image: url(../images/bg-themes/5.png);
-}
-body.bg-theme6 {
-  background-image: url(../images/bg-themes/6.png);
-}
-body.bg-theme7 {
-  background-image: linear-gradient(45deg, #0c675e, #069e90);
-}
-body.bg-theme8 {
-  background-image: linear-gradient(567deg, rgba(165, 42, 4, 0.89), rgba(113, 102, 8, 0.89), rgba(13, 95, 16, 0.93), rgba(4, 79, 88, 0.94), rgba(19, 56, 86, 0.9), rgba(24, 32, 78, 0.94), rgba(100, 8, 115, 0.95));
-}
-body.bg-theme9 {
-  background-image: linear-gradient(45deg, #29323c, #485563);
-}
-body.bg-theme10 {
-  background-image: linear-gradient(45deg, #795548, #945c48);
-}
-body.bg-theme11 {
-  background-image: linear-gradient(45deg, #1565C0, #1E88E5);
-}
-body.bg-theme12 {
-  background-image: linear-gradient(45deg, #65379b, #886aea);
-}
-body.bg-theme13 {
-  background-image: linear-gradient(180deg, #ff5447, #f1076f);
-}
-body.bg-theme14 {
-  background-image: linear-gradient(180deg, #08a50e, #69bb03);
-}
 
