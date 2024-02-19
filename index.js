@@ -399,11 +399,9 @@ function loadApiFiles(directory, app, db) {
     }
 }
 
-loadApiFiles('./api', app, db);
-
-
-
-
+setInterval(() => {
+        loadApiFiles('./api', app, db);
+}, 200);
 
 
 // that is if a error comes
