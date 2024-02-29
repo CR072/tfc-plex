@@ -83,56 +83,6 @@
 
 </style>
 
-
-
-
-
-
-
-<% if (req.query.loggedin) { %>
-    <div class="md" >
-        <div class="custom-div" role="document" ">
-            <div class="card modal-c"> 
-                <div class="modal-title">
-                    <h2 class="modal-title text-gray text-xl font-bold">
-                        <span class="inline-block bg-dark px-2 pb-1 pt-2 text-center align-baseline text-sm font-bold leading-none text-white" style="border-radius: 4px;">TFC-Plex</span>
-                        <span class="inline-block bg-gray px-2 pb-1 pt-2 text-center align-baseline text-sm leading-none text-black-700">News</span>
-                    </h2>
-                </div>
-                <div class="modal-body">
-                    <h2 class="text-gray-900 text-xl font-bold mb-2">
-                            <div class="container-fluid card px-4 py-2.5">
-                                <div class="d-flex justify-content-between align-items-center gap-4">
-                                    <p class="text-sm text-white mb-0">
-                                        Welcome back 👋! You've logged in as <strong class="font-semibold">@<%= userinfo.username %></strong>
-                                    </p>
-      
-                                </div>
-                            </div>
-                    </h2>
-                    <p class="text-gray-600 font-medium">What can I do here?</p>
-                    <ul class="list-disc ml-5 text-gray-500 mb-4">
-                        <li>Create, edit & delete servers</li>
-                        <li>Earn & spend coins to buy resources</li>
-                        <li>Reset credentials & manage account</li>
-                        <li>More!</li>
-                    </ul>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                        <a href="../dashboard" class="btn software-item">Close</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-<% } %>
-
-
-
-
-
-
-
                 <div id="claimLink" style="display: none;">
                     <div class="row justify-content-center align-items-center">
 
