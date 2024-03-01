@@ -87,6 +87,16 @@
                       placeholder="<%= userinfo.username%>'s Server" value="<%= userinfo.username%>'s Server" name="fname">
                   </div>
                 </div>
+
+
+      <div class="row row-group m-0">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"> <span class="float-right"></span></h5>
+                    <h6 style="color:white">Describe your server:</h6>
+                    <textarea id="SRVdescription" class="form-control form-control-rounded" type="text"
+                      placeholder="<%= userinfo.username%>'s really nice server that is used to play minecraft"  rows="2" name="fname"></textarea>
+                  </div>
+                </div>
         
         
                 <div class="row row-group mt-0">
@@ -228,7 +238,7 @@
     const backups = 2;
     const databases =1;
     const allocations =1;
-    const description = <%= settings.name %>;
+    const description = encodeURIComponent(document.getElementById("SRVdescription").value);
 
     const locationItems = document.getElementsByClassName("location-item");
     let selectedLocation;
