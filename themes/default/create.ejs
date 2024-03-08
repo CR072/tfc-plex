@@ -204,15 +204,24 @@
     console.log(num);
   }
 
-  function submitNew() {
-
+function submitNew() {
     const cbox = document.getElementById("createBox");
     const loading = document.getElementById("loading");
-    cbox.style.display = 'none'
-    loading.style.display = 'block';
-    const name = encodeURIComponent(document.getElementById("SRVname").value);
-    const softwareItems = document.getElementsByClassName("software-item");
-    let selectedEgg;
+    const name = document.getElementById("SRVname").value.trim();
+    const description = document.getElementById("SRVdescription").value.trim();
+    const ram = document.getElementById("SRVram").value.trim();
+    const disk = document.getElementById("SRVdisk").value.trim();
+    const cpu = document.getElementById("SRVcpu").value.trim();
+
+    if (name === '' || description === '' || ram === '' || disk === '' || cpu === '') {
+        // Show alert for missing fields
+        Swal.fire({
+            title: 'Alert!',
+            text: 'Please fill out all fields.',
+            icon: 'error'
+        });
+        return;
+    }
 
     for (let i = 0; i < softwareItems.length; i++) {
       if (softwareItems[i].classList.contains("selected")) {
