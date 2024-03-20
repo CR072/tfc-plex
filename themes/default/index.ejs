@@ -284,13 +284,13 @@
     
     <section class="mt-16">
         <div class="flex w-full justify-between">
-            <div class="text-[55px] mb-4 text-white ml-4 pr-8 ">Plans:</div>
+            <div class="text-[55px] mb-4 text-white ml-1 pr-8 ">Plans:</div>
 
         </div>
 
 
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 mx-4 gap-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-3 mx-4 gap-8 w-full" style="margin-left: 0px;">
             <% 
             // Eine Map erstellen, um einzigartige Dienste zu speichern
             const uniqueServices = new Map();
@@ -377,7 +377,7 @@
                 <span class="text-ls ml-2 font-nunito">Safety</span>
             </center>
             <p class="mt-4 text-sm">
-                PoggerHost fuels your Minecraft mastery with market-leading prices. Craft smarter, play stronger!
+                <%= settings.name %> fuels your Minecraft mastery with market-leading prices. Craft smarter, play stronger!
             </p>
         </div>
     </div>
@@ -457,8 +457,27 @@
 <h1 class="text-white text-3xl lg:text-5xl font-semibold">
     Statistics speaks!
 </h1>
+<style>
+    @media screen and (max-width: 768px) {
+        .flex {
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .m-1190{
+            margin-left: -90px;
+        }
+    }
+
+
+
+    
+</style>
 <div class="flex mt-8 gap-4">
-    <div class="grid grid-cols-1 gap-4 w-3/4">
+    <div class="grid grid-cols-1 gap-4 w-3/4" style="min-width: 280px; margin-left: -90px; @media screen and (max-width: 768px) {margin-left: 0; margin-right: 500px;}">
+
+    
         <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-4 justify-center text-center">
             <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
                 Join with <span id="users">---</span> other users
@@ -477,7 +496,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-2 w-1/4 justify-center text-center">
+    <div class="bg-zinc-900 border h-max rounded-lg border-zinc-700 p-2 w-1/4 justify-center text-center m-1190" style="min-width: 280px;">
         <div class="bg-gradient-to-br from-rose-500/70 to-transparent p-2 rounded-lg">
             <h1 class="text-white my-8 text-3xl lg:text-5xl font-semibold">
                 <span id="servers">-_-</span>+ <br>servers
