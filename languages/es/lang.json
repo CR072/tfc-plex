@@ -116,18 +116,4 @@
   "not_find_server_id": "No se pudo encontrar el servidor con el ID proporcionado.",
   "missingvariable": "No has completado toda la información del servidor.",
   "erroronmodify": "Hubo un error al intentar modificar tu servidor. Informa a un administrador para corregir este problema.",
-  "missingegg": "El tipo de servidor para este servidor no está registrado como un tipo de servidor válido, por lo tanto, no se pudieron cambiar la RAM, disco y/o CPU de tu servidor.",
-  "toolittleresources": "Debes hacer un servidor con al menos",
-  "erroralertadmin": "Hubo un error al intentar modificar tu servidor. Informa a un administrador para corregir este problema.",
-  "not_modified_server": "El servidor no pudo ser modificado porque solicitaste modificar un servidor que excede tu plan.",
-  "ontheserver": "en el servidor.",
-  "maximumof": "Con el tipo de servidor seleccionado, puedes tener un máximo de",
-  "modified_type_server": "si deseas modificar un servidor con el tipo de servidor que seleccionaste.",
-  "mustcompletecaptcha": "¡Debes completar el captcha para demostrar que eres humano! (recurso antiguo)",
-  "invalidcaptchareponse": "Has enviado una respuesta de captcha inválida, inténtalo de nuevo. (recurso antiguo)",
-  "note_page_404": "Esta es una traducción para la página 404 (Finalizada)",
-  "not_available": "¡Este sitio no está disponible!",
-  "404": "404",
-  "back": "Volver",
-  "error": "¡ERROR!"
-}
+  "missingegg": "El tipo de servidor para este servidor no está registrado como un tipo de servidor válido, por lo tanto, no se pudieron cambiar la RAM, disco
