@@ -11,8 +11,6 @@
     "@keyv/redis": "^2.2.1",
     "@keyv/sqlite": "^2.0.3",
     "@paypal/checkout-server-sdk": "^1.0.3",
-    "@tensorflow/tfjs": "^4.17.0",
-    "@tensorflow/tfjs-node": "^4.17.0",
     "archiver": "^6.0.1",
     "axios": "^0.25.0",
     "base32-encode": "^2.0.0",
@@ -51,7 +49,6 @@
     "sharp": "^0.33.2",
     "sqlite3": "^5.1.7",
     "stripe": "^14.14.0",
-    "textflow.js": "^0.1.4",
     "thirty-two": "^1.0.2",
     "warn": "^1.0.1"
   },
