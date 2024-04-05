@@ -750,12 +750,6 @@ app.get('/ctrl', (req, res) => {
 
   app.get("/create", async (req, res) => {
 
-
-    const costPerRam = settings.costPerRam;
-    const costPerCpu = settings.costPerCpu;
-    const costPerGbStorage = settings.costPerGbStorage;
-
-
     try {
       if (!req.session.pterodactyl) return res.json({ "success": false, "message": "unauthenticated", "redirect": "/login" });
       if (true == true) {
@@ -776,7 +770,7 @@ app.get('/ctrl', (req, res) => {
           return res.json({ "success": false, "message": "PANELERROR" });
         }
         req.session.pterodactyl = cacheaccountinfo.attributes;
-        if (req.query.name && req.query.description && req.query.ram && req.query.disk && req.query.cpu && req.query.backups && req.query.allocations && req.query.databases && req.query.egg && req.query.location) {
+        if (req.query.name && req.query.ram && req.query.disk && req.query.cpu && req.query.backups && req.query.allocations && req.query.databases && req.query.egg && req.query.location) {
           try {
             decodeURIComponent(req.query.name)
           } catch (err) {
@@ -834,7 +828,7 @@ app.get('/ctrl', (req, res) => {
           }
 
           let egg = req.query.egg;
-
+          
           let egginfo = eggconfig[egg];
           if (!eggconfig[egg]) {
             return res.json({ "success": false, "message": "INVALIDEGG" });
@@ -848,14 +842,7 @@ app.get('/ctrl', (req, res) => {
 
 
 
-          const diskInGb = disk / 1024;
-          const ramInGb = ram / 1024;
-          const cpuInCores = cpu / 100;
-
-
-          const totalCost = ramInGb*costPerRam + cpuInCores*costPerCpu + diskInGb * costPerGbStorage ;
-console.log(totalCost)
-
+        
           if (!isNaN(ram) && !isNaN(disk) && !isNaN(cpu) && !isNaN(databases) && !isNaN(backups) && !isNaN(allocations)) {
             if (ram2 + ram > package.ram + extra.ram) {
               return res.json({ "success": false, "message": `Exceeded ram!, ${package.ram + extra.ram - ram2}` });
@@ -897,11 +884,6 @@ console.log(totalCost)
             }
             const createdServer = await db.get(`createdserver-${req.session.userinfo.id}`)
             const createdStatus = createdServer ?? false
-            const coins = await db.get("coins-" + req.session.userinfo.id) ?? 0;
-            const cost = settings.features.server.cost
-            if (createdStatus && coins < totalCost) {
-              return res.json({ "success": false, "message": "TOOLITTLECOINS" });
-            }
             let serverinfo = await fetch(
               settings.pterodactyl.domain + "/api/application/servers",
               {
