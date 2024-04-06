@@ -112,9 +112,9 @@
         "/admin/user",
         "/admin/coins",
         "/admin/reghost",
-        "admin/user",
-        "admin/server",
-        "admin/settings",
+        "/admin/user",
+        "/admin/server",
+        "/admin/settings",
         "/admin/setting"
     ],
     "variables": {
