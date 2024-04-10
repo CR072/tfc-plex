@@ -22,7 +22,7 @@
 ---
 
 ## 👀 Preview
-TFC-plex Demo: https://dash.tfc-hosting.de/
+TFC-plex Demo: https://demo.tfc-plex.de/
 
 ## 👀 Our Docs
 https://docs.tfc-plex.de/
