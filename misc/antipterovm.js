@@ -180,24 +180,42 @@ module.exports.load = function (app, db) {
                 chalk.cyan("]") +
                 chalk.whiteBright(" Scanning servers for Ptero-VM...")
             );
-            const serversResponse = await fetch(
-                `${panelUrl}/api/application/servers`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${panelApiKey}`,
-                        Accept: "application/vnd.pterodactyl.v1+json",
-                    },
+            
+            const servers = [];
+            
+            async function getServersOnPage(page) {
+                return new Promise(async (resolve) => {
+                    const response = await fetch(
+                        settings.pterodactyl.domain + "/api/application/servers/?page=" + page,
+                        {
+                            headers: {
+                                "Authorization": `Bearer ${settings.pterodactyl.key}`
+                            }
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch server list: ${response.status} ${response.statusText}`);
+                    }
+
+                    resolve(response.json());
+                });
+            };
+
+            let currentPage = 1;
+            try {
+                while (true) {
+                    const serversResponse = await getServersOnPage(currentPage);
+                    servers.push(...serversResponse.data);
+                    if (serversResponse.meta.pagination.total_pages > currentPage) {
+                        currentPage++;
+                    } else {
+                        break;
+                    }
                 }
-            );
-
-            if (!serversResponse.ok) {
-                throw new Error(
-                    `Failed to retrieve server list: ${serversResponse.status} ${serversResponse.statusText}`
-                );
+            } catch (error) {
+                console.error("Failed to fetch server list:", error);
             }
-
-            const serversData = await serversResponse.json();
-            const servers = serversData.data;
 
             for (const server of servers) {
                 const serverId = server.attributes.identifier;
@@ -222,7 +240,6 @@ module.exports.load = function (app, db) {
 
     if (settings.anti_pteroVM.enabled == true) {
         setInterval(scanServers, scanInterval);
-
         scanServers();
     } else {
         console.log(" ");
