@@ -45,7 +45,7 @@ module.exports.load = async function (app, db) {
     <body style="background-color: #0b0b0f; font-family: 'Whitney-Semibold', sans-serif;">
     <center>
       <br><br><br>
-      <h1 style="color: white">You´re getting loged in sitdown and Relax</h1>
+      <h1 style="color: white">You´re getting logged in sitdown and Relax</h1>
       <p style="color: #BBBBBB">were getting all ready for you for the best hosting expririenc</p>
     </center>
     <script type="text/javascript" defer>
