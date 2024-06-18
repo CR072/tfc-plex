@@ -56,14 +56,14 @@ const defaultthemesettings = {
     variables: {}
 };
 
-module.exports.renderdataeval =
-    `(async () => {
-        let products = JSON.parse(require("fs").readFileSync("./prod.json"));
-let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
+module.exports.renderdataeval = async function(req) {
+    let products = JSON.parse(require("fs").readFileSync("./prod.json"));
+    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
     const JavaScriptObfuscator = require('javascript-obfuscator');
     const newlang = JSON.parse(require("fs").readFileSync('./languages/' + settings.language + '/lang.json'));
+    let theme = indexjs.get(req);
 
-    let renderdata = {
+  return {
     products: products,    
     req: req,
     eggs: eggconfig,
@@ -84,10 +84,8 @@ let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
     extra: theme.settings.variables,
     referid: req.session.userinfo ? await db.get("referiduser-" + req.session.userinfo.id) : null,
     db: db,
-    };
-
-    return renderdata;
-})();`;
+  };
+};
 
 console.log(chalk.white("+ | ✅ "));
 
