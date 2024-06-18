@@ -425,7 +425,7 @@ app.all("*", async (req, res) => {
             `./themes/${theme.name}/${theme.settings.notfound}`,
 
 
-            await eval(indexjs.renderdataeval),
+            await indexjs.renderdataeval(req),
             null,
             async function (err, str) {
                 delete req.session.newaccount;
