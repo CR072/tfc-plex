@@ -496,7 +496,7 @@ app.all("*", async (req, res) => {
         return;
     }
 
-    const data = JSON.parse(indexjs.renderdataeval);
+  const data = await indexjs.renderdataeval(req);
     ejs.renderFile(
         `./themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`,
         data,
