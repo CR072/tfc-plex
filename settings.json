@@ -10,7 +10,7 @@
   "banner": "",
   "hostid": "100",
 
-"imprint_url":"https://imprints.example.com",
+  "imprint_url":"https://imprints.example.com",
 
   "language": "en",
   "claiming": {
@@ -18,24 +18,19 @@
     "coinsPerClaim": 20
   },
 
-"plans": {
-  "enabled": true
-},
-
-
+  "plans": {
+    "enabled": true
+  },
 
   "website": {
     "port": 2000,
     "secret": "( Change that )"
   },
 
-
-  "_2_note": "This is an example feature and not recomended to use", 
+  "_note2": "This is an example feature and not recomended to use", 
   "costPerRam": 0,
   "costPerGbStorage": 0,
   "costPerCpu": 0,
-
-
 
   "storelimits": {
     "ram": "8192",
@@ -43,7 +38,6 @@
     "cpu": "400",
     "servers": "8"
   },
-
 
   "pterodactyl": {
     "domain": "https://panel.example.com/",
@@ -57,21 +51,16 @@
     "_note":"set the coins per minute that the user will earn by watching ads"
   },
   
-"adscript":"https://cdn.tfc-plex.de/js/ads.js",
-"____note": "the url for your ad script you must host it on a cdn platform or somthing",
+  "adscript":"https://cdn.tfc-plex.de/js/ads.js",
+  "_note": "the url for your ad script you must host it on a cdn platform or somthing",
 
-
-
-
-"stripe": {
-  "enabled": false,
-  "key": "743284728347",
-  "coins": 100,
-  "currency": "eur",
-  "_note": "per coin means how much one coin costs like 10 means 10 cents per coin"
-},
-
-
+  "stripe": {
+    "enabled": false,
+    "key": "743284728347",
+    "coins": 100,
+    "currency": "eur",
+    "_note": "per coin means how much one coin costs like 10 means 10 cents per coin"
+  },
 
   "google": {
     "enabled": true,
@@ -100,11 +89,11 @@
     "enabled": false,
     "keyword": "[active]"
   },
+
   "linkvertise": {
     "userid": "963062",
     "coins": 150,
     "dailyLimit": 3
-
   },
 
   "anti_pteroVM": {
@@ -114,7 +103,7 @@
     "_comment": "low, medium, high, strict"
   },
 
-  "note_1":"smtp dont work no need to setup",
+  "_note1":"smtp dont work no need to setup",
   "smtp": {
     "enabled": false,
     "host": "smtp.example.com",
@@ -122,10 +111,7 @@
     "username": "",
     "password": ""
   },
-
   "database": "sqlite://database.sqlite",
-
-  
   "api": {
     "client": {
       "api": {
@@ -161,7 +147,7 @@
       },
       "passwordgenerator": {
         "signup": true,
-        "note": "Use this to disable signups",
+        "_note": "Use this to disable signups",
         "length": 16
       },
       "allow": {
@@ -220,7 +206,7 @@
           }
         },
         "rolePackages": {
-          "note": "This allows you to set a different plan to people who have a specific role however this requires the Discord bot to be configured and functioning",
+          "_note": "This allows you to set a different plan to people who have a specific role however this requires the Discord bot to be configured and functioning",
           "roleServer": "Server ID",
           "roles": {
             "Role ID": "Package Name"
@@ -234,14 +220,14 @@
           "package": null
         }
       },
-      "note-1": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
+      "_note": "The Configured EGGS Reasy TO Paste you can find at tfc-plex discord server: https://discord.com/invite/BXmzHS9DRA",
       "paypal": {
         "clientId": "1009",
         "clientSecret": "YOUR_PAYPAL_CLIENT_SECRET"
       },
       "coins": {
         "enabled": true,
-        "note-1": "the money that cost 1 coin in this version the real money shop is disabled",
+        "_note": "the money that cost 1 coin in this version the real money shop is disabled",
         "costPerCoin": 1,
         "store": {
           "_comment": "The cost and per is not intended to used with 0. This is not intended to sell resources for coins. Make sure coins are enabled too, or else there can be errors.",
@@ -273,7 +259,7 @@
     }
   },
   "whitelist": {
-    "note": "This allows only specific people to be able to use the dashboard",
+    "_note": "This allows only specific people to be able to use the dashboard",
     "status": false,
     "users": [
       "User ID"
@@ -287,7 +273,7 @@
   },
 
   "servercreation": {
-    "note": "You can set how much it should cost to create a server here, 0 Means The price is free",
+    "_note": "You can set how much it should cost to create a server here, 0 Means The price is free",
     "cost": 10
   },
   "logging": {
@@ -317,7 +303,7 @@
     }
   },
   "antivpn": {
-    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, TFC-Plex will disable antigen.",
+    "_note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, TFC-Plex will disable antigen.",
     "status": false,
     "APIKey": "api Key",
     "whitelistedIPs": [
@@ -325,11 +311,12 @@
     ]
   },
   "blacklist": {
-    "note": "This allows only specific people to be able to use the dashboard",
+    "_note": "This allows only specific people to be able to use the dashboard",
     "status": false,
     "users": [
       "787878787787"
     ]
   },
+
   "installing": false
 }
