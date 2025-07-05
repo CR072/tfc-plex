@@ -1,5 +1,8 @@
 # tfc-plex
 
+# PROJECT HAS REACHED EOL
+EOL: 21 Jun, 2024.
+
 ![image](https://cdn.tfc-plex.de/img/gitlogo.png)
 <p align="center" dir="auto">Trusted by 134 host and 130472 users.</p>
 <p align="center">
